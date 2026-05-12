@@ -1,0 +1,75 @@
+{
+  "meta": {
+    "ticker": "GOOG",
+    "generated_at": "2026-05-12T10:06:46.573310+00:00",
+    "cost_price": 386.77,
+    "data_rows": 180
+  },
+  "monte_carlo": {
+    "prob_always_above": 0.1678,
+    "prob_touch_below": 0.8322,
+    "expected_final_price": 386.7318760201962,
+    "pct5_final_price": 342.820018492603,
+    "pct95_final_price": 434.66448028596386,
+    "prob_by_day": [
+      0.4864,
+      0.4938,
+      0.488,
+      0.4894,
+      0.4898,
+      0.487,
+      0.4874,
+      0.4854,
+      0.4834,
+      0.4806
+    ],
+    "probability_matrix": {
+      "+5%": 0.239,
+      "-5%": 0.7484,
+      "+10%": 0.0908,
+      "-10%": 0.9232,
+      "+15%": 0.0236,
+      "-15%": 0.9876
+    }
+  },
+  "iv_analysis": {
+    "iv_latest": 0.3610785263861037,
+    "iv_percentile": 100.0,
+    "iv_mean_180d": 0.361079,
+    "iv_std_180d": 0.0,
+    "iv_regime": "expensive"
+  },
+  "risk_matrix": {
+    "latest_close": 386.77,
+    "latest_atr": 9.305,
+    "stop_1x5_atr": 372.8125,
+    "stop_2x_atr": 368.16,
+    "tp_conservative": 391.4225,
+    "tp_moderate": 396.075,
+    "tp_aggressive": 400.7275,
+    "risk_reward_1x5": 1.0,
+    "risk_reward_2x": 0.75,
+    "rr_score": 4
+  },
+  "technicals": {
+    "rsi_14": 72.54,
+    "ma_5": 391.706,
+    "ma_20": 358.3775,
+    "ma_60": 321.0928
+  },
+  "sentiment": {
+    "total_articles": 10,
+    "net_sentiment_score": 2,
+    "top_bearish_title": "Entergy Shareholders Back Board as CEO Highlights Data Center Demand, Grid Investments",
+    "top_bullish_title": "Amazon Kicks Off Debut Swiss Franc Bond Sale in Record Six Parts",
+    "keyword_freq": {
+      "ai": 18,
+      "delivery": 0,
+      "earnings": 3,
+      "recall": 0,
+      "fsd": 0,
+      "cybertruck": 0,
+      "margin": 0
+    }
+  }
+}

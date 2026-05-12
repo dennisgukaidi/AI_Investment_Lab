@@ -1,0 +1,75 @@
+{
+  "meta": {
+    "ticker": "AMD",
+    "generated_at": "2026-05-12T10:08:14.468123+00:00",
+    "cost_price": 458.79,
+    "data_rows": 180
+  },
+  "monte_carlo": {
+    "prob_always_above": 0.16,
+    "prob_touch_below": 0.84,
+    "expected_final_price": 458.7199565092451,
+    "pct5_final_price": 351.94909295432444,
+    "pct95_final_price": 585.6171950499124,
+    "prob_by_day": [
+      0.4818,
+      0.4872,
+      0.4786,
+      0.4786,
+      0.4802,
+      0.4754,
+      0.4748,
+      0.4736,
+      0.4676,
+      0.4634
+    ],
+    "probability_matrix": {
+      "+5%": 0.3528,
+      "-5%": 0.5984,
+      "+10%": 0.246,
+      "-10%": 0.7268,
+      "+15%": 0.1668,
+      "-15%": 0.8302
+    }
+  },
+  "iv_analysis": {
+    "iv_latest": 0.7745493671721584,
+    "iv_percentile": 100.0,
+    "iv_mean_180d": 0.774549,
+    "iv_std_180d": 0.0,
+    "iv_regime": "expensive"
+  },
+  "risk_matrix": {
+    "latest_close": 458.79,
+    "latest_atr": 22.28,
+    "stop_1x5_atr": 425.37,
+    "stop_2x_atr": 414.23,
+    "tp_conservative": 469.93,
+    "tp_moderate": 481.07,
+    "tp_aggressive": 492.21,
+    "risk_reward_1x5": 1.0,
+    "risk_reward_2x": 0.75,
+    "rr_score": 4
+  },
+  "technicals": {
+    "rsi_14": 81.09,
+    "ma_5": 419.818,
+    "ma_20": 336.8245,
+    "ma_60": 250.3893
+  },
+  "sentiment": {
+    "total_articles": 10,
+    "net_sentiment_score": 8,
+    "top_bearish_title": "Stock Market Today: Dow Up As Trump Gives Iran Warning; Michael Burry Says This As Micron Soars (Live Coverage)",
+    "top_bullish_title": "Advanced Micro Devices and Other Growth Stocks Are Flying High. History Says Hold on to Them.",
+    "keyword_freq": {
+      "ai": 15,
+      "delivery": 0,
+      "earnings": 2,
+      "recall": 0,
+      "fsd": 0,
+      "cybertruck": 0,
+      "margin": 0
+    }
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "meta": {
+    "ticker": "VST",
+    "generated_at": "2026-05-12T10:19:00.389519+00:00",
+    "cost_price": 166.05,
+    "data_rows": 180
+  },
+  "monte_carlo": {
+    "prob_always_above": 0.0,
+    "prob_touch_below": 1.0,
+    "expected_final_price": 152.03331167648807,
+    "pct5_final_price": 132.20073594878062,
+    "pct95_final_price": 173.93477346501652,
+    "prob_by_day": [
+      0.0002,
+      0.0074,
+      0.0252,
+      0.0472,
+      0.065,
+      0.082,
+      0.0974,
+      0.1124,
+      0.1228,
+      0.139
+    ],
+    "probability_matrix": {
+      "+5%": 0.2676,
+      "-5%": 0.7138,
+      "+10%": 0.1216,
+      "-10%": 0.8866,
+      "+15%": 0.0424,
+      "-15%": 0.9732
+    }
+  },
+  "iv_analysis": {
+    "iv_latest": 0.4173466727709071,
+    "iv_percentile": 100.0,
+    "iv_mean_180d": 0.417347,
+    "iv_std_180d": 0.0,
+    "iv_regime": "expensive"
+  },
+  "risk_matrix": {
+    "latest_close": 152.05,
+    "latest_atr": 7.259,
+    "stop_1x5_atr": 141.1616,
+    "stop_2x_atr": 137.5321,
+    "tp_conservative": 155.6795,
+    "tp_moderate": 159.309,
+    "tp_aggressive": 162.9384,
+    "risk_reward_1x5": -0.125,
+    "risk_reward_2x": -0.109,
+    "rr_score": 2
+  },
+  "technicals": {
+    "rsi_14": 44.69,
+    "ma_5": 154.478,
+    "ma_20": 158.7625,
+    "ma_60": 160.4362
+  },
+  "sentiment": {
+    "total_articles": 10,
+    "net_sentiment_score": 5,
+    "top_bearish_title": "Nuclear Reactor Leader Constellation Backs Three Mile Island Goal",
+    "top_bullish_title": "Vistra Q1 Earnings Beat Estimates as Hedging Fortifies Visibility",
+    "keyword_freq": {
+      "ai": 9,
+      "delivery": 0,
+      "earnings": 7,
+      "recall": 0,
+      "fsd": 0,
+      "cybertruck": 0,
+      "margin": 0
+    }
+  }
+}

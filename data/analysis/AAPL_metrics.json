@@ -1,0 +1,75 @@
+{
+  "meta": {
+    "ticker": "AAPL",
+    "generated_at": "2026-05-12T10:08:04.733989+00:00",
+    "cost_price": 292.68,
+    "data_rows": 180
+  },
+  "monte_carlo": {
+    "prob_always_above": 0.1698,
+    "prob_touch_below": 0.8302,
+    "expected_final_price": 292.6588601254723,
+    "pct5_final_price": 269.69285798443144,
+    "pct95_final_price": 317.1412556234958,
+    "prob_by_day": [
+      0.4882,
+      0.4956,
+      0.4894,
+      0.4924,
+      0.493,
+      0.4896,
+      0.4916,
+      0.4894,
+      0.4878,
+      0.4838
+    ],
+    "probability_matrix": {
+      "+5%": 0.1578,
+      "-5%": 0.8402,
+      "+10%": 0.0248,
+      "-10%": 0.9834,
+      "+15%": 0.0018,
+      "-15%": 0.9996
+    }
+  },
+  "iv_analysis": {
+    "iv_latest": 0.2465262887834773,
+    "iv_percentile": 100.0,
+    "iv_mean_180d": 0.246526,
+    "iv_std_180d": 0.0,
+    "iv_regime": "expensive"
+  },
+  "risk_matrix": {
+    "latest_close": 292.68,
+    "latest_atr": 6.4761,
+    "stop_1x5_atr": 282.9658,
+    "stop_2x_atr": 279.7277,
+    "tp_conservative": 295.9181,
+    "tp_moderate": 299.1561,
+    "tp_aggressive": 302.3942,
+    "risk_reward_1x5": 1.0,
+    "risk_reward_2x": 0.75,
+    "rr_score": 4
+  },
+  "technicals": {
+    "rsi_14": 71.94,
+    "ma_5": 289.026,
+    "ma_20": 274.8855,
+    "ma_60": 263.7913
+  },
+  "sentiment": {
+    "total_articles": 10,
+    "net_sentiment_score": 8,
+    "top_bearish_title": "Memory chip stocks hit record highs, pharma reacts to hantavirus concerns",
+    "top_bullish_title": "Arm Holdings (ARM) Price Target Raised to $300 on AI and Data Center Momentum",
+    "keyword_freq": {
+      "ai": 19,
+      "delivery": 0,
+      "earnings": 2,
+      "recall": 0,
+      "fsd": 0,
+      "cybertruck": 0,
+      "margin": 0
+    }
+  }
+}

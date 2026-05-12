@@ -1,0 +1,75 @@
+{
+  "meta": {
+    "ticker": "CEG",
+    "generated_at": "2026-05-12T10:18:28.010473+00:00",
+    "cost_price": 289.61,
+    "data_rows": 180
+  },
+  "monte_carlo": {
+    "prob_always_above": 0.3902,
+    "prob_touch_below": 0.6098,
+    "expected_final_price": 299.65412191420836,
+    "pct5_final_price": 255.58735911471555,
+    "pct95_final_price": 348.8832102451847,
+    "prob_by_day": [
+      0.8664,
+      0.7784,
+      0.735,
+      0.7062,
+      0.6852,
+      0.6676,
+      0.6498,
+      0.643,
+      0.6298,
+      0.6226
+    ],
+    "probability_matrix": {
+      "+5%": 0.2886,
+      "-5%": 0.6846,
+      "+10%": 0.1488,
+      "-10%": 0.8506,
+      "+15%": 0.0684,
+      "-15%": 0.954
+    }
+  },
+  "iv_analysis": {
+    "iv_latest": 0.473347188051625,
+    "iv_percentile": 100.0,
+    "iv_mean_180d": 0.473347,
+    "iv_std_180d": 0.0,
+    "iv_regime": "expensive"
+  },
+  "risk_matrix": {
+    "latest_close": 299.69,
+    "latest_atr": 14.4639,
+    "stop_1x5_atr": 277.9942,
+    "stop_2x_atr": 270.7623,
+    "tp_conservative": 306.9219,
+    "tp_moderate": 314.1539,
+    "tp_aggressive": 321.3858,
+    "risk_reward_1x5": 2.736,
+    "risk_reward_2x": 1.686,
+    "rr_score": 8
+  },
+  "technicals": {
+    "rsi_14": 48.29,
+    "ma_5": 311.56,
+    "ma_20": 303.1475,
+    "ma_60": 302.0823
+  },
+  "sentiment": {
+    "total_articles": 10,
+    "net_sentiment_score": 7,
+    "top_bearish_title": "Memory chip stocks hit record highs, pharma reacts to hantavirus concerns",
+    "top_bullish_title": "Memory chip stocks hit record highs, pharma reacts to hantavirus concerns",
+    "keyword_freq": {
+      "ai": 2,
+      "delivery": 0,
+      "earnings": 14,
+      "recall": 0,
+      "fsd": 0,
+      "cybertruck": 0,
+      "margin": 0
+    }
+  }
+}

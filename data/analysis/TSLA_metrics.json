@@ -1,0 +1,75 @@
+{
+  "meta": {
+    "ticker": "TSLA",
+    "generated_at": "2026-05-12T10:18:49.099463+00:00",
+    "cost_price": 390.55,
+    "data_rows": 180
+  },
+  "monte_carlo": {
+    "prob_always_above": 0.903,
+    "prob_touch_below": 0.097,
+    "expected_final_price": 444.95013955381586,
+    "pct5_final_price": 385.2742312068197,
+    "pct95_final_price": 511.018896135237,
+    "prob_by_day": [
+      1.0,
+      0.9994,
+      0.998,
+      0.9918,
+      0.983,
+      0.9744,
+      0.9624,
+      0.9552,
+      0.9414,
+      0.9324
+    ],
+    "probability_matrix": {
+      "+5%": 0.2726,
+      "-5%": 0.7062,
+      "+10%": 0.1288,
+      "-10%": 0.8784,
+      "+15%": 0.0478,
+      "-15%": 0.9702
+    }
+  },
+  "iv_analysis": {
+    "iv_latest": 0.4296564869052784,
+    "iv_percentile": 100.0,
+    "iv_mean_180d": 0.429656,
+    "iv_std_180d": 0.0,
+    "iv_regime": "expensive"
+  },
+  "risk_matrix": {
+    "latest_close": 445.0,
+    "latest_atr": 16.1996,
+    "stop_1x5_atr": 420.7005,
+    "stop_2x_atr": 412.6007,
+    "tp_conservative": 453.0998,
+    "tp_moderate": 461.1996,
+    "tp_aggressive": 469.2995,
+    "risk_reward_1x5": Infinity,
+    "risk_reward_2x": Infinity,
+    "rr_score": 10
+  },
+  "technicals": {
+    "rsi_14": 74.06,
+    "ma_5": 414.648,
+    "ma_20": 391.3905,
+    "ma_60": 388.3763
+  },
+  "sentiment": {
+    "total_articles": 11,
+    "net_sentiment_score": -1,
+    "top_bearish_title": "Panasonic forecasts profit rebound for battery unit after quarterly loss",
+    "top_bullish_title": "These Stocks Are Today’s Movers: Nvidia, Lumentum, Intel, Micron, Qualcomm, Tesla, Moderna, Circle Internet, and More",
+    "keyword_freq": {
+      "ai": 15,
+      "delivery": 0,
+      "earnings": 0,
+      "recall": 0,
+      "fsd": 0,
+      "cybertruck": 0,
+      "margin": 1
+    }
+  }
+}
