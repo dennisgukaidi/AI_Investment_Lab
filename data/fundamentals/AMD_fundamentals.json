@@ -1,0 +1,31 @@
+{
+  "ticker": "AMD",
+  "collected_at": "2026-05-13T02:02:03.126184+00:00",
+  "current_ratios": {
+    "valuation_ratios": {
+      "pe_ratio": 149.43001,
+      "pb_ratio": 11.335626,
+      "ps_ratio": 19.516792
+    },
+    "financial_health": {
+      "debt_to_equity": 6.005,
+      "current_ratio": 2.725,
+      "roe": 0.08063,
+      "roa": 0.03647
+    },
+    "growth_indicators": {
+      "eps_growth": 0.951,
+      "revenue_growth": null
+    },
+    "company_info": {
+      "market_cap": 730981924864,
+      "industry": "Semiconductors",
+      "sector": "Technology"
+    }
+  },
+  "historical_percentiles": {
+    "pe_percentile": null,
+    "pb_percentile": null,
+    "note": "Historical percentiles require extended market data"
+  }
+}

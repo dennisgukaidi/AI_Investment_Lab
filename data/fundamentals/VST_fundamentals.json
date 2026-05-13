@@ -1,0 +1,31 @@
+{
+  "ticker": "VST",
+  "collected_at": "2026-05-13T02:02:21.810071+00:00",
+  "current_ratios": {
+    "valuation_ratios": {
+      "pe_ratio": 24.5602,
+      "pb_ratio": 18.943634,
+      "ps_ratio": 2.5467722
+    },
+    "financial_health": {
+      "debt_to_equity": 355.187,
+      "current_ratio": 0.896,
+      "roe": 0.42898,
+      "roa": 0.06022
+    },
+    "growth_indicators": {
+      "eps_growth": null,
+      "revenue_growth": null
+    },
+    "company_info": {
+      "market_cap": 49521987584,
+      "industry": "Utilities - Independent Power Producers",
+      "sector": "Utilities"
+    }
+  },
+  "historical_percentiles": {
+    "pe_percentile": null,
+    "pb_percentile": null,
+    "note": "Historical percentiles require extended market data"
+  }
+}

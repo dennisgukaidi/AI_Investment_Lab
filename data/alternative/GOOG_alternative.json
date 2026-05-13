@@ -1,6 +1,6 @@
 {
-  "ticker": "TSLA",
-  "collected_at": "2026-05-13T02:02:38.872256+00:00",
+  "ticker": "GOOG",
+  "collected_at": "2026-05-13T02:02:33.407362+00:00",
   "google_trends": {
     "error": "The request failed: Google returned a response with code 429"
   },
@@ -10,24 +10,24 @@
       "mention_count": 0,
       "top_posts": [],
       "note": "Reddit sentiment analysis requires API configuration",
-      "last_updated": "2026-05-13T02:02:38.871743+00:00"
+      "last_updated": "2026-05-13T02:02:33.406929+00:00"
     },
     "twitter": {
       "sentiment_score": 0.0,
       "tweet_count": 0,
       "positive_ratio": 0.0,
       "note": "Twitter sentiment analysis requires API configuration",
-      "last_updated": "2026-05-13T02:02:38.871757+00:00"
+      "last_updated": "2026-05-13T02:02:33.406941+00:00"
     }
   },
   "news_sentiment_aggregate": {
-    "average_sentiment": 0.028,
+    "average_sentiment": 0.036,
     "sentiment_category": "neutral",
-    "news_count": 31,
+    "news_count": 29,
     "sentiment_distribution": {
       "positive": 3,
       "negative": 0,
-      "neutral": 28
+      "neutral": 26
     }
   }
 }

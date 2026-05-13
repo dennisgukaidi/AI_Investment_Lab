@@ -1,0 +1,31 @@
+{
+  "ticker": "AVGO",
+  "collected_at": "2026-05-13T02:02:08.755399+00:00",
+  "current_ratios": {
+    "valuation_ratios": {
+      "pe_ratio": 81.575874,
+      "pb_ratio": 24.86214,
+      "ps_ratio": 29.074228
+    },
+    "financial_health": {
+      "debt_to_equity": 82.704,
+      "current_ratio": 1.902,
+      "roe": 0.33370999,
+      "roa": 0.10663
+    },
+    "growth_indicators": {
+      "eps_growth": 0.335,
+      "revenue_growth": null
+    },
+    "company_info": {
+      "market_cap": 1985246396416,
+      "industry": "Semiconductors",
+      "sector": "Technology"
+    }
+  },
+  "historical_percentiles": {
+    "pe_percentile": null,
+    "pb_percentile": null,
+    "note": "Historical percentiles require extended market data"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "ticker": "AAPL",
+  "collected_at": "2026-05-13T02:01:49.846079+00:00",
+  "current_ratios": {
+    "valuation_ratios": {
+      "pe_ratio": 35.733334,
+      "pb_ratio": 40.606056,
+      "ps_ratio": 9.591115
+    },
+    "financial_health": {
+      "debt_to_equity": 79.548,
+      "current_ratio": 1.07,
+      "roe": 1.4147099,
+      "roa": 0.26229
+    },
+    "growth_indicators": {
+      "eps_growth": 0.194,
+      "revenue_growth": null
+    },
+    "company_info": {
+      "market_cap": 4329832448000,
+      "industry": "Consumer Electronics",
+      "sector": "Technology"
+    }
+  },
+  "historical_percentiles": {
+    "pe_percentile": null,
+    "pb_percentile": null,
+    "note": "Historical percentiles require extended market data"
+  }
+}

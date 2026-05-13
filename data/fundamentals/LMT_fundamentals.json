@@ -1,0 +1,31 @@
+{
+  "ticker": "LMT",
+  "collected_at": "2026-05-13T02:02:18.735495+00:00",
+  "current_ratios": {
+    "valuation_ratios": {
+      "pe_ratio": 25.254484,
+      "pb_ratio": 16.000736,
+      "ps_ratio": 1.5993881
+    },
+    "financial_health": {
+      "debt_to_equity": 276.365,
+      "current_ratio": 1.135,
+      "roe": 0.6764,
+      "roa": 0.07226
+    },
+    "growth_indicators": {
+      "eps_growth": -0.131,
+      "revenue_growth": null
+    },
+    "company_info": {
+      "market_cap": 120123645952,
+      "industry": "Aerospace & Defense",
+      "sector": "Industrials"
+    }
+  },
+  "historical_percentiles": {
+    "pe_percentile": null,
+    "pb_percentile": null,
+    "note": "Historical percentiles require extended market data"
+  }
+}

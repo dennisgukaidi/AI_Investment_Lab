@@ -219,13 +219,13 @@ def main(ticker: str = "TSLA") -> None:
     data = collect_alternative_data(ticker)
     output_path = save_alternative_data(data, ticker)
     
-    print(f"✅ Alternative data saved to {output_path}")
+    print(f"[OK] Alternative data saved to {output_path}")
     
     # 显示摘要
     trends = data.get("google_trends", {})
     news_sent = data.get("news_sentiment_aggregate", {})
     
-    print("\n📊 替代数据摘要:")
+    print("\n[SUMMARY] 替代数据摘要:")
     if "error" not in trends:
         print(f"  Google Trends: {trends.get('latest_search_volume', 'N/A')} (趋势: {trends.get('trend_direction', 'N/A')})")
     

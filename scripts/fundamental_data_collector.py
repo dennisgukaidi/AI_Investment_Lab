@@ -139,7 +139,7 @@ def main(ticker: str = "TSLA") -> None:
     data = collect_fundamental_data(ticker)
     output_path = save_fundamental_data(data, ticker)
     
-    print(f"✅ Fundamental data saved to {output_path}")
+    print(f"[OK] Fundamental data saved to {output_path}")
 
 
 if __name__ == "__main__":

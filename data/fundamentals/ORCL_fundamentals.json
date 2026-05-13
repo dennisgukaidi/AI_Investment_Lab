@@ -1,0 +1,31 @@
+{
+  "ticker": "ORCL",
+  "collected_at": "2026-05-13T02:02:05.243532+00:00",
+  "current_ratios": {
+    "valuation_ratios": {
+      "pe_ratio": 33.54219,
+      "pb_ratio": 16.014915,
+      "ps_ratio": 8.385849
+    },
+    "financial_health": {
+      "debt_to_equity": 415.265,
+      "current_ratio": 1.347,
+      "roe": 0.57572,
+      "roa": 0.06335
+    },
+    "growth_indicators": {
+      "eps_growth": 0.267,
+      "revenue_growth": null
+    },
+    "company_info": {
+      "market_cap": 537331695616,
+      "industry": "Software - Infrastructure",
+      "sector": "Technology"
+    }
+  },
+  "historical_percentiles": {
+    "pe_percentile": null,
+    "pb_percentile": null,
+    "note": "Historical percentiles require extended market data"
+  }
+}

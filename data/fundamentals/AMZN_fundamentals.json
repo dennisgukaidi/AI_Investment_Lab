@@ -1,25 +1,25 @@
 {
-  "ticker": "TSLA",
-  "collected_at": "2026-05-13T02:01:57.757265+00:00",
+  "ticker": "AMZN",
+  "collected_at": "2026-05-13T02:01:54.725124+00:00",
   "current_ratios": {
     "valuation_ratios": {
-      "pe_ratio": 405.09344,
-      "pb_ratio": 19.79495,
-      "ps_ratio": 16.63195
+      "pe_ratio": 31.83473,
+      "pb_ratio": 6.468742,
+      "ps_ratio": 3.8496869
     },
     "financial_health": {
-      "debt_to_equity": 18.738,
-      "current_ratio": 2.043,
-      "roe": 0.04901,
-      "roa": 0.022330001
+      "debt_to_equity": 53.3,
+      "current_ratio": 1.177,
+      "roe": 0.24285,
+      "roa": 0.06845
     },
     "growth_indicators": {
-      "eps_growth": 0.166,
+      "eps_growth": 0.767,
       "revenue_growth": null
     },
     "company_info": {
-      "market_cap": 1627918565376,
-      "industry": "Auto Manufacturers",
+      "market_cap": 2859454955520,
+      "industry": "Internet Retail",
       "sector": "Consumer Cyclical"
     }
   },

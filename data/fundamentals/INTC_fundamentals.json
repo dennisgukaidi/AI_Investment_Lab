@@ -1,0 +1,31 @@
+{
+  "ticker": "INTC",
+  "collected_at": "2026-05-13T02:02:13.434030+00:00",
+  "current_ratios": {
+    "valuation_ratios": {
+      "pe_ratio": null,
+      "pb_ratio": 5.2704945,
+      "ps_ratio": 11.275149
+    },
+    "financial_health": {
+      "debt_to_equity": 36.028,
+      "current_ratio": 2.312,
+      "roe": -0.02911,
+      "roa": 0.0063099996
+    },
+    "growth_indicators": {
+      "eps_growth": null,
+      "revenue_growth": null
+    },
+    "company_info": {
+      "market_cap": 606185848832,
+      "industry": "Semiconductors",
+      "sector": "Technology"
+    }
+  },
+  "historical_percentiles": {
+    "pe_percentile": null,
+    "pb_percentile": null,
+    "note": "Historical percentiles require extended market data"
+  }
+}
