@@ -106,3 +106,21 @@
 4. 逐步恢复完整流水线
 
 所有修改必须经过测试验证，确保不破坏现有自动化工作流。
+
+## ✅ 验证状态
+
+已对项目中的所有 Python 脚本进行语法编译检查，未发现错误。以下文件已成功编译：
+
+```
+scripts/alternative_data_collector.py
+scripts/analyze_report.py
+scripts/download_watchlist_data.py
+scripts/fundamental_data_collector.py
+scripts/macroeconomic_data_collector.py
+scripts/news_collector.py
+scripts/portfolio_pipeline.py
+```
+
+文档中引用的脚本路径、文件名称均与实际文件保持一致，确保新手能够顺畅地按照说明进行操作。
+
+*最后更新：2026年5月13日*

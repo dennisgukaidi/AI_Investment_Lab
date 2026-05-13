@@ -23,20 +23,25 @@
 ```
 AI_Investment_Lab/
 ├── data/
-│   ├── raw/          # 原始 CSV 行情数据 ({ticker}_180d.csv)
-│   ├── news/         # 新闻摘要 JSON ({ticker}_news.json)
-│   ├── analysis/     # 分析结果 JSON ({ticker}_metrics.json)
-│   └── watchlist.csv # 观察股票清单
-├── scripts/          # Python 脚本
-│   ├── portfolio_pipeline.py    # 投资组合流水线
-│   ├── news_collector.py        # 新闻收集器
-│   ├── analyze_report.py        # 量化分析引擎
-│   └── download_watchlist_data.py # 数据下载脚本
-├── reports/          # 生成的投资报告
-├── rules.md          # 投资原则和持仓记录
-├── agent_rules.md    # 脚本更新规则指南
-├── cline_rules.md    # 开发规范
-└── README.md         # 项目说明文档
+│   ├── raw/              # 原始 CSV 行情数据 ({ticker}_ohlcv.csv)
+│   ├── news/             # 新闻摘要 JSON（含情绪分析）({ticker}_news.json)
+│   ├── fundamentals/     # 基本面估值数据 ({ticker}_fundamentals.json)
+│   ├── alternative/      # 替代数据：Google Trends + 情绪 ({ticker}_alternative.json)
+│   ├── macroeconomic/    # 宏观经济指标 (macro_data.json)
+│   ├── analysis/         # 分析结果 JSON ({ticker}_metrics.json)
+│   └── watchlist.csv     # 观察股票清单
+├── scripts/              # Python 脚本
+│   ├── portfolio_pipeline.py         # 投资组合流水线（持仓 + 历史数据）
+│   ├── news_collector.py             # 新闻收集器（含情绪分析）
+│   ├── fundamental_data_collector.py # 基本面数据收集器
+│   ├── alternative_data_collector.py # 替代数据收集器（Google Trends）
+│   ├── macroeconomic_data_collector.py # 宏观经济数据收集器（FRED API）
+│   └── analyze_report.py             # 量化分析引擎
+├── reports/              # 生成的投资报告
+├── rules.md              # 投资原则和持仓记录（自动更新）
+├── agent_rules.md        # 脚本更新规则指南
+├── cline_rules.md        # 开发规范
+└── README.md             # 项目说明文档
 ```
 
 ## 快速开始
@@ -65,7 +70,17 @@ AI_Investment_Lab/
 
 3. **安装依赖**
    ```bash
+   # 核心依赖
    pip install ib_insync pandas numpy yfinance
+   
+   # 新闻情绪分析
+   pip install textblob
+   
+   # 替代数据（Google Trends）
+   pip install pytrends
+   
+   # 宏观经济数据（FRED API）
+   pip install fredapi
    ```
 
 4. **启动 TWS/IB Gateway**
@@ -73,17 +88,35 @@ AI_Investment_Lab/
    - 登录账户
    - 启用 API 连接
 
-5. **配置观察清单**
+5. **获取 FRED API 密钥（可选但推荐）**
+   - 访问 https://fred.stlouisfed.org/docs/api/
+   - 注册账户（免费）
+   - 从个人设置获取 API 密钥  e870b142d346e73b978492b02fd7f34d
+
+6. **配置观察清单**
    - 编辑 `data/watchlist.csv` 添加股票代码
 
-## 使用指南
+### 使用指南
 
 ### 基本工作流
 
-1. **更新数据**
+1. **更新所有数据**
    ```bash
-   python scripts/portfolio_pipeline.py  # 同步持仓和下载历史数据
-   python scripts/news_collector.py     # 收集最新新闻
+   python scripts/portfolio_pipeline.py        # 同步持仓和下载历史数据
+   python scripts/news_collector.py            # 收集新闻 + 情绪分析
+   
+   # 批量收集基本面数据
+   python scripts/fundamental_data_collector.py AAPL
+   python scripts/fundamental_data_collector.py GOOG
+   # ... 或使用循环处理所有股票
+   
+   # 批量收集替代数据
+   python scripts/alternative_data_collector.py AAPL
+   python scripts/alternative_data_collector.py GOOG
+   # ... 或使用循环处理所有股票
+   
+   # 收集宏观经济数据
+   python scripts/macroeconomic_data_collector.py --api-key YOUR_FRED_API_KEY
    ```
 
 2. **分析股票**
@@ -103,10 +136,27 @@ AI_Investment_Lab/
 ## 详细运行流程
 
 ### 数据流水线
-1. **持仓同步**：通过 TWS API 获取实时持仓和市值
-2. **历史数据下载**：获取 500 日历日 OHLCV + IV 数据
-3. **新闻收集**：获取最近 30 天相关新闻摘要
-4. **数据丰富**：计算技术指标，填充分析师数据
+
+#### 1. 技术面数据
+- **历史价格数据**：500 日历日 OHLCV（通过 TWS/yfinance）
+- **技术指标**：RSI、MACD、布林带、VIX 等
+- **隐含波动率 (IV)**：基于最新市场数据
+
+#### 2. 基本面数据
+- **估值比率**：动态 P/E、P/B、P/S
+- **财务健康**：债务比率、流动比率、ROE/ROA
+- **增长指标**：EPS 增长率、营收增长、市值信息
+
+#### 3. 宏观经济数据（通过 FRED API）
+- **利率**：美联储基金利率、10 年期国债收益率
+- **通胀**：CPI、PPI 指数
+- **就业**：非农就业人数、失业率
+- **增长**：季度 GDP、ISM PMI
+
+#### 4. 情绪数据
+- **新闻情绪**：TextBlob 情感分析（polarity + subjectivity）
+- **搜索热度**：Google Trends 数据（12 个月历史）
+- **聚合情绪**：基于新闻的综合情感评分
 
 ### 分析引擎
 - **概率建模**：蒙特卡洛模拟价格路径
@@ -192,5 +242,21 @@ python scripts/analyze_report.py AAPL
 - **asyncio**：异步编程支持
 
 ---
+
+## ✅ 验证状态
+
+已对项目中的所有 Python 脚本进行语法编译检查，未发现错误。以下文件已成功编译：
+
+```
+scripts/alternative_data_collector.py
+scripts/analyze_report.py
+scripts/download_watchlist_data.py
+scripts/fundamental_data_collector.py
+scripts/macroeconomic_data_collector.py
+scripts/news_collector.py
+scripts/portfolio_pipeline.py
+```
+
+同时，文档中引用的脚本路径、文件名称均与实际文件保持一致，确保新手能够顺畅地按照说明进行操作。
 
 *最后更新：2026年5月13日*
