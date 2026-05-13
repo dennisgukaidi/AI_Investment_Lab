@@ -31,8 +31,9 @@ from typing import List, Dict, Any, Set
 
 try:
     import yfinance as yf
-except ImportError:  # pragma: no cover
-    sys.stderr.write("yfinance is required. Install with 'pip install yfinance'\n")
+    from textblob import TextBlob
+except ImportError as e:  # pragma: no cover
+    sys.stderr.write(f"Required packages missing: {e}. Install with 'pip install yfinance textblob'\n")
     sys.exit(1)
 
 # ---------------------------------------------------------------------------
@@ -143,6 +144,22 @@ def filter_by_date(news: List[Dict[str, Any]], days: int) -> List[Dict[str, Any]
     return filtered
 
 
+def analyze_sentiment(text: str) -> Dict[str, float]:
+    """使用TextBlob进行情感分析，返回polarity和subjectivity分数。
+    
+    polarity: -1(负面) 到 +1(正面)
+    subjectivity: 0(客观) 到 1(主观)
+    """
+    if not text or not text.strip():
+        return {"polarity": 0.0, "subjectivity": 0.0}
+    
+    blob = TextBlob(text)
+    return {
+        "polarity": round(blob.sentiment.polarity, 3),
+        "subjectivity": round(blob.sentiment.subjectivity, 3)
+    }
+
+
 def fetch_news_for_ticker(ticker: str) -> List[Dict[str, Any]]:
     """Fetch news using yfinance and normalise the fields.
 
@@ -181,6 +198,10 @@ def fetch_news_for_ticker(ticker: str) -> List[Dict[str, Any]]:
             or content.get("clickThroughUrl", {}).get("url")
             or ""
         )
+        # 合并标题和摘要进行情感分析
+        full_text = f"{title} {summary}"
+        sentiment = analyze_sentiment(full_text)
+        
         result.append(
             {
                 "title": title,
@@ -188,6 +209,8 @@ def fetch_news_for_ticker(ticker: str) -> List[Dict[str, Any]]:
                 "publisher": publisher,
                 "summary": summary,
                 "link": link,
+                "sentiment_polarity": sentiment["polarity"],
+                "sentiment_subjectivity": sentiment["subjectivity"],
             }
         )
     return result

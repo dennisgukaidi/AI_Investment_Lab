@@ -4,70 +4,90 @@
     "published": "2026-05-12T21:02:50Z",
     "publisher": "Insider Monkey",
     "summary": "We just covered Grok’s Latest Stock Portfolio in 2026: Elon Musk’s AI Chatbot’s Top 10 Stock Picks. Lockheed Martin Corporation (NYSE:LMT) ranks #6 (see Grok’s Latest Stock Portfolio in 2026: AI Assistant’s Top 5 Stock Picks). Number of Hedge Funds: 59 Wars raging around the world, including the Russia-Ukraine war and the conflict in the […]",
-    "link": "https://finance.yahoo.com/news/grok-ai-chatbot-says-buy-210250825.html"
+    "link": "https://finance.yahoo.com/news/grok-ai-chatbot-says-buy-210250825.html",
+    "sentiment_polarity": 0.5,
+    "sentiment_subjectivity": 0.7
   },
   {
     "title": "Should Ford’s Profit Beat, Dividend And New IR Chief Reshape The Ford+ Story For (F) Investors?",
     "published": "2026-05-12T20:17:24Z",
     "publisher": "Simply Wall St.",
     "summary": "Ford Motor Company recently reported first-quarter 2026 results showing revenue of US$43,253 million and net income of US$2,548 million, while also declaring a US$0.15 second-quarter dividend and appointing former Lockheed Martin executive Maria Ricciardone as its new chief investor relations officer effective May 1, 2026. Together with government-backed retooling of its Oakville plant toward F-series truck production and an intensified focus on profitable software and services, these moves...",
-    "link": "https://finance.yahoo.com/news/ford-profit-beat-dividend-ir-201724869.html"
+    "link": "https://finance.yahoo.com/news/ford-profit-beat-dividend-ir-201724869.html",
+    "sentiment_polarity": 0.145,
+    "sentiment_subjectivity": 0.327
   },
   {
     "title": "How The Lockheed Martin (LMT) Investment Story Is Shifting With New Targets And Programs",
     "published": "2026-05-12T20:17:09Z",
     "publisher": "Simply Wall St.",
     "summary": "The average fair value estimate for Lockheed Martin has moved from US$652.53 to US$637.60, a shift of about US$14.93 that has caught the attention of many investors. This adjustment lines up with a mixed set of analyst calls, where some target increases reflect confidence in earnings power and cash generation, while other cuts lean on more conservative assumptions and a new neutral stance. As you read on, you will see how these changing targets fit into the broader story and what to watch as...",
-    "link": "https://finance.yahoo.com/news/lockheed-martin-lmt-investment-story-201709763.html"
+    "link": "https://finance.yahoo.com/news/lockheed-martin-lmt-investment-story-201709763.html",
+    "sentiment_polarity": 0.233,
+    "sentiment_subjectivity": 0.47
   },
   {
     "title": "Western Digital and Dream Finders Homes have been highlighted as Zacks Bull and Bear of the Day",
     "published": "2026-05-12T12:51:00Z",
     "publisher": "Zacks",
     "summary": "Western Digital and Dream Finders Homes have been highlighted as Zacks Bull and Bear of the Day",
-    "link": "https://finance.yahoo.com/markets/stocks/articles/western-digital-dream-finders-homes-125100128.html"
+    "link": "https://finance.yahoo.com/markets/stocks/articles/western-digital-dream-finders-homes-125100128.html",
+    "sentiment_polarity": 0.0,
+    "sentiment_subjectivity": 0.0
   },
   {
     "title": "Lockheed Martin Stock Rises 10.8% in 6 Months: More Upside Ahead?",
     "published": "2026-05-11T18:25:00Z",
     "publisher": "Zacks",
     "summary": "LMT gains from a $186.4B backlog, F-35 demand and global defense deals, but program delays and high debt may keep new investors cautious.",
-    "link": "https://finance.yahoo.com/markets/stocks/articles/lockheed-martin-stock-rises-10-182500457.html"
+    "link": "https://finance.yahoo.com/markets/stocks/articles/lockheed-martin-stock-rises-10-182500457.html",
+    "sentiment_polarity": 0.199,
+    "sentiment_subjectivity": 0.374
   },
   {
     "title": "Boeing Stock Surges 6.9% in a Month: Time to Hold or Book Profits?",
     "published": "2026-05-11T18:23:00Z",
     "publisher": "Zacks",
     "summary": "BA gains on strong aircraft orders, defense backlog growth and aviation services demand, though trade tensions and cancellations remain risks.",
-    "link": "https://finance.yahoo.com/markets/stocks/articles/boeing-stock-surges-6-9-182300004.html"
+    "link": "https://finance.yahoo.com/markets/stocks/articles/boeing-stock-surges-6-9-182300004.html",
+    "sentiment_polarity": 0.433,
+    "sentiment_subjectivity": 0.733
   },
   {
     "title": "Embraer aims to sell C-390 military plane to Colombia, Chile, CEO says",
     "published": "2026-05-11T17:56:20Z",
     "publisher": "Reuters",
     "summary": "By Gabriel Araujo SAO PAULO, May 11 (Reuters) - Brazilian planemaker Embraer is in talks with Colombia and Chile for potential orders of its C-390 military transport aircraft, as it steps up output to",
-    "link": "https://finance.yahoo.com/sectors/technology/articles/embraer-aims-sell-c-390-175620310.html"
+    "link": "https://finance.yahoo.com/sectors/technology/articles/embraer-aims-sell-c-390-175620310.html",
+    "sentiment_polarity": -0.067,
+    "sentiment_subjectivity": 0.4
   },
   {
     "title": "This “UFO” ETF Is Among the Few Real Ways To Invest In The Space Economy",
     "published": "2026-05-11T12:47:16Z",
     "publisher": "24/7 Wall St.",
     "summary": "If you have ever tried to buy “space exposure” through an ETF, you have probably noticed the same trick. Most space funds quietly fill the bucket with Boeing (NYSE:BA), Lockheed Martin (NYSE:LMT), and Honeywell (NASDAQ:HON), then call it a day. You end up with aerospace primes when what you wanted was the companies actually launching rockets and beaming ... This “UFO” ETF Is Among the Few Real Ways To Invest In The Space Economy",
-    "link": "https://247wallst.com/investing/2026/05/11/this-ufo-etf-is-among-the-few-real-ways-to-invest-in-the-space-economy/"
+    "link": "https://247wallst.com/investing/2026/05/11/this-ufo-etf-is-among-the-few-real-ways-to-invest-in-the-space-economy/",
+    "sentiment_polarity": 0.062,
+    "sentiment_subjectivity": 0.232
   },
   {
     "title": "Trump Knows AI Matters More to Markets Than Iran. His China Trip Is Crucial.",
     "published": "2026-05-11T10:33:00Z",
     "publisher": "Barrons.com",
     "summary": "President rejects Iran’s response, Warsh’s favored inflation measure, airlines are raising bag fees, and more news to start your day.",
-    "link": "https://www.barrons.com/articles/trump-china-ai-stock-market-things-to-know-today-4f546bc2?siteid=yhoof2&yptr=yahoo"
+    "link": "https://www.barrons.com/articles/trump-china-ai-stock-market-things-to-know-today-4f546bc2?siteid=yhoof2&yptr=yahoo",
+    "sentiment_polarity": 0.45,
+    "sentiment_subjectivity": 0.725
   },
   {
     "title": "Space Stock ETFs Are Suddenly Hot. Only 1 Owns SpaceX.",
     "published": "2026-05-11T09:33:00Z",
     "publisher": "Barrons.com",
     "summary": "There are a bunch of space-themed ETFs, a mix of actively managed and index funds. But just one has access to SpaceX ahead of its eagerly awaited debut.",
-    "link": "https://www.barrons.com/articles/space-stock-etfs-funds-spacex-ipo-70011d12?siteid=yhoof2&yptr=yahoo"
+    "link": "https://www.barrons.com/articles/space-stock-etfs-funds-spacex-ipo-70011d12?siteid=yhoof2&yptr=yahoo",
+    "sentiment_polarity": 0.039,
+    "sentiment_subjectivity": 0.817
   },
   {
     "title": "A $185,000 Portfolio That Covers Your Groceries, Utilities, and Phone Bill Every Month",

@@ -4,63 +4,81 @@
     "published": "2026-05-12T21:55:00Z",
     "publisher": "Motley Fool",
     "summary": "The hyperscalers may not be profiting yet from their massive infrastructure spending, but the hardware companies are.",
-    "link": "https://www.fool.com/investing/2026/05/12/4-brilliant-chip-stocks-to-capitalize-on-the-artif/"
+    "link": "https://www.fool.com/investing/2026/05/12/4-brilliant-chip-stocks-to-capitalize-on-the-artif/",
+    "sentiment_polarity": 0.1,
+    "sentiment_subjectivity": 1.0
   },
   {
     "title": "EPIC AI Chip R&D Alliance Might Change The Case For Investing In Applied Materials (AMAT)",
     "published": "2026-05-12T21:23:43Z",
     "publisher": "Simply Wall St.",
     "summary": "Earlier this week, Applied Materials announced that Arizona State University, Rensselaer Polytechnic Institute, Stanford University and TSMC will collaborate at its US$5.00 billion EPIC Center in Silicon Valley to accelerate materials, equipment and process technologies for next-generation, energy-efficient AI chips. The EPIC Center, which Applied describes as the largest-ever U.S. investment in advanced semiconductor equipment R&D, positions the company as a central hub linking leading...",
-    "link": "https://finance.yahoo.com/news/epic-ai-chip-r-d-212343971.html"
+    "link": "https://finance.yahoo.com/news/epic-ai-chip-r-d-212343971.html",
+    "sentiment_polarity": 0.062,
+    "sentiment_subjectivity": 0.344
   },
   {
     "title": "TSM Stock Up 33% YTD Amid Valuation Risk: Buy, Hold or Sell?",
     "published": "2026-05-12T19:00:00Z",
     "publisher": "Zacks",
     "summary": "Taiwan Semiconductor jumps 33% YTD as AI demand and advanced-node expansion fuel growth, but valuation and margin pressures may limit upside.",
-    "link": "https://finance.yahoo.com/news/tsm-stock-33-ytd-amid-190000120.html"
+    "link": "https://finance.yahoo.com/news/tsm-stock-33-ytd-amid-190000120.html",
+    "sentiment_polarity": 0.0,
+    "sentiment_subjectivity": 0.0
   },
   {
     "title": "First Eagle Investment Reduces Stake in Taiwan Semiconductor Manufacturing Co Ltd by 34.29%",
     "published": "2026-05-12T18:00:20Z",
     "publisher": "GuruFocus.com",
     "summary": "Insightful Moves in First Eagle Investment (Trades, Portfolio)'s First Quarter 2026 13F Filing",
-    "link": "https://finance.yahoo.com/markets/stocks/articles/first-eagle-investment-reduces-stake-180020739.html"
+    "link": "https://finance.yahoo.com/markets/stocks/articles/first-eagle-investment-reduces-stake-180020739.html",
+    "sentiment_polarity": 0.25,
+    "sentiment_subjectivity": 0.333
   },
   {
     "title": "Here’s What AMD’s 2nm Deal With Samsung Could Mean for Taiwan Semi Stock",
     "published": "2026-05-12T17:00:02Z",
     "publisher": "Barchart",
     "summary": "What looks like a short-term setback for TSMC may prove far more damaging in the long run. Here's what to know about TSM stock today.",
-    "link": "https://www.barchart.com/story/news/1882434/heres-what-amds-2nm-deal-with-samsung-could-mean-for-taiwan-semi-stock"
+    "link": "https://www.barchart.com/story/news/1882434/heres-what-amds-2nm-deal-with-samsung-could-mean-for-taiwan-semi-stock",
+    "sentiment_polarity": 0.059,
+    "sentiment_subjectivity": 0.647
   },
   {
     "title": "Applied Materials Poised for Slight Quarterly Beat, Strong Outlook, RBC Says",
     "published": "2026-05-12T16:53:12Z",
     "publisher": "MT Newswires",
     "summary": "Applied Materials (AMAT) is expected to post fiscal second-quarter results slightly above Wall Stree",
-    "link": "https://finance.yahoo.com/markets/stocks/articles/applied-materials-poised-slight-quarterly-165312075.html"
+    "link": "https://finance.yahoo.com/markets/stocks/articles/applied-materials-poised-slight-quarterly-165312075.html",
+    "sentiment_polarity": 0.042,
+    "sentiment_subjectivity": 0.35
   },
   {
     "title": "Prediction: Taiwan Semiconductor Could Be the Smartest AI Bet in the Market",
     "published": "2026-05-12T15:48:43Z",
     "publisher": "24/7 Wall St.",
     "summary": "Let me cut to the chase. Taiwan Semiconductor Manufacturing (NYSE:TSM) trades at $404.54, and our 24/7 Wall St. price target for TSMC is $473.33 over the next 12 months. That implies 17% upside, and our recommendation is buy with high confidence at 90%. 24/7 Wall St. Price Target Summary Metric Value Current Price $404.54 24/7 ... Prediction: Taiwan Semiconductor Could Be the Smartest AI Bet in the Market",
-    "link": "https://247wallst.com/investing/2026/05/12/prediction-taiwan-semiconductor-could-be-the-smartest-ai-bet-in-the-market/"
+    "link": "https://247wallst.com/investing/2026/05/12/prediction-taiwan-semiconductor-could-be-the-smartest-ai-bet-in-the-market/",
+    "sentiment_polarity": 0.053,
+    "sentiment_subjectivity": 0.313
   },
   {
     "title": "Mizuho Hikes Intel Price Target to $124 as Agentic AI Server Demand Validates the Turnaround",
     "published": "2026-05-12T15:47:20Z",
     "publisher": "24/7 Wall St.",
     "summary": "Mizuho raised its price target on Intel (NASDAQ:INTC) stock to $124 from $100 on May 12, keeping a Neutral rating as the firm cited agentic AI continuing to drive server demand. The revision is part of a broader semiconductor and AI infrastructure estimate hike across multiple names. For long-term investors, the move signals that even cautious ... Mizuho Hikes Intel Price Target to $124 as Agentic AI Server Demand Validates the Turnaround",
-    "link": "https://247wallst.com/investing/2026/05/12/mizuho-hikes-intel-price-target-to-124-as-agentic-ai-server-demand-validates-the-turnaround/"
+    "link": "https://247wallst.com/investing/2026/05/12/mizuho-hikes-intel-price-target-to-124-as-agentic-ai-server-demand-validates-the-turnaround/",
+    "sentiment_polarity": -0.1,
+    "sentiment_subjectivity": 0.2
   },
   {
     "title": "Nvidia Defies the Decline in Chip Stocks",
     "published": "2026-05-12T14:17:05Z",
     "publisher": "Barrons.com",
     "summary": "Stocks of most chip companies were getting hit, besides Nvidia. Texas Instruments, Samsung Electronics, ASML stocks were all down more than 2%, while shares of Taiwan Semiconductor Manufacturing were down 1.",
-    "link": "https://www.barrons.com/livecoverage/stock-market-news-today-051226/card/nvidia-defies-the-decline-in-chip-stocks-T0H16UNOFZPZae7BwCRm?siteid=yhoof2&yptr=yahoo"
+    "link": "https://www.barrons.com/livecoverage/stock-market-news-today-051226/card/nvidia-defies-the-decline-in-chip-stocks-T0H16UNOFZPZae7BwCRm?siteid=yhoof2&yptr=yahoo",
+    "sentiment_polarity": 0.172,
+    "sentiment_subjectivity": 0.394
   },
   {
     "title": "Investors Heavily Search Taiwan Semiconductor Manufacturing Company Ltd. (TSM): Here is What You Need to Know",
@@ -74,7 +92,9 @@
     "published": "2026-05-12T10:30:00Z",
     "publisher": "Yahoo Finance Video",
     "summary": "Benchmark Company managing director and senior semiconductor research analyst Cody Acree joins Yahoo Finance to explain where AMD (AMD) stands in relation to Nvidia (NVDA), and what to expect from Nvidia's upcoming earnings results.",
-    "link": "https://finance.yahoo.com/video/why-amds-ai-roadmap-very-103000112.html"
+    "link": "https://finance.yahoo.com/video/why-amds-ai-roadmap-very-103000112.html",
+    "sentiment_polarity": 0.2,
+    "sentiment_subjectivity": 0.3
   },
   {
     "title": "Applied Materials makes unexpected AI move as demand explodes",

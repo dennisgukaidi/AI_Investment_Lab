@@ -1,10 +1,21 @@
 [
   {
+    "title": "Dow Jones Futures: AI Stocks Pare Big Losses; How To Handle Sandisk, Micron, Intel",
+    "published": "2026-05-13T01:39:51Z",
+    "publisher": "Investor's Business Daily",
+    "summary": "The Nasdaq fell as AI and chip stocks retreated, but they came off lows. Investors need sell rules for big AI winners such as Sandisk, Micron and Intel.",
+    "link": "https://www.investors.com/market-trend/stock-market-today/dow-jones-futures-ai-stocks-sandisk-micron-intel/?src=A00220&yptr=yahoo",
+    "sentiment_polarity": 0.0,
+    "sentiment_subjectivity": 0.233
+  },
+  {
     "title": "Is Toast Stock a Buy on the Dip?",
     "published": "2026-05-13T01:25:00Z",
     "publisher": "Motley Fool",
     "summary": "Toast shares are down despite its continued strong operational performance.",
-    "link": "https://www.fool.com/investing/2026/05/12/is-toast-stock-a-buy-on-the-dip/"
+    "link": "https://www.fool.com/investing/2026/05/12/is-toast-stock-a-buy-on-the-dip/",
+    "sentiment_polarity": 0.139,
+    "sentiment_subjectivity": 0.511
   },
   {
     "title": "Dow Jones Futures: AI Stocks Pare Big Losses; How To Handle Sandisk, Micron, Intel",
@@ -18,49 +29,63 @@
     "published": "2026-05-13T00:25:00Z",
     "publisher": "Motley Fool",
     "summary": "Sales are still declining.",
-    "link": "https://www.fool.com/investing/2026/05/12/is-beyond-meat-beyond-saving/"
+    "link": "https://www.fool.com/investing/2026/05/12/is-beyond-meat-beyond-saving/",
+    "sentiment_polarity": 0.0,
+    "sentiment_subjectivity": 0.0
   },
   {
     "title": "Review & Preview: Chips Down",
     "published": "2026-05-12T23:55:00Z",
     "publisher": "Barrons.com",
     "summary": "Chip stocks fell sharply after weeks of gains. The vibe shift pushed consumer staples and healthcare stocks higher.",
-    "link": "https://www.barrons.com/articles/review-preview-chips-down-ba2cccc9?siteid=yhoof2&yptr=yahoo"
+    "link": "https://www.barrons.com/articles/review-preview-chips-down-ba2cccc9?siteid=yhoof2&yptr=yahoo",
+    "sentiment_polarity": -0.01,
+    "sentiment_subjectivity": 0.513
   },
   {
     "title": "Why Si-Bone Stock Soared by Almost 20% on Tuesday",
     "published": "2026-05-12T23:36:49Z",
     "publisher": "Motley Fool",
     "summary": "It's off to a roaring start as far as the financial year is concerned.",
-    "link": "https://www.fool.com/investing/2026/05/12/why-si-bone-stock-soared-by-almost-20-on-tuesday/"
+    "link": "https://www.fool.com/investing/2026/05/12/why-si-bone-stock-soared-by-almost-20-on-tuesday/",
+    "sentiment_polarity": 0.05,
+    "sentiment_subjectivity": 0.5
   },
   {
     "title": "Chevron's CEO Just Said Physical Oil Shortages Are Starting. Here's What That Means for CVX Stock.",
     "published": "2026-05-12T23:20:00Z",
     "publisher": "Motley Fool",
     "summary": "The global economy is burning through its oil and refined products stockpiles.",
-    "link": "https://www.fool.com/investing/2026/05/12/chevrons-ceo-just-said-physical-oil-shortages-are/"
+    "link": "https://www.fool.com/investing/2026/05/12/chevrons-ceo-just-said-physical-oil-shortages-are/",
+    "sentiment_polarity": 0.0,
+    "sentiment_subjectivity": 0.081
   },
   {
     "title": "Cerebras IPO to land amid chipmaker mania on Wall Street",
     "published": "2026-05-12T22:40:03Z",
     "publisher": "TheStreet",
     "summary": "The U.S. might be facing a testy economic backdrop, with the Iran War, worries about oil rationing, and a return of inflation, but the market continues to soldier onward and upward. The market has clung onto one balloon in particular: chipmakers. From its March lows, the VanEck Semiconductor ETF ...",
-    "link": "https://www.thestreet.com/investing/stocks/cerebras-ipo-to-land-amid-chipmaker-mania-on-wall-street"
+    "link": "https://www.thestreet.com/investing/stocks/cerebras-ipo-to-land-amid-chipmaker-mania-on-wall-street",
+    "sentiment_polarity": 0.183,
+    "sentiment_subjectivity": 0.267
   },
   {
     "title": "SpaceX IPO: Here's What to Watch for Next (And It Could Be Crucial for Investors)",
     "published": "2026-05-12T22:30:00Z",
     "publisher": "Motley Fool",
     "summary": "Mark your calendars: A key event may be days away.",
-    "link": "https://www.fool.com/investing/2026/05/12/spacex-ipo-heres-what-to-watch-for-next/"
+    "link": "https://www.fool.com/investing/2026/05/12/spacex-ipo-heres-what-to-watch-for-next/",
+    "sentiment_polarity": 0.0,
+    "sentiment_subjectivity": 0.667
   },
   {
     "title": "Chip stocks in focus as AI trade evolves on 'insatiable' demand",
     "published": "2026-05-12T21:08:52Z",
     "publisher": "Yahoo Finance Video",
     "summary": "Yahoo Financed Tech Editor Dan Howley and Futurum CEO Daniel Newman join Asking for a Trend to discuss the chip trade and the AI trade.",
-    "link": "https://finance.yahoo.com/video/chip-stocks-in-focus-as-ai-trade-evolves-on-insatiable-demand-210852903.html"
+    "link": "https://finance.yahoo.com/video/chip-stocks-in-focus-as-ai-trade-evolves-on-insatiable-demand-210852903.html",
+    "sentiment_polarity": 0.0,
+    "sentiment_subjectivity": 0.0
   },
   {
     "title": "Stock Market Today: Dow, Nasdaq Sink On $100 Oil, Higher Inflation; Quantum Names Take A Fall (Live Coverage)",
@@ -130,7 +155,9 @@
     "published": "2026-05-12T10:30:00Z",
     "publisher": "Yahoo Finance Video",
     "summary": "Benchmark Company managing director and senior semiconductor research analyst Cody Acree joins Yahoo Finance to explain where AMD (AMD) stands in relation to Nvidia (NVDA), and what to expect from Nvidia's upcoming earnings results.",
-    "link": "https://finance.yahoo.com/video/why-amds-ai-roadmap-very-103000112.html"
+    "link": "https://finance.yahoo.com/video/why-amds-ai-roadmap-very-103000112.html",
+    "sentiment_polarity": 0.2,
+    "sentiment_subjectivity": 0.3
   },
   {
     "title": "These Are the 10 Largest Consumer Staples Stocks in May -- How to Pick the Top Investments",

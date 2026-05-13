@@ -4,69 +4,89 @@
     "published": "2026-05-10T02:13:14Z",
     "publisher": "Simply Wall St.",
     "summary": "If you are wondering whether Interactive Brokers Group is still attractively priced after its strong run, the valuation picture is more mixed than the share chart might suggest. The stock last closed at US$83.71, with returns of 5.3% over 7 days, 22.9% over 30 days, 24.5% year to date and 82.4% over the past year, as well as 348.6% over 3 years and 410.9% over 5 years. Recent price action has been in the spotlight as investors react to ongoing developments around market activity and trading...",
-    "link": "https://finance.yahoo.com/markets/stocks/articles/too-consider-interactive-brokers-group-021314985.html"
+    "link": "https://finance.yahoo.com/markets/stocks/articles/too-consider-interactive-brokers-group-021314985.html",
+    "sentiment_polarity": 0.118,
+    "sentiment_subjectivity": 0.385
   },
   {
     "title": "Traders Looking for Next Leg in Global Stocks Rally Bet on Asia",
     "published": "2026-05-09T22:00:00Z",
     "publisher": "Bloomberg",
     "summary": "(Bloomberg) -- As the focus moves away from the Iran war, investors and strategists alike are looking for the next leg up in equities. Many are turning to Asia. Most Read from BloombergIran Makes New Offer on Uranium in Response to US, WSJ SaysTrump Rejects New Iran Peace Offer as ‘Totally Unacceptable’Drone Hits Ship Near Qatar as US Awaits Iran Peace Plan ResponseJudge to Review Musk, SEC Settlement Deal in Twitter Stake CaseOnline Mob Fuels 6,000% Stock Rally in Obscure SpaceX RivalShares in",
-    "link": "https://finance.yahoo.com/markets/world-indices/articles/traders-looking-next-leg-global-220000207.html"
+    "link": "https://finance.yahoo.com/markets/world-indices/articles/traders-looking-next-leg-global-220000207.html",
+    "sentiment_polarity": 0.127,
+    "sentiment_subjectivity": 0.366
   },
   {
     "title": "Robinhood Is Down 30% in 2026 While Interactive Brokers Is Up 35%: Here’s Why",
     "published": "2026-05-07T13:48:19Z",
     "publisher": "24/7 Wall St.",
     "summary": "The brokerage sector is producing one of the widest divergences of 2026 so far. Robinhood Markets (NASDAQ:HOOD) is down 30% year to date (YTD), while Interactive Brokers Group (NASDAQ:IBKR) is up 36% YTD. That roughly 65-point spread heading into mid-May tells a revealing story about customer mix and revenue durability. HOOD stock closed at $79.05 ... Robinhood Is Down 30% in 2026 While Interactive Brokers Is Up 35%: Here’s Why",
-    "link": "https://247wallst.com/investing/2026/05/07/robinhood-is-down-30-in-2026-while-interactive-brokers-is-up-35-heres-why/"
+    "link": "https://247wallst.com/investing/2026/05/07/robinhood-is-down-30-in-2026-while-interactive-brokers-is-up-35-heres-why/",
+    "sentiment_polarity": -0.094,
+    "sentiment_subjectivity": 0.394
   },
   {
     "title": "US Retail Investors Get Direct Path to World-Beating Korea Rally",
     "published": "2026-05-07T02:32:22Z",
     "publisher": "Bloomberg",
     "summary": "(Bloomberg) -- South Korean stocks are set for a further boost as Interactive Brokers Group Inc. gives US retail investors direct access to the world’s hottest market.Most Read from BloombergUS Has Opened a Passage Through Hormuz, Central Command SaysDOJ Plans Intervention in Trump Supreme Court Carroll AppealUS Says Offensive Phase of Iran War Over as Ship Hit in StraitSony to Pay Almost $4 Billion for Bieber, Neil Young CatalogUS, Iran Weigh Potential Deal as Trump Seeks Way Out of War“Eligibl",
-    "link": "https://finance.yahoo.com/markets/world-indices/articles/us-retail-investors-direct-path-023222571.html"
+    "link": "https://finance.yahoo.com/markets/world-indices/articles/us-retail-investors-direct-path-023222571.html",
+    "sentiment_polarity": 0.05,
+    "sentiment_subjectivity": 0.492
   },
   {
     "title": "3 Companies Reporting Record Results This Earnings Season",
     "published": "2026-05-06T22:29:00Z",
     "publisher": "Zacks",
     "summary": "The 2026 Q1 earnings season continues to be one of positivity, with many notable companies - Newmont (NEM), Interactive Brokers (IBKR), and Quanta Services (PWR) - all knocking it out of the park, reporting quarterly records in one way or another.",
-    "link": "https://finance.yahoo.com/markets/stocks/articles/3-companies-reporting-record-results-222900903.html"
+    "link": "https://finance.yahoo.com/markets/stocks/articles/3-companies-reporting-record-results-222900903.html",
+    "sentiment_polarity": 0.5,
+    "sentiment_subjectivity": 0.5
   },
   {
     "title": "Why This Fund Sold $4.7 Million in Bread Financial Amid a Staggering Stock Surge",
     "published": "2026-05-06T17:36:32Z",
     "publisher": "Motley Fool",
     "summary": "Bread Financial Holdings delivers tech-enabled payment and lending solutions to merchants and consumers across North America.",
-    "link": "https://www.fool.com/coverage/filings/2026/05/06/why-this-fund-sold-usd4-7-million-in-bread-financial-amid-a-staggering-stock-surge/"
+    "link": "https://www.fool.com/coverage/filings/2026/05/06/why-this-fund-sold-usd4-7-million-in-bread-financial-amid-a-staggering-stock-surge/",
+    "sentiment_polarity": 0.0,
+    "sentiment_subjectivity": 0.0
   },
   {
     "title": "What This $3.9 Million Wix Buy Could Mean After the Stock’s 54% Collapse",
     "published": "2026-05-06T17:20:18Z",
     "publisher": "Motley Fool",
     "summary": "Wix.com Ltd. provides cloud-based website creation and business management tools for entrepreneurs and small businesses worldwide.",
-    "link": "https://www.fool.com/coverage/filings/2026/05/06/what-this-usd3-9-million-wix-buy-could-mean-after-the-stock-s-54-collapse/"
+    "link": "https://www.fool.com/coverage/filings/2026/05/06/what-this-usd3-9-million-wix-buy-could-mean-after-the-stock-s-54-collapse/",
+    "sentiment_polarity": -0.281,
+    "sentiment_subjectivity": 0.544
   },
   {
     "title": "Comfort Systems USA and Builders FirstSource have been highlighted as Zacks Bull and Bear of the Day",
     "published": "2026-05-06T12:53:00Z",
     "publisher": "Zacks",
     "summary": "Comfort Systems USA surges on data center demand and strong earnings growth, while Builders FirstSource struggles amid housing slowdown and falling estimates.",
-    "link": "https://finance.yahoo.com/markets/stocks/articles/comfort-systems-usa-builders-firstsource-125300913.html"
+    "link": "https://finance.yahoo.com/markets/stocks/articles/comfort-systems-usa-builders-firstsource-125300913.html",
+    "sentiment_polarity": 0.167,
+    "sentiment_subjectivity": 0.417
   },
   {
     "title": "These 3 Companies Crushed Key Metrics This Earnings Season",
     "published": "2026-05-05T21:07:00Z",
     "publisher": "Zacks",
     "summary": "Several companies, inlcuding Alphabet, Roku, and Interactive Brokers, have crushed it concerning key metrics, with each also seeing share momentum in the days that have followed post-earnings.",
-    "link": "https://finance.yahoo.com/markets/stocks/articles/3-companies-crushed-key-metrics-210700466.html"
+    "link": "https://finance.yahoo.com/markets/stocks/articles/3-companies-crushed-key-metrics-210700466.html",
+    "sentiment_polarity": -0.04,
+    "sentiment_subjectivity": 0.44
   },
   {
     "title": "Coinbase Bets on On-Chain Credit With New Tokenized Fund",
     "published": "2026-05-05T18:03:00Z",
     "publisher": "Zacks",
     "summary": "Coinbase launches CUSHY, a tokenized credit fund to tap into rising on-chain liquidity and link traditional credit markets with digital assets.",
-    "link": "https://finance.yahoo.com/markets/crypto/articles/coinbase-bets-chain-credit-tokenized-180300362.html"
+    "link": "https://finance.yahoo.com/markets/crypto/articles/coinbase-bets-chain-credit-tokenized-180300362.html",
+    "sentiment_polarity": 0.259,
+    "sentiment_subjectivity": 0.551
   }
 ]

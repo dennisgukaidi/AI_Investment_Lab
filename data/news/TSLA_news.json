@@ -1,66 +1,93 @@
 [
   {
+    "title": "Dow Jones Futures: AI Stocks Pare Big Losses; How To Handle Sandisk, Micron, Intel",
+    "published": "2026-05-13T01:39:51Z",
+    "publisher": "Investor's Business Daily",
+    "summary": "The Nasdaq fell as AI and chip stocks retreated, but they came off lows. Investors need sell rules for big AI winners such as Sandisk, Micron and Intel.",
+    "link": "https://www.investors.com/market-trend/stock-market-today/dow-jones-futures-ai-stocks-sandisk-micron-intel/?src=A00220&yptr=yahoo",
+    "sentiment_polarity": 0.0,
+    "sentiment_subjectivity": 0.233
+  },
+  {
     "title": "Trump-Xi summit: What's on the table for US, Chinese companies",
     "published": "2026-05-12T21:45:00Z",
     "publisher": "Yahoo Finance Video",
     "summary": "President Trump is visiting Beijing this week to meet with Chinese President Xi Jinping, bringing along several Big Tech CEOs like Tesla's (TSLA) Elon Musk and Apple (AAPL) chief executive Tim Cook as part of the US delegation. KraneShares CIO Brendan Ahern comes on Market Domination Overtime to talk about China's progress and position in the current tech landscape, especially as foreign companies invest more into AI ventures, clean energy, and robotics.",
-    "link": "https://finance.yahoo.com/video/trump-xi-summit-whats-table-214500458.html"
+    "link": "https://finance.yahoo.com/video/trump-xi-summit-whats-table-214500458.html",
+    "sentiment_polarity": 0.077,
+    "sentiment_subjectivity": 0.244
   },
   {
     "title": "Nvidia’s Huang Wants to Sell Chips to China. Trump Has Other Priorities.",
     "published": "2026-05-12T21:02:00Z",
     "publisher": "Barrons.com",
     "summary": "Nvidia  CEO Jensen Huang won’t be among the business leaders accompanying President Donald Trump on this week’s visit to China, according to media reports.  It might be a sign that the White House is giving up on hopes of opening up the Chinese market for U.S. chip companies.  The recent strength of the semiconductor sector has been a boon for Nvidia, as investors warm again to the prospects for its artificial-intelligence chips.",
-    "link": "https://www.barrons.com/articles/nvidia-stock-price-huang-trump-china-ff6adbb1?siteid=yhoof2&yptr=yahoo"
+    "link": "https://www.barrons.com/articles/nvidia-stock-price-huang-trump-china-ff6adbb1?siteid=yhoof2&yptr=yahoo",
+    "sentiment_polarity": 0.113,
+    "sentiment_subjectivity": 0.221
   },
   {
     "title": "OpenAI's Altman faces questions about lying, disclosures from Musk's attorney in trial",
     "published": "2026-05-12T20:29:32Z",
     "publisher": "Yahoo Finance",
     "summary": "OpenAI CEO Sam Altman faced questions related to accusations of lying and deciving the company's board as part of Elon Musk's suit againt the him.",
-    "link": "https://finance.yahoo.com/news/openais-altman-faces-questions-about-lying-disclosures-from-musks-attorney-in-trial-202932309.html"
+    "link": "https://finance.yahoo.com/news/openais-altman-faces-questions-about-lying-disclosures-from-musks-attorney-in-trial-202932309.html",
+    "sentiment_polarity": 0.0,
+    "sentiment_subjectivity": 0.4
   },
   {
     "title": "Elon Musk Is Expected to Join Trump in China. What It Means for Tesla Stock.",
     "published": "2026-05-12T20:19:00Z",
     "publisher": "Barrons.com",
     "summary": "Tesla  CEO Elon Musk is expected to join President Donald Trump on the latter’s trip to China, The Wall Street Journal reported.  Tesla shares dropped 2.6% on Tuesday, closing at $433.45, while the  fell 0.2% and the  gained 0.1%.  Tweets have suggested Tesla is close to rolling out its AI-trained Full Self-Driving, or FSD, driver-assistance technology in China.",
-    "link": "https://www.barrons.com/articles/tesla-stock-elon-musk-trump-china-75012e6d?siteid=yhoof2&yptr=yahoo"
+    "link": "https://www.barrons.com/articles/tesla-stock-elon-musk-trump-china-75012e6d?siteid=yhoof2&yptr=yahoo",
+    "sentiment_polarity": 0.037,
+    "sentiment_subjectivity": 0.338
   },
   {
     "title": "Elon Musk To Join Trump On China State Visit. Tesla Stock Sinks.",
     "published": "2026-05-12T20:02:51Z",
     "publisher": "Investor's Business Daily",
     "summary": "Tesla CEO Elon Musk will be among a group of business leaders joining President Donald Trump's state visit to China.",
-    "link": "https://www.investors.com/news/elon-musk-donald-trump-china-visit-tesla-boeing-rare-earths/?src=A00220&yptr=yahoo"
+    "link": "https://www.investors.com/news/elon-musk-donald-trump-china-visit-tesla-boeing-rare-earths/?src=A00220&yptr=yahoo",
+    "sentiment_polarity": -0.1,
+    "sentiment_subjectivity": 0.0
   },
   {
     "title": "Roku Inc Faces Significant Reduction in Catherine Wood's Portfolio",
     "published": "2026-05-12T20:00:37Z",
     "publisher": "GuruFocus.com",
     "summary": "Exploring the Strategic Moves of ARK's Founder in Q1 2026",
-    "link": "https://finance.yahoo.com/news/roku-inc-faces-significant-reduction-200037964.html"
+    "link": "https://finance.yahoo.com/news/roku-inc-faces-significant-reduction-200037964.html",
+    "sentiment_polarity": 0.375,
+    "sentiment_subjectivity": 0.875
   },
   {
     "title": "Tesla's plans for Robotaxi dominance hit major snag in Austin",
     "published": "2026-05-12T19:37:00Z",
     "publisher": "TheStreet",
     "summary": "Perhaps Elon Musk's greatest and most valuable attribute as Tesla's CEO is getting investors to stick with him as his company works through the details of his grand declarations. The $40,000 Cybertruck, Tesla Cybercab, and Roadster all represent promises made, and broken, by Musk in recent years, ...",
-    "link": "https://www.thestreet.com/automotive/tesla-still-has-robotaxi-wait-time-issues-in-austin"
+    "link": "https://www.thestreet.com/automotive/tesla-still-has-robotaxi-wait-time-issues-in-austin",
+    "sentiment_polarity": 0.277,
+    "sentiment_subjectivity": 0.608
   },
   {
     "title": "BLNK Q1 Earnings Beat Estimates on Improved Revenue Mix",
     "published": "2026-05-12T18:46:00Z",
     "publisher": "Zacks",
     "summary": "Blink narrows Q1 loss to 6 cents and beats estimates as costs fall and service revenues surge, but $20.8M sales miss signals mixed execution.",
-    "link": "https://finance.yahoo.com/news/blnk-q1-earnings-beat-estimates-184600780.html"
+    "link": "https://finance.yahoo.com/news/blnk-q1-earnings-beat-estimates-184600780.html",
+    "sentiment_polarity": 0.0,
+    "sentiment_subjectivity": 0.25
   },
   {
     "title": "Andrew Left accused of scaring retail investors as his LA trial gets under way ",
     "published": "2026-05-12T18:29:45Z",
     "publisher": "Reuters",
     "summary": "By Nichola Groom LOS ANGELES, May 12 (Reuters) - U.S. prosecutors cast prominent short seller Andrew Left as an opportunist who profited by scaring retail investors, while his defense said Left",
-    "link": "https://finance.yahoo.com/markets/stocks/articles/andrew-left-accused-scaring-retail-182945037.html"
+    "link": "https://finance.yahoo.com/markets/stocks/articles/andrew-left-accused-scaring-retail-182945037.html",
+    "sentiment_polarity": 0.1,
+    "sentiment_subjectivity": 0.26
   },
   {
     "title": "Tesla’s AI Chip Pivot Reshapes Valuation Story For NasdaqGS TSLA",

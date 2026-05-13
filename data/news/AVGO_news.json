@@ -4,70 +4,90 @@
     "published": "2026-05-12T21:45:03Z",
     "publisher": "Zacks",
     "summary": "Broadcom Inc. (AVGO) reached $419.3 at the closing of the latest trading day, reflecting a -2.13% change compared to its last close.",
-    "link": "https://finance.yahoo.com/news/broadcom-inc-avgo-dips-more-214503993.html"
+    "link": "https://finance.yahoo.com/news/broadcom-inc-avgo-dips-more-214503993.html",
+    "sentiment_polarity": 0.333,
+    "sentiment_subjectivity": 0.489
   },
   {
     "title": "Broadcom (AVGO) Is The Biggest Holding in Elon Musk’s Grok AI Chatbot Latest Portfolio",
     "published": "2026-05-12T21:20:21Z",
     "publisher": "Insider Monkey",
     "summary": "We just covered Grok’s Latest Stock Portfolio in 2026: Elon Musk’s AI Chatbot’s Top 10 Stock Picks. Broadcom (NASDAQ:AVGO) ranks #4 (see Grok’s Latest Stock Portfolio in 2026: AI Assistant’s Top 5 Stock Picks). Number of Hedge Funds: 202 Broadcom (NASDAQ:AVGO) is the biggest position in the Grok portfolio at 8.58%. Grok believes the bull […]",
-    "link": "https://finance.yahoo.com/news/broadcom-avgo-biggest-holding-elon-212021718.html"
+    "link": "https://finance.yahoo.com/news/broadcom-avgo-biggest-holding-elon-212021718.html",
+    "sentiment_polarity": 0.5,
+    "sentiment_subjectivity": 0.74
   },
   {
     "title": "Citi Says Broadcom (AVGO) Could Beat April Quarter Estimates on AI Strength",
     "published": "2026-05-12T21:09:49Z",
     "publisher": "Insider Monkey",
     "summary": "With a 5-year average dividend growth rate of 12.60%, Broadcom Inc. (NASDAQ:AVGO) is included among the 14 Best Dividend Stocks to Buy for Steady Growth. On May 12, Citi analyst Atif Malik raised the firm’s price target on Broadcom Inc. (NASDAQ:AVGO) to $500 from $475 and maintained a Buy rating on the shares as part of an […]",
-    "link": "https://finance.yahoo.com/news/citi-says-broadcom-avgo-could-210949101.html"
+    "link": "https://finance.yahoo.com/news/citi-says-broadcom-avgo-could-210949101.html",
+    "sentiment_polarity": 0.204,
+    "sentiment_subjectivity": 0.4
   },
   {
     "title": "Tech Stocks Nurse a Post-Earnings Hangover",
     "published": "2026-05-12T20:28:00Z",
     "publisher": "The Wall Street Journal",
     "summary": "Tech stocks recovered a bit in afternoon trading, but it was still a rough day for names such as Micron, Intel and Qualcomm, down 3.6%, 6.8% and 11% respectively .  There was always going to be a comedown after a few weeks of breathless quarterly reports, said Jay Hatfield, chief executive officer at Infrastructure Capital Advisors.",
-    "link": "https://www.wsj.com/livecoverage/cpi-inflation-report-stock-market-05-12-2026/card/tech-stocks-nurse-a-post-earnings-hangover-uRSVv7aHAdegmCUJk7ij?siteid=yhoof2&yptr=yahoo"
+    "link": "https://www.wsj.com/livecoverage/cpi-inflation-report-stock-market-05-12-2026/card/tech-stocks-nurse-a-post-earnings-hangover-uRSVv7aHAdegmCUJk7ij?siteid=yhoof2&yptr=yahoo",
+    "sentiment_polarity": -0.091,
+    "sentiment_subjectivity": 0.278
   },
   {
     "title": "AI Stocks Nvidia, AMD, Broadcom Nab Price-Target Hikes",
     "published": "2026-05-12T20:27:00Z",
     "publisher": "Investor's Business Daily",
     "summary": "Several Wall Street analysts raised their price targets on highflying AI stocks, including Nvidia, AMD and Broadcom.",
-    "link": "https://www.investors.com/news/technology/ai-stocks-nvidia-amd-broadcom-price-target-hikes/?src=A00220&yptr=yahoo"
+    "link": "https://www.investors.com/news/technology/ai-stocks-nvidia-amd-broadcom-price-target-hikes/?src=A00220&yptr=yahoo",
+    "sentiment_polarity": 0.0,
+    "sentiment_subjectivity": 0.0
   },
   {
     "title": "Dow Nearly Flat as Market Perks Up",
     "published": "2026-05-12T18:26:19Z",
     "publisher": "Barrons.com",
     "summary": "The stock market is perking up a little in afternoon trading. The S&P 500 was down 0.6%; it had marked a loss as large as a percent earlier. The tech-heavy Nasdaq was extending its losses, down 1.4%. The Dow was flat.",
-    "link": "https://www.barrons.com/livecoverage/stock-market-news-today-051226/card/dow-nearly-flat-as-market-perks-up-w9Ic7byrmVxCITCUNZK2?siteid=yhoof2&yptr=yahoo"
+    "link": "https://www.barrons.com/livecoverage/stock-market-news-today-051226/card/dow-nearly-flat-as-market-perks-up-w9Ic7byrmVxCITCUNZK2?siteid=yhoof2&yptr=yahoo",
+    "sentiment_polarity": -0.029,
+    "sentiment_subjectivity": 0.357
   },
   {
     "title": "Up Nearly 40% Since April Began, Is Broadcom Stock Still a Buy?",
     "published": "2026-05-12T18:05:00Z",
     "publisher": "Motley Fool",
     "summary": "Broadcom investors should look at 2027's projections to assess the business.",
-    "link": "https://www.fool.com/investing/2026/05/12/up-nearly-40-since-april-began-is-broadcom-stock/"
+    "link": "https://www.fool.com/investing/2026/05/12/up-nearly-40-since-april-began-is-broadcom-stock/",
+    "sentiment_polarity": 0.1,
+    "sentiment_subjectivity": 0.4
   },
   {
     "title": "Are Memory Specialists a Better Way to Play the AI Boom Than AI Chipmakers?",
     "published": "2026-05-12T16:37:00Z",
     "publisher": "Motley Fool",
     "summary": "If you missed out on the AI chip boom, the memory space could be a second chance to profit.",
-    "link": "https://www.fool.com/investing/2026/05/12/are-memory-specialists-a-better-way-to-play-the-ai/"
+    "link": "https://www.fool.com/investing/2026/05/12/are-memory-specialists-a-better-way-to-play-the-ai/",
+    "sentiment_polarity": 0.25,
+    "sentiment_subjectivity": 0.25
   },
   {
     "title": "Will Broadcom Inc. (AVGO) Beat Estimates Again in Its Next Earnings Report?",
     "published": "2026-05-12T16:10:01Z",
     "publisher": "Zacks",
     "summary": "Broadcom Inc. (AVGO) has an impressive earnings surprise history and currently possesses the right combination of the two key ingredients for a likely beat in its next quarterly report.",
-    "link": "https://finance.yahoo.com/markets/stocks/articles/broadcom-inc-avgo-beat-estimates-161001511.html"
+    "link": "https://finance.yahoo.com/markets/stocks/articles/broadcom-inc-avgo-beat-estimates-161001511.html",
+    "sentiment_polarity": 0.184,
+    "sentiment_subjectivity": 0.562
   },
   {
     "title": "Citi Raises Broadcom Price Target to $500: AI Demand Sets Up Another Big April Quarter",
     "published": "2026-05-12T15:18:14Z",
     "publisher": "24/7 Wall St.",
     "summary": "Broadcom stock picked up a fresh price target raise from Citi on Tuesday, with analyst Atif Malik lifting his target to $500 from $475 while maintaining a Buy rating. Broadcom (NASDAQ:AVGO) was framed in Citi’s note as an earnings preview call, with the firm pointing to stronger AI demand driving the April quarter modestly above ... Citi Raises Broadcom Price Target to $500: AI Demand Sets Up Another Big April Quarter",
-    "link": "https://247wallst.com/investing/2026/05/12/citi-raises-broadcom-price-target-to-500-ai-demand-sets-up-another-big-april-quarter/"
+    "link": "https://247wallst.com/investing/2026/05/12/citi-raises-broadcom-price-target-to-500-ai-demand-sets-up-another-big-april-quarter/",
+    "sentiment_polarity": 0.02,
+    "sentiment_subjectivity": 0.24
   },
   {
     "title": "Is the Arista Rally Over? The Path to $111",
