@@ -77,10 +77,13 @@ def get_fred_data(series_id: str, api_key: str, months: int = 24) -> Dict[str, A
         latest_value = values.iloc[-1] if not values.empty else None
         latest_date = values.index[-1] if not values.empty else None
         
+        # 将pandas Timestamp键转换为ISO字符串格式
+        series_dict = {str(k.date()): float(v) for k, v in values.items()}
+        
         return {
             "latest_value": float(latest_value) if latest_value is not None else None,
             "latest_date": latest_date.isoformat() if latest_date else None,
-            "series": values.to_dict(),
+            "series": series_dict,
             "unit": "percent" if "RATE" in series_id or "CPI" in series_id or "PPI" in series_id else "index"
         }
         

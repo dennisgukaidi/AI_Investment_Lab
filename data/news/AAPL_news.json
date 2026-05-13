@@ -76,7 +76,9 @@
     "published": "2026-05-12T18:14:05Z",
     "publisher": "Insider Monkey",
     "summary": "Apple Inc. (NASDAQ:AAPL) is one of the top tech stocks in Louis Navellier’s portfolio. On May 7, Apple unveiled new initiatives aimed at expanding renewable energy infrastructure, reducing plastic pollution, and fostering green entrepreneurship in India. The company has inked a strategic partnership with clean energy developer CleanMax as part of a new effort to […]",
-    "link": "https://finance.yahoo.com/sectors/energy/articles/apple-inc-aapl-partners-cleanmax-181405337.html"
+    "link": "https://finance.yahoo.com/sectors/energy/articles/apple-inc-aapl-partners-cleanmax-181405337.html",
+    "sentiment_polarity": 0.188,
+    "sentiment_subjectivity": 0.482
   },
   {
     "title": "Intel Crashes 10%, AMD Slides 5% as Chip Trade Cools After Parabolic Run",
