@@ -1,69 +1,216 @@
 {
   "meta": {
     "ticker": "VST",
-    "generated_at": "2026-05-12T10:19:00.389519+00:00",
-    "cost_price": 166.05,
-    "data_rows": 180
+    "generated_at": "2026-05-13T11:01:32.672969+00:00",
+    "cost_price": 146.87,
+    "data_rows": 501,
+    "history_first_date": "2024-05-13",
+    "history_last_date": "2026-05-12",
+    "iv_percentile_window_rows": 180,
+    "bootstrap_horizons": [
+      10,
+      20,
+      60
+    ],
+    "benchmark_ticker": "SPY"
+  },
+  "trend": {
+    "regime": "bear_core",
+    "close_vs_ma200": -29.7156,
+    "ma_spread_20_60": -2.1183,
+    "slope_ma20_5d": -0.008371,
+    "slope_ma60_5d": -0.005019,
+    "ma200_available": true,
+    "positioning_hint": "价在 MA200 下方且短中期均线空头：大趋势偏空；加仓需谨慎，止损纪律优先。"
+  },
+  "market_context": {
+    "benchmark_ticker": "SPY",
+    "available": true,
+    "aligned_trading_days": 501,
+    "spy_trend_regime": "bull_core",
+    "spy_trend": {
+      "regime": "bull_core",
+      "close_vs_ma200": 63.7232,
+      "ma_spread_20_60": 31.4637,
+      "slope_ma20_5d": 0.018772,
+      "slope_ma60_5d": 0.005848,
+      "ma200_available": true,
+      "positioning_hint": "多头排列+价在 MA200 上方：大趋势偏多；减仓宜分批止盈，加仓宜等回撤至均线带。"
+    },
+    "spy_ma": {
+      "ma_20": 717.909,
+      "ma_60": 686.4453,
+      "ma_200": 674.4568
+    },
+    "stock_total_return_20d": -0.104287,
+    "spy_total_return_20d": 0.062955,
+    "excess_return_20d": -0.167243,
+    "stock_total_return_60d": -0.143565,
+    "spy_total_return_60d": 0.082772,
+    "excess_return_60d": -0.226337,
+    "log_return_corr_60d": 0.3586,
+    "benchmark_notes": [
+      "大盘偏强而标的偏弱：回撤可能更多来自个股/板块而非系统性恐慌。",
+      "近60日显著跑输SPY，结合成本与止损概率审视仓位。"
+    ]
   },
   "monte_carlo": {
-    "prob_always_above": 0.0,
-    "prob_touch_below": 1.0,
-    "expected_final_price": 152.03331167648807,
-    "pct5_final_price": 132.20073594878062,
-    "pct95_final_price": 173.93477346501652,
+    "model": "lognormal_iv",
+    "horizon_days": 10,
+    "iv_input": 0.4010990521371123,
+    "prob_always_above": 0.167,
+    "prob_touch_below": 0.833,
+    "expected_final_price": 146.85433690133002,
+    "pct5_final_price": 128.4108857702817,
+    "pct95_final_price": 167.1535815256484,
     "prob_by_day": [
-      0.0002,
-      0.0074,
-      0.0252,
-      0.0472,
-      0.065,
-      0.082,
-      0.0974,
-      0.1124,
-      0.1228,
-      0.139
+      0.4858,
+      0.4932,
+      0.487,
+      0.4882,
+      0.489,
+      0.4864,
+      0.4866,
+      0.4846,
+      0.4824,
+      0.4794
     ],
     "probability_matrix": {
-      "+5%": 0.2676,
-      "-5%": 0.7138,
-      "+10%": 0.1216,
-      "-10%": 0.8866,
-      "+15%": 0.0424,
-      "-15%": 0.9732
+      "+5%": 0.2588,
+      "-5%": 0.726,
+      "+10%": 0.1136,
+      "-10%": 0.8982,
+      "+15%": 0.0362,
+      "-15%": 0.9772
+    }
+  },
+  "bootstrap": {
+    "method": "historical_log_return_bootstrap",
+    "simulations": 5000,
+    "return_pool_len": 252,
+    "s0": 146.87,
+    "ma200_level": 176.5856,
+    "horizons": {
+      "10": {
+        "final_median": 147.78673166739395,
+        "final_pct5": 126.18713312431129,
+        "final_pct25": 138.41703527356842,
+        "final_pct75": 157.3959622258993,
+        "final_pct95": 172.64064542884103,
+        "min_price_mae_from_start_pct5": -15.663501540989836,
+        "min_price_mae_from_start_median": -4.135447410838972,
+        "max_price_runup_from_start_pct95": 19.241874184682544,
+        "prob_touch_or_below_stop_1x5": 0.3026,
+        "prob_touch_or_below_stop_2x": 0.1882,
+        "prob_touch_or_below_cost": 0.7978,
+        "prob_final_at_or_above_tp_aggressive": 0.2446,
+        "prob_paths_always_above_cost": 0.2022,
+        "prob_touch_or_below_ma200": 1.0,
+        "probability_matrix_final": {
+          "+5%": 0.3258,
+          "-5%": 0.7212,
+          "+10%": 0.1756,
+          "-10%": 0.876,
+          "+15%": 0.0814,
+          "-15%": 0.9596
+        }
+      },
+      "20": {
+        "final_median": 148.37439871930252,
+        "final_pct5": 117.82691125774213,
+        "final_pct25": 135.20673450414773,
+        "final_pct75": 161.9905658554819,
+        "final_pct95": 185.2018574841899,
+        "min_price_mae_from_start_pct5": -22.15417735016372,
+        "min_price_mae_from_start_median": -6.567770793082467,
+        "max_price_runup_from_start_pct95": 29.509462136343316,
+        "prob_touch_or_below_stop_1x5": 0.4598,
+        "prob_touch_or_below_stop_2x": 0.3446,
+        "prob_touch_or_below_cost": 0.8534,
+        "prob_final_at_or_above_tp_aggressive": 0.3224,
+        "prob_paths_always_above_cost": 0.1466,
+        "prob_touch_or_below_ma200": 1.0,
+        "probability_matrix_final": {
+          "+5%": 0.3864,
+          "-5%": 0.6704,
+          "+10%": 0.2558,
+          "-10%": 0.8002,
+          "+15%": 0.1626,
+          "-15%": 0.8932
+        }
+      },
+      "60": {
+        "final_median": 149.53180572653048,
+        "final_pct5": 101.2972689371281,
+        "final_pct25": 127.88626600729226,
+        "final_pct75": 175.41230056296035,
+        "final_pct95": 220.30919043722906,
+        "min_price_mae_from_start_pct5": -35.08518016886106,
+        "min_price_mae_from_start_median": -12.068831302568592,
+        "max_price_runup_from_start_pct95": 57.883603904207675,
+        "prob_touch_or_below_stop_1x5": 0.6576,
+        "prob_touch_or_below_stop_2x": 0.5706,
+        "prob_touch_or_below_cost": 0.917,
+        "prob_final_at_or_above_tp_aggressive": 0.4184,
+        "prob_paths_always_above_cost": 0.083,
+        "prob_touch_or_below_ma200": 1.0,
+        "probability_matrix_final": {
+          "+5%": 0.4522,
+          "-5%": 0.6172,
+          "+10%": 0.3772,
+          "-10%": 0.6988,
+          "+15%": 0.3046,
+          "-15%": 0.7846
+        }
+      }
     }
   },
   "iv_analysis": {
-    "iv_latest": 0.4173466727709071,
-    "iv_percentile": 100.0,
-    "iv_mean_180d": 0.417347,
-    "iv_std_180d": 0.0,
-    "iv_regime": "expensive"
+    "iv_latest": 0.4010990521371123,
+    "iv_percentile": 8.33,
+    "iv_mean_180d": 0.507611,
+    "iv_std_180d": 0.080669,
+    "iv_regime": "cheap",
+    "window_rows": 180
   },
   "risk_matrix": {
-    "latest_close": 152.05,
-    "latest_atr": 7.259,
-    "stop_1x5_atr": 141.1616,
-    "stop_2x_atr": 137.5321,
-    "tp_conservative": 155.6795,
-    "tp_moderate": 159.309,
-    "tp_aggressive": 162.9384,
-    "risk_reward_1x5": -0.125,
-    "risk_reward_2x": -0.109,
-    "rr_score": 2
+    "latest_close": 146.87,
+    "latest_atr": 7.1969,
+    "stop_1x5_atr": 136.0747,
+    "stop_2x_atr": 132.4762,
+    "tp_conservative": 150.4684,
+    "tp_moderate": 154.0669,
+    "tp_aggressive": 157.6653,
+    "risk_reward_1x5": 1.0,
+    "risk_reward_2x": 0.75,
+    "rr_score": 4,
+    "rr_note": "risk_measured_as_cost_minus_stop_1x5"
   },
   "technicals": {
-    "rsi_14": 44.69,
-    "ma_5": 154.478,
-    "ma_20": 158.7625,
-    "ma_60": 160.4362
+    "rsi_14": 40.41,
+    "ma_5": 151.776,
+    "ma_20": 157.9075,
+    "ma_60": 160.0258,
+    "ma_200": 176.5856,
+    "macd_line": -1.9377,
+    "signal_line": -0.6569,
+    "histogram": -1.2808,
+    "momentum": "bearish",
+    "upper_band": 168.8918,
+    "middle_band": 157.9075,
+    "lower_band": 146.9232,
+    "bandwidth": 0.1391,
+    "position": "below_lower",
+    "vix_current": null,
+    "fear_level": "error"
   },
   "sentiment": {
-    "total_articles": 10,
+    "total_articles": 11,
     "net_sentiment_score": 5,
     "top_bearish_title": "Nuclear Reactor Leader Constellation Backs Three Mile Island Goal",
     "top_bullish_title": "Vistra Q1 Earnings Beat Estimates as Hedging Fortifies Visibility",
     "keyword_freq": {
-      "ai": 9,
+      "ai": 11,
       "delivery": 0,
       "earnings": 7,
       "recall": 0,
@@ -71,5 +218,10 @@
       "cybertruck": 0,
       "margin": 0
     }
+  },
+  "extra_dimensions": {
+    "pe_percentile": 15.38,
+    "ten_year_treasury_corr": null,
+    "sentiment_price_divergence": 11.36
   }
 }

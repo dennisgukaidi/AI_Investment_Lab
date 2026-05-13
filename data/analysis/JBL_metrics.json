@@ -1,0 +1,226 @@
+{
+  "meta": {
+    "ticker": "JBL",
+    "generated_at": "2026-05-13T11:01:32.298177+00:00",
+    "cost_price": 350.8,
+    "data_rows": 501,
+    "history_first_date": "2024-05-13",
+    "history_last_date": "2026-05-12",
+    "iv_percentile_window_rows": 180,
+    "bootstrap_horizons": [
+      10,
+      20,
+      60
+    ],
+    "benchmark_ticker": "SPY"
+  },
+  "trend": {
+    "regime": "bull_core",
+    "close_vs_ma200": 109.2589,
+    "ma_spread_20_60": 48.3095,
+    "slope_ma20_5d": 0.046684,
+    "slope_ma60_5d": 0.029633,
+    "ma200_available": true,
+    "positioning_hint": "多头排列+价在 MA200 上方：大趋势偏多；减仓宜分批止盈，加仓宜等回撤至均线带。"
+  },
+  "market_context": {
+    "benchmark_ticker": "SPY",
+    "available": true,
+    "aligned_trading_days": 501,
+    "spy_trend_regime": "bull_core",
+    "spy_trend": {
+      "regime": "bull_core",
+      "close_vs_ma200": 63.7232,
+      "ma_spread_20_60": 31.4637,
+      "slope_ma20_5d": 0.018772,
+      "slope_ma60_5d": 0.005848,
+      "ma200_available": true,
+      "positioning_hint": "多头排列+价在 MA200 上方：大趋势偏多；减仓宜分批止盈，加仓宜等回撤至均线带。"
+    },
+    "spy_ma": {
+      "ma_20": 717.909,
+      "ma_60": 686.4453,
+      "ma_200": 674.4568
+    },
+    "stock_total_return_20d": 0.146518,
+    "spy_total_return_20d": 0.062955,
+    "excess_return_20d": 0.083562,
+    "stock_total_return_60d": 0.377956,
+    "spy_total_return_60d": 0.082772,
+    "excess_return_60d": 0.295184,
+    "log_return_corr_60d": 0.7128,
+    "benchmark_notes": [
+      "近60日显著跑赢SPY，注意获利了结与波动放大。"
+    ]
+  },
+  "monte_carlo": {
+    "model": "lognormal_iv",
+    "horizon_days": 10,
+    "iv_input": 0.4793255844912601,
+    "prob_always_above": 0.1654,
+    "prob_touch_below": 0.8346,
+    "expected_final_price": 350.7576545177677,
+    "pct5_final_price": 298.55810079968575,
+    "pct95_final_price": 409.1441931999403,
+    "prob_by_day": [
+      0.485,
+      0.4918,
+      0.4852,
+      0.4862,
+      0.4858,
+      0.4842,
+      0.4838,
+      0.4826,
+      0.4788,
+      0.4768
+    ],
+    "probability_matrix": {
+      "+5%": 0.291,
+      "-5%": 0.6818,
+      "+10%": 0.1508,
+      "-10%": 0.8474,
+      "+15%": 0.0696,
+      "-15%": 0.9508
+    }
+  },
+  "bootstrap": {
+    "method": "historical_log_return_bootstrap",
+    "simulations": 5000,
+    "return_pool_len": 252,
+    "s0": 350.8,
+    "ma200_level": 241.5411,
+    "horizons": {
+      "10": {
+        "final_median": 362.8920465131157,
+        "final_pct5": 317.08913910616354,
+        "final_pct25": 343.09847128610295,
+        "final_pct75": 383.16635109218174,
+        "final_pct95": 415.4041149053434,
+        "min_price_mae_from_start_pct5": -11.217850716065778,
+        "min_price_mae_from_start_median": -2.0520434278121336,
+        "max_price_runup_from_start_pct95": 19.44891181423186,
+        "prob_touch_or_below_stop_1x5": 0.2114,
+        "prob_touch_or_below_stop_2x": 0.12,
+        "prob_touch_or_below_cost": 0.7188,
+        "prob_final_at_or_above_tp_aggressive": 0.3658,
+        "prob_paths_always_above_cost": 0.2812,
+        "prob_touch_or_below_ma200": 0.0,
+        "probability_matrix_final": {
+          "+5%": 0.4268,
+          "-5%": 0.8532,
+          "+10%": 0.2224,
+          "-10%": 0.956,
+          "+15%": 0.096,
+          "-15%": 0.99
+        }
+      },
+      "20": {
+        "final_median": 374.73287142245294,
+        "final_pct5": 308.5900662845401,
+        "final_pct25": 347.1033141977059,
+        "final_pct75": 405.0182905942422,
+        "final_pct95": 452.81379556701916,
+        "min_price_mae_from_start_pct5": -14.772067508887162,
+        "min_price_mae_from_start_median": -3.1909481613139503,
+        "max_price_runup_from_start_pct95": 30.779099828278,
+        "prob_touch_or_below_stop_1x5": 0.3048,
+        "prob_touch_or_below_stop_2x": 0.2106,
+        "prob_touch_or_below_cost": 0.7622,
+        "prob_final_at_or_above_tp_aggressive": 0.5188,
+        "prob_paths_always_above_cost": 0.2378,
+        "prob_touch_or_below_ma200": 0.0006,
+        "probability_matrix_final": {
+          "+5%": 0.561,
+          "-5%": 0.8416,
+          "+10%": 0.3956,
+          "-10%": 0.9266,
+          "+15%": 0.26,
+          "-15%": 0.9736
+        }
+      },
+      "60": {
+        "final_median": 426.6339971651971,
+        "final_pct5": 309.8624978096949,
+        "final_pct25": 374.76308411000275,
+        "final_pct75": 487.85303063187257,
+        "final_pct95": 588.1800114589898,
+        "min_price_mae_from_start_pct5": -20.597142505977388,
+        "min_price_mae_from_start_median": -4.409080711121449,
+        "max_price_runup_from_start_pct95": 72.60222389866772,
+        "prob_touch_or_below_stop_1x5": 0.3992,
+        "prob_touch_or_below_stop_2x": 0.3074,
+        "prob_touch_or_below_cost": 0.8016,
+        "prob_final_at_or_above_tp_aggressive": 0.7576,
+        "prob_paths_always_above_cost": 0.1984,
+        "prob_touch_or_below_ma200": 0.0062,
+        "probability_matrix_final": {
+          "+5%": 0.7734,
+          "-5%": 0.897,
+          "+10%": 0.6986,
+          "-10%": 0.939,
+          "+15%": 0.611,
+          "-15%": 0.9648
+        }
+      }
+    }
+  },
+  "iv_analysis": {
+    "iv_latest": 0.4793255844912601,
+    "iv_percentile": 86.67,
+    "iv_mean_180d": 0.418625,
+    "iv_std_180d": 0.054718,
+    "iv_regime": "expensive",
+    "window_rows": 180
+  },
+  "risk_matrix": {
+    "latest_close": 350.8,
+    "latest_atr": 14.694,
+    "stop_1x5_atr": 328.759,
+    "stop_2x_atr": 321.412,
+    "tp_conservative": 358.147,
+    "tp_moderate": 365.494,
+    "tp_aggressive": 372.841,
+    "risk_reward_1x5": 1.0,
+    "risk_reward_2x": 0.75,
+    "rr_score": 4,
+    "rr_note": "risk_measured_as_cost_minus_stop_1x5"
+  },
+  "technicals": {
+    "rsi_14": 60.1,
+    "ma_5": 358.626,
+    "ma_20": 338.696,
+    "ma_60": 290.3865,
+    "ma_200": 241.5411,
+    "macd_line": 17.5812,
+    "signal_line": 17.9352,
+    "histogram": -0.354,
+    "momentum": "bearish",
+    "upper_band": 370.6178,
+    "middle_band": 338.696,
+    "lower_band": 306.7742,
+    "bandwidth": 0.1885,
+    "position": "within_bands",
+    "vix_current": null,
+    "fear_level": "error"
+  },
+  "sentiment": {
+    "total_articles": 11,
+    "net_sentiment_score": 9,
+    "top_bearish_title": "Assessing Jabil (JBL) Valuation As Earnings Approach And Analyst Upgrades Draw Fresh Attention",
+    "top_bullish_title": "Assessing Jabil (JBL) Valuation As Earnings Approach And Analyst Upgrades Draw Fresh Attention",
+    "keyword_freq": {
+      "ai": 9,
+      "delivery": 0,
+      "earnings": 5,
+      "recall": 0,
+      "fsd": 0,
+      "cybertruck": 0,
+      "margin": 0
+    }
+  },
+  "extra_dimensions": {
+    "pe_percentile": 76.92,
+    "ten_year_treasury_corr": null,
+    "sentiment_price_divergence": 5.38
+  }
+}

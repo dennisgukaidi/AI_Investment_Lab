@@ -1,69 +1,216 @@
 {
   "meta": {
     "ticker": "CEG",
-    "generated_at": "2026-05-12T10:18:28.010473+00:00",
-    "cost_price": 289.61,
-    "data_rows": 180
+    "generated_at": "2026-05-13T11:01:32.722941+00:00",
+    "cost_price": 293.6,
+    "data_rows": 501,
+    "history_first_date": "2024-05-13",
+    "history_last_date": "2026-05-12",
+    "iv_percentile_window_rows": 180,
+    "bootstrap_horizons": [
+      10,
+      20,
+      60
+    ],
+    "benchmark_ticker": "SPY"
+  },
+  "trend": {
+    "regime": "neutral",
+    "close_vs_ma200": -33.1588,
+    "ma_spread_20_60": 0.8285,
+    "slope_ma20_5d": 0.015353,
+    "slope_ma60_5d": 0.008135,
+    "ma200_available": true,
+    "positioning_hint": "趋势不明或震荡；宜控制仓位，以结构止损与情景概率为主。"
+  },
+  "market_context": {
+    "benchmark_ticker": "SPY",
+    "available": true,
+    "aligned_trading_days": 501,
+    "spy_trend_regime": "bull_core",
+    "spy_trend": {
+      "regime": "bull_core",
+      "close_vs_ma200": 63.7232,
+      "ma_spread_20_60": 31.4637,
+      "slope_ma20_5d": 0.018772,
+      "slope_ma60_5d": 0.005848,
+      "ma200_available": true,
+      "positioning_hint": "多头排列+价在 MA200 上方：大趋势偏多；减仓宜分批止盈，加仓宜等回撤至均线带。"
+    },
+    "spy_ma": {
+      "ma_20": 717.909,
+      "ma_60": 686.4453,
+      "ma_200": 674.4568
+    },
+    "stock_total_return_20d": -0.010148,
+    "spy_total_return_20d": 0.062955,
+    "excess_return_20d": -0.073103,
+    "stock_total_return_60d": 0.017925,
+    "spy_total_return_60d": 0.082772,
+    "excess_return_60d": -0.064848,
+    "log_return_corr_60d": 0.2559,
+    "benchmark_notes": [
+      "大盘偏强而标的偏弱：回撤可能更多来自个股/板块而非系统性恐慌。",
+      "近60日显著跑输SPY，结合成本与止损概率审视仓位。"
+    ]
   },
   "monte_carlo": {
-    "prob_always_above": 0.3902,
-    "prob_touch_below": 0.6098,
-    "expected_final_price": 299.65412191420836,
-    "pct5_final_price": 255.58735911471555,
-    "pct95_final_price": 348.8832102451847,
+    "model": "lognormal_iv",
+    "horizon_days": 10,
+    "iv_input": 0.4762846548730263,
+    "prob_always_above": 0.1654,
+    "prob_touch_below": 0.8346,
+    "expected_final_price": 293.56470712485833,
+    "pct5_final_price": 250.1393944288934,
+    "pct95_final_price": 342.10659040975855,
     "prob_by_day": [
-      0.8664,
-      0.7784,
-      0.735,
-      0.7062,
-      0.6852,
-      0.6676,
-      0.6498,
-      0.643,
-      0.6298,
-      0.6226
+      0.485,
+      0.4918,
+      0.4854,
+      0.4862,
+      0.4858,
+      0.4842,
+      0.484,
+      0.4826,
+      0.4788,
+      0.4768
     ],
     "probability_matrix": {
-      "+5%": 0.2886,
-      "-5%": 0.6846,
-      "+10%": 0.1488,
-      "-10%": 0.8506,
+      "+5%": 0.2894,
+      "-5%": 0.683,
+      "+10%": 0.1502,
+      "-10%": 0.8486,
       "+15%": 0.0684,
-      "-15%": 0.954
+      "-15%": 0.9522
+    }
+  },
+  "bootstrap": {
+    "method": "historical_log_return_bootstrap",
+    "simulations": 5000,
+    "return_pool_len": 252,
+    "s0": 293.6,
+    "ma200_level": 326.75885,
+    "horizons": {
+      "10": {
+        "final_median": 295.43024334901384,
+        "final_pct5": 253.21928904916064,
+        "final_pct25": 278.4192664040132,
+        "final_pct75": 313.6259534537346,
+        "final_pct95": 342.1885425867306,
+        "min_price_mae_from_start_pct5": -15.218393910657134,
+        "min_price_mae_from_start_median": -3.8083348758525397,
+        "max_price_runup_from_start_pct95": 18.066908080040804,
+        "prob_touch_or_below_stop_1x5": 0.2784,
+        "prob_touch_or_below_stop_2x": 0.1692,
+        "prob_touch_or_below_cost": 0.8064,
+        "prob_final_at_or_above_tp_aggressive": 0.2308,
+        "prob_paths_always_above_cost": 0.1936,
+        "prob_touch_or_below_ma200": 1.0,
+        "probability_matrix_final": {
+          "+5%": 0.3144,
+          "-5%": 0.7424,
+          "+10%": 0.1596,
+          "-10%": 0.889,
+          "+15%": 0.066,
+          "-15%": 0.9636
+        }
+      },
+      "20": {
+        "final_median": 295.89582159411407,
+        "final_pct5": 238.83132069754257,
+        "final_pct25": 271.3728550899069,
+        "final_pct75": 322.55636958536,
+        "final_pct95": 364.2263880255496,
+        "min_price_mae_from_start_pct5": -20.9709366120678,
+        "min_price_mae_from_start_median": -6.045885111424797,
+        "max_price_runup_from_start_pct95": 26.62161211981414,
+        "prob_touch_or_below_stop_1x5": 0.4356,
+        "prob_touch_or_below_stop_2x": 0.3194,
+        "prob_touch_or_below_cost": 0.8554,
+        "prob_final_at_or_above_tp_aggressive": 0.314,
+        "prob_paths_always_above_cost": 0.1446,
+        "prob_touch_or_below_ma200": 1.0,
+        "probability_matrix_final": {
+          "+5%": 0.3758,
+          "-5%": 0.6808,
+          "+10%": 0.2476,
+          "-10%": 0.811,
+          "+15%": 0.1488,
+          "-15%": 0.9054
+        }
+      },
+      "60": {
+        "final_median": 300.23324866862873,
+        "final_pct5": 208.84839976101432,
+        "final_pct25": 258.29094290083054,
+        "final_pct75": 348.3786373813043,
+        "final_pct95": 429.61176143347484,
+        "min_price_mae_from_start_pct5": -33.56497825343532,
+        "min_price_mae_from_start_median": -11.207250333029315,
+        "max_price_runup_from_start_pct95": 53.11863274582139,
+        "prob_touch_or_below_stop_1x5": 0.6322,
+        "prob_touch_or_below_stop_2x": 0.5464,
+        "prob_touch_or_below_cost": 0.9144,
+        "prob_final_at_or_above_tp_aggressive": 0.4188,
+        "prob_paths_always_above_cost": 0.0856,
+        "prob_touch_or_below_ma200": 1.0,
+        "probability_matrix_final": {
+          "+5%": 0.4562,
+          "-5%": 0.6268,
+          "+10%": 0.3758,
+          "-10%": 0.7164,
+          "+15%": 0.301,
+          "-15%": 0.7962
+        }
+      }
     }
   },
   "iv_analysis": {
-    "iv_latest": 0.473347188051625,
-    "iv_percentile": 100.0,
-    "iv_mean_180d": 0.473347,
-    "iv_std_180d": 0.0,
-    "iv_regime": "expensive"
+    "iv_latest": 0.4762846548730263,
+    "iv_percentile": 38.89,
+    "iv_mean_180d": 0.475519,
+    "iv_std_180d": 0.079057,
+    "iv_regime": "cheap",
+    "window_rows": 180
   },
   "risk_matrix": {
-    "latest_close": 299.69,
-    "latest_atr": 14.4639,
-    "stop_1x5_atr": 277.9942,
-    "stop_2x_atr": 270.7623,
-    "tp_conservative": 306.9219,
-    "tp_moderate": 314.1539,
-    "tp_aggressive": 321.3858,
-    "risk_reward_1x5": 2.736,
-    "risk_reward_2x": 1.686,
-    "rr_score": 8
+    "latest_close": 293.6,
+    "latest_atr": 14.3743,
+    "stop_1x5_atr": 272.0385,
+    "stop_2x_atr": 264.8514,
+    "tp_conservative": 300.7872,
+    "tp_moderate": 307.9743,
+    "tp_aggressive": 315.1615,
+    "risk_reward_1x5": 1.0,
+    "risk_reward_2x": 0.75,
+    "rr_score": 4,
+    "rr_note": "risk_measured_as_cost_minus_stop_1x5"
   },
   "technicals": {
-    "rsi_14": 48.29,
-    "ma_5": 311.56,
-    "ma_20": 303.1475,
-    "ma_60": 302.0823
+    "rsi_14": 45.39,
+    "ma_5": 306.196,
+    "ma_20": 302.997,
+    "ma_60": 302.1685,
+    "ma_200": 326.7588,
+    "macd_line": 2.7381,
+    "signal_line": 3.823,
+    "histogram": -1.0849,
+    "momentum": "bearish",
+    "upper_band": 328.0346,
+    "middle_band": 302.997,
+    "lower_band": 277.9594,
+    "bandwidth": 0.1653,
+    "position": "within_bands",
+    "vix_current": null,
+    "fear_level": "error"
   },
   "sentiment": {
-    "total_articles": 10,
+    "total_articles": 12,
     "net_sentiment_score": 7,
     "top_bearish_title": "Memory chip stocks hit record highs, pharma reacts to hantavirus concerns",
     "top_bullish_title": "Memory chip stocks hit record highs, pharma reacts to hantavirus concerns",
     "keyword_freq": {
-      "ai": 2,
+      "ai": 6,
       "delivery": 0,
       "earnings": 14,
       "recall": 0,
@@ -71,5 +218,10 @@
       "cybertruck": 0,
       "margin": 0
     }
+  },
+  "extra_dimensions": {
+    "pe_percentile": 30.77,
+    "ten_year_treasury_corr": null,
+    "sentiment_price_divergence": 6.72
   }
 }

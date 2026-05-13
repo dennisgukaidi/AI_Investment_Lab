@@ -1,0 +1,28 @@
+{
+  "meta": {
+    "generated_at": "2026-05-13T11:31:25.542944Z",
+    "source": "tws"
+  },
+  "holdings": {
+    "CEG": {
+      "position": 10.0,
+      "averageCost": 289.61,
+      "marketPrice": 294.6000061
+    },
+    "IBKR": {
+      "position": 6.144,
+      "averageCost": 65.10416665,
+      "marketPrice": 84.87999725
+    },
+    "TSLA": {
+      "position": 20.0,
+      "averageCost": 390.55,
+      "marketPrice": 438.89001465
+    },
+    "VST": {
+      "position": 20.0,
+      "averageCost": 166.05,
+      "marketPrice": 148.1000061
+    }
+  }
+}

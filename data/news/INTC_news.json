@@ -1,5 +1,41 @@
 [
   {
+    "title": "Bank of America revamps Intel stock price target",
+    "published": "2026-05-13T04:03:00Z",
+    "publisher": "TheStreet",
+    "summary": "Intel (INTC) stock closed the May 11 trading session at $129.44. That means it has gained 93.8% since April 23, according to Yahoo Finance. Meanwhile, the SPDR S&P 500 index (SPY) is up about 4.3% in the same period. Why is Intel outpacing the S&P 500 so much, and why that specific period? ...",
+    "link": "https://www.thestreet.com/investing/stocks/bank-of-america-revamps-intel-stock-price-target",
+    "sentiment_polarity": 0.025,
+    "sentiment_subjectivity": 0.138
+  },
+  {
+    "title": "Why PACS Group Stock Surged Today",
+    "published": "2026-05-13T03:57:23Z",
+    "publisher": "Motley Fool",
+    "summary": "The post-acute care leader sees plenty of attractive acquisition targets.",
+    "link": "https://www.fool.com/investing/2026/05/12/why-pacs-group-stock-is-up-today/",
+    "sentiment_polarity": 0.8,
+    "sentiment_subjectivity": 1.0
+  },
+  {
+    "title": "Dow Jones Futures: Nvidia's Huang Joins Trump's China Trip; How To Handle Sandisk, Micron, Intel",
+    "published": "2026-05-13T03:09:38Z",
+    "publisher": "Investor's Business Daily",
+    "summary": "Nvidia CEO Jensen Huang is joining President Trump's China trip. Investors need sell rules for big AI winners such as Sandisk, Micron and Intel.",
+    "link": "https://www.investors.com/market-trend/stock-market-today/dow-jones-futures-ai-stocks-sandisk-micron-intel/?src=A00220&yptr=yahoo",
+    "sentiment_polarity": 0.0,
+    "sentiment_subjectivity": 0.3
+  },
+  {
+    "title": "QuickLogic Q1 Earnings Call Highlights",
+    "published": "2026-05-13T02:06:18Z",
+    "publisher": "MarketBeat",
+    "summary": "QuickLogic (NASDAQ:QUIK) reported higher first-quarter fiscal 2026 revenue and reiterated expectations for strong full-year growth, as management highlighted progress in radiation-hardened FPGA products, embedded FPGA intellectual property and chiplet-related opportunities. President and Chief Exec",
+    "link": "https://www.marketbeat.com/instant-alerts/quicklogic-q1-earnings-call-highlights-2026-05-12/?utm_source=yahoofinance&utm_medium=yahoofinance",
+    "sentiment_polarity": 0.328,
+    "sentiment_subjectivity": 0.544
+  },
+  {
     "title": "Dow Jones Futures: AI Stocks Pare Big Losses; How To Handle Sandisk, Micron, Intel",
     "published": "2026-05-13T01:39:51Z",
     "publisher": "Investor's Business Daily",

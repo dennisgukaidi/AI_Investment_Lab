@@ -1,5 +1,14 @@
 [
   {
+    "title": "Dow Jones Futures: Nvidia's Huang Joins Trump's China Trip; How To Handle Sandisk, Micron, Intel",
+    "published": "2026-05-13T03:09:38Z",
+    "publisher": "Investor's Business Daily",
+    "summary": "Nvidia CEO Jensen Huang is joining President Trump's China trip. Investors need sell rules for big AI winners such as Sandisk, Micron and Intel.",
+    "link": "https://www.investors.com/market-trend/stock-market-today/dow-jones-futures-ai-stocks-sandisk-micron-intel/?src=A00220&yptr=yahoo",
+    "sentiment_polarity": 0.0,
+    "sentiment_subjectivity": 0.3
+  },
+  {
     "title": "Dow Jones Futures: AI Stocks Pare Big Losses; How To Handle Sandisk, Micron, Intel",
     "published": "2026-05-13T01:39:51Z",
     "publisher": "Investor's Business Daily",
@@ -7,6 +16,15 @@
     "link": "https://www.investors.com/market-trend/stock-market-today/dow-jones-futures-ai-stocks-sandisk-micron-intel/?src=A00220&yptr=yahoo",
     "sentiment_polarity": 0.0,
     "sentiment_subjectivity": 0.233
+  },
+  {
+    "title": "Nvidia's Jensen Huang joins Trump's China visit",
+    "published": "2026-05-13T01:34:48Z",
+    "publisher": "Reuters",
+    "summary": "Nvidia CEO Jensen Huang has joined over a dozen U.S. CEOs on ‌President Donald Trump's visit to China this week.  Trump called Huang last-minute ‌on Tuesday after seeing media coverage that he was not invited, according to one source ​familiar with the matter.  Huang was seen by White House reporters boarding Air Force One in Alaska, joining Trump on his flight to China.",
+    "link": "https://finance.yahoo.com/news/nvidias-jensen-huang-join-trumps-013448593.html",
+    "sentiment_polarity": 0.0,
+    "sentiment_subjectivity": 0.0
   },
   {
     "title": "Trump-Xi summit: What's on the table for US, Chinese companies",

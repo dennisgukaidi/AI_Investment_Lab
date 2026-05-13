@@ -1,5 +1,14 @@
 [
   {
+    "title": "CoreWeave CEO sends blunt message to Nvidia stock investors",
+    "published": "2026-05-13T03:07:00Z",
+    "publisher": "TheStreet",
+    "summary": "Nvidia (NVDA) stock investors have laughed all the way to the bank over the past three years, as the company has crushed the AI chip space. CoreWeave (CRWV) CEO Michael Intrator, however, just laid out why that incredible level of dominance requires consistent defense. In a recent CNBC ...",
+    "link": "https://www.thestreet.com/investing/stocks/coreweave-ceo-sends-blunt-message-to-nvidia-stock-investors",
+    "sentiment_polarity": 0.25,
+    "sentiment_subjectivity": 0.325
+  },
+  {
     "title": "Was Advanced Micro Devices (AMD) One of the Top “Blue Chip” Stocks Suddenly on Fire in April?",
     "published": "2026-05-12T21:29:19Z",
     "publisher": "Insider Monkey",
@@ -34,6 +43,15 @@
     "link": "https://finance.yahoo.com/news/nasdaq-p-500-retreat-record-204726851.html",
     "sentiment_polarity": 0.05,
     "sentiment_subjectivity": 0.35
+  },
+  {
+    "title": "Stocks Settle Mixed on Tech Weakness and Inflation Pressures",
+    "published": "2026-05-12T20:37:44Z",
+    "publisher": "Barchart",
+    "summary": "The S&P 500 Index ($SPX ) (SPY ) on Tuesday closed down -0.16%, the Dow Jones Industrial Average ($DOWI ) (DIA ) closed up +0.11%, and the Nasdaq 100 Index ($IUXX ) (QQQ ) closed down -0.87%. June E-mini S&P futures (ESM26 ) fell -0.16%, and June E-mini Nasdaq futures...",
+    "link": "https://www.barchart.com/story/news/1887337/stocks-settle-mixed-on-tech-weakness-and-inflation-pressures",
+    "sentiment_polarity": -0.109,
+    "sentiment_subjectivity": 0.218
   },
   {
     "title": "Intel, Other Chip Stocks Cool Off After Dizzying Runup",

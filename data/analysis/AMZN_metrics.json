@@ -1,0 +1,226 @@
+{
+  "meta": {
+    "ticker": "AMZN",
+    "generated_at": "2026-05-13T11:01:32.217084+00:00",
+    "cost_price": 265.82,
+    "data_rows": 501,
+    "history_first_date": "2024-05-13",
+    "history_last_date": "2026-05-12",
+    "iv_percentile_window_rows": 180,
+    "bootstrap_horizons": [
+      10,
+      20,
+      60
+    ],
+    "benchmark_ticker": "SPY"
+  },
+  "trend": {
+    "regime": "bull_core",
+    "close_vs_ma200": 36.94,
+    "ma_spread_20_60": 32.7223,
+    "slope_ma20_5d": 0.033843,
+    "slope_ma60_5d": 0.02501,
+    "ma200_available": true,
+    "positioning_hint": "多头排列+价在 MA200 上方：大趋势偏多；减仓宜分批止盈，加仓宜等回撤至均线带。"
+  },
+  "market_context": {
+    "benchmark_ticker": "SPY",
+    "available": true,
+    "aligned_trading_days": 501,
+    "spy_trend_regime": "bull_core",
+    "spy_trend": {
+      "regime": "bull_core",
+      "close_vs_ma200": 63.7232,
+      "ma_spread_20_60": 31.4637,
+      "slope_ma20_5d": 0.018772,
+      "slope_ma60_5d": 0.005848,
+      "ma200_available": true,
+      "positioning_hint": "多头排列+价在 MA200 上方：大趋势偏多；减仓宜分批止盈，加仓宜等回撤至均线带。"
+    },
+    "spy_ma": {
+      "ma_20": 717.909,
+      "ma_60": 686.4453,
+      "ma_200": 674.4568
+    },
+    "stock_total_return_20d": 0.067464,
+    "spy_total_return_20d": 0.062955,
+    "excess_return_20d": 0.004509,
+    "stock_total_return_60d": 0.33719,
+    "spy_total_return_60d": 0.082772,
+    "excess_return_60d": 0.254418,
+    "log_return_corr_60d": 0.724,
+    "benchmark_notes": [
+      "近60日显著跑赢SPY，注意获利了结与波动放大。"
+    ]
+  },
+  "monte_carlo": {
+    "model": "lognormal_iv",
+    "horizon_days": 10,
+    "iv_input": 0.2662623824023713,
+    "prob_always_above": 0.1694,
+    "prob_touch_below": 0.8306,
+    "expected_final_price": 265.7995043548903,
+    "pct5_final_price": 243.3183523619987,
+    "pct95_final_price": 289.8630252914679,
+    "prob_by_day": [
+      0.4876,
+      0.4954,
+      0.4892,
+      0.4914,
+      0.4922,
+      0.4894,
+      0.4908,
+      0.4884,
+      0.4874,
+      0.4834
+    ],
+    "probability_matrix": {
+      "+5%": 0.176,
+      "-5%": 0.8202,
+      "+10%": 0.0344,
+      "-10%": 0.9756,
+      "+15%": 0.0034,
+      "-15%": 0.9986
+    }
+  },
+  "bootstrap": {
+    "method": "historical_log_return_bootstrap",
+    "simulations": 5000,
+    "return_pool_len": 252,
+    "s0": 265.82,
+    "ma200_level": 228.88,
+    "horizons": {
+      "10": {
+        "final_median": 269.0725621441188,
+        "final_pct5": 243.92074176113923,
+        "final_pct25": 258.8849906328896,
+        "final_pct75": 280.2223601335422,
+        "final_pct95": 298.41582888372585,
+        "min_price_mae_from_start_pct5": -9.327470969750987,
+        "min_price_mae_from_start_median": -2.0322513288658657,
+        "max_price_runup_from_start_pct95": 13.089388559980074,
+        "prob_touch_or_below_stop_1x5": 0.3112,
+        "prob_touch_or_below_stop_2x": 0.2134,
+        "prob_touch_or_below_cost": 0.7816,
+        "prob_final_at_or_above_tp_aggressive": 0.3302,
+        "prob_paths_always_above_cost": 0.2184,
+        "prob_touch_or_below_ma200": 0.0068,
+        "probability_matrix_final": {
+          "+5%": 0.2724,
+          "-5%": 0.8606,
+          "+10%": 0.0902,
+          "-10%": 0.9738,
+          "+15%": 0.0238,
+          "-15%": 0.9972
+        }
+      },
+      "20": {
+        "final_median": 272.69182205237837,
+        "final_pct5": 236.6000789869881,
+        "final_pct25": 257.36721798548615,
+        "final_pct75": 288.67075489266153,
+        "final_pct95": 313.94133766866696,
+        "min_price_mae_from_start_pct5": -12.939497685308721,
+        "min_price_mae_from_start_median": -3.1791135802833828,
+        "max_price_runup_from_start_pct95": 19.546043517473297,
+        "prob_touch_or_below_stop_1x5": 0.4412,
+        "prob_touch_or_below_stop_2x": 0.3408,
+        "prob_touch_or_below_cost": 0.8292,
+        "prob_final_at_or_above_tp_aggressive": 0.442,
+        "prob_paths_always_above_cost": 0.1708,
+        "prob_touch_or_below_ma200": 0.0356,
+        "probability_matrix_final": {
+          "+5%": 0.3906,
+          "-5%": 0.8174,
+          "+10%": 0.2068,
+          "-10%": 0.9364,
+          "+15%": 0.0876,
+          "-15%": 0.9834
+        }
+      },
+      "60": {
+        "final_median": 286.5481019124636,
+        "final_pct5": 224.9918746815447,
+        "final_pct25": 259.9505866453146,
+        "final_pct75": 316.0773454680991,
+        "final_pct95": 366.2009275836305,
+        "min_price_mae_from_start_pct5": -19.437810266963478,
+        "min_price_mae_from_start_median": -5.045118371891987,
+        "max_price_runup_from_start_pct95": 41.64073404109349,
+        "prob_touch_or_below_stop_1x5": 0.5812,
+        "prob_touch_or_below_stop_2x": 0.4956,
+        "prob_touch_or_below_cost": 0.8784,
+        "prob_final_at_or_above_tp_aggressive": 0.6072,
+        "prob_paths_always_above_cost": 0.1216,
+        "prob_touch_or_below_ma200": 0.1476,
+        "probability_matrix_final": {
+          "+5%": 0.5732,
+          "-5%": 0.811,
+          "+10%": 0.4386,
+          "-10%": 0.8904,
+          "+15%": 0.327,
+          "-15%": 0.9466
+        }
+      }
+    }
+  },
+  "iv_analysis": {
+    "iv_latest": 0.2662623824023713,
+    "iv_percentile": 33.33,
+    "iv_mean_180d": 0.308103,
+    "iv_std_180d": 0.058267,
+    "iv_regime": "cheap",
+    "window_rows": 180
+  },
+  "risk_matrix": {
+    "latest_close": 265.82,
+    "latest_atr": 6.8245,
+    "stop_1x5_atr": 255.5833,
+    "stop_2x_atr": 252.171,
+    "tp_conservative": 269.2322,
+    "tp_moderate": 272.6445,
+    "tp_aggressive": 276.0567,
+    "risk_reward_1x5": 1.0,
+    "risk_reward_2x": 0.75,
+    "rr_score": 4,
+    "rr_note": "risk_measured_as_cost_minus_stop_1x5"
+  },
+  "technicals": {
+    "rsi_14": 63.82,
+    "ma_5": 270.73,
+    "ma_20": 261.8905,
+    "ma_60": 229.1682,
+    "ma_200": 228.88,
+    "macd_line": 10.9427,
+    "signal_line": 12.0044,
+    "histogram": -1.0617,
+    "momentum": "bearish",
+    "upper_band": 280.3294,
+    "middle_band": 261.8905,
+    "lower_band": 243.4516,
+    "bandwidth": 0.1408,
+    "position": "within_bands",
+    "vix_current": null,
+    "fear_level": "error"
+  },
+  "sentiment": {
+    "total_articles": 28,
+    "net_sentiment_score": 5,
+    "top_bearish_title": "Beachbody Q1 Earnings Call Highlights",
+    "top_bullish_title": "3 Growth Stocks Long-Term Investors Should Buy in May",
+    "keyword_freq": {
+      "ai": 31,
+      "delivery": 5,
+      "earnings": 9,
+      "recall": 0,
+      "fsd": 0,
+      "cybertruck": 0,
+      "margin": 0
+    }
+  },
+  "extra_dimensions": {
+    "pe_percentile": 46.15,
+    "ten_year_treasury_corr": null,
+    "sentiment_price_divergence": 0.79
+  }
+}

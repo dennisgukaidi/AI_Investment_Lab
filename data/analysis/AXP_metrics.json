@@ -1,0 +1,227 @@
+{
+  "meta": {
+    "ticker": "AXP",
+    "generated_at": "2026-05-13T11:01:32.574477+00:00",
+    "cost_price": 314.31,
+    "data_rows": 501,
+    "history_first_date": "2024-05-13",
+    "history_last_date": "2026-05-12",
+    "iv_percentile_window_rows": 180,
+    "bootstrap_horizons": [
+      10,
+      20,
+      60
+    ],
+    "benchmark_ticker": "SPY"
+  },
+  "trend": {
+    "regime": "neutral",
+    "close_vs_ma200": -22.0286,
+    "ma_spread_20_60": 6.849,
+    "slope_ma20_5d": -0.002352,
+    "slope_ma60_5d": -0.009142,
+    "ma200_available": true,
+    "positioning_hint": "趋势不明或震荡；宜控制仓位，以结构止损与情景概率为主。"
+  },
+  "market_context": {
+    "benchmark_ticker": "SPY",
+    "available": true,
+    "aligned_trading_days": 501,
+    "spy_trend_regime": "bull_core",
+    "spy_trend": {
+      "regime": "bull_core",
+      "close_vs_ma200": 63.7232,
+      "ma_spread_20_60": 31.4637,
+      "slope_ma20_5d": 0.018772,
+      "slope_ma60_5d": 0.005848,
+      "ma200_available": true,
+      "positioning_hint": "多头排列+价在 MA200 上方：大趋势偏多；减仓宜分批止盈，加仓宜等回撤至均线带。"
+    },
+    "spy_ma": {
+      "ma_20": 717.909,
+      "ma_60": 686.4453,
+      "ma_200": 674.4568
+    },
+    "stock_total_return_20d": -0.03869,
+    "spy_total_return_20d": 0.062955,
+    "excess_return_20d": -0.101645,
+    "stock_total_return_60d": -0.068711,
+    "spy_total_return_60d": 0.082772,
+    "excess_return_60d": -0.151483,
+    "log_return_corr_60d": 0.4977,
+    "benchmark_notes": [
+      "大盘偏强而标的偏弱：回撤可能更多来自个股/板块而非系统性恐慌。",
+      "近60日显著跑输SPY，结合成本与止损概率审视仓位。"
+    ]
+  },
+  "monte_carlo": {
+    "model": "lognormal_iv",
+    "horizon_days": 10,
+    "iv_input": 0.2516936782191918,
+    "prob_always_above": 0.1696,
+    "prob_touch_below": 0.8304,
+    "expected_final_price": 314.28689244232595,
+    "pct5_final_price": 289.12043417935166,
+    "pct95_final_price": 341.1437142937964,
+    "prob_by_day": [
+      0.4882,
+      0.4956,
+      0.4894,
+      0.4918,
+      0.4924,
+      0.4896,
+      0.4916,
+      0.4888,
+      0.4878,
+      0.4838
+    ],
+    "probability_matrix": {
+      "+5%": 0.162,
+      "-5%": 0.8354,
+      "+10%": 0.026,
+      "-10%": 0.9818,
+      "+15%": 0.002,
+      "-15%": 0.9994
+    }
+  },
+  "bootstrap": {
+    "method": "historical_log_return_bootstrap",
+    "simulations": 5000,
+    "return_pool_len": 252,
+    "s0": 314.31,
+    "ma200_level": 336.33855000000005,
+    "horizons": {
+      "10": {
+        "final_median": 316.0637214325103,
+        "final_pct5": 289.4004558343115,
+        "final_pct25": 305.3944008480795,
+        "final_pct75": 327.0030477366687,
+        "final_pct95": 343.745061371951,
+        "min_price_mae_from_start_pct5": -9.013666685362718,
+        "min_price_mae_from_start_median": -1.987174792907394,
+        "max_price_runup_from_start_pct95": 9.956900847791385,
+        "prob_touch_or_below_stop_1x5": 0.3274,
+        "prob_touch_or_below_stop_2x": 0.228,
+        "prob_touch_or_below_cost": 0.791,
+        "prob_final_at_or_above_tp_aggressive": 0.282,
+        "prob_paths_always_above_cost": 0.209,
+        "prob_touch_or_below_ma200": 0.9992,
+        "probability_matrix_final": {
+          "+5%": 0.194,
+          "-5%": 0.8604,
+          "+10%": 0.0386,
+          "-10%": 0.9764,
+          "+15%": 0.0042,
+          "-15%": 0.9964
+        }
+      },
+      "20": {
+        "final_median": 317.9152099587135,
+        "final_pct5": 278.5934635726002,
+        "final_pct25": 302.2984318610101,
+        "final_pct75": 333.41236493097216,
+        "final_pct95": 358.36307737360363,
+        "min_price_mae_from_start_pct5": -12.768254243902627,
+        "min_price_mae_from_start_median": -3.2313092014559652,
+        "max_price_runup_from_start_pct95": 15.324746596479498,
+        "prob_touch_or_below_stop_1x5": 0.4766,
+        "prob_touch_or_below_stop_2x": 0.3706,
+        "prob_touch_or_below_cost": 0.847,
+        "prob_final_at_or_above_tp_aggressive": 0.3688,
+        "prob_paths_always_above_cost": 0.153,
+        "prob_touch_or_below_ma200": 0.9992,
+        "probability_matrix_final": {
+          "+5%": 0.2968,
+          "-5%": 0.8012,
+          "+10%": 0.1222,
+          "-10%": 0.9322,
+          "+15%": 0.0396,
+          "-15%": 0.9842
+        }
+      },
+      "60": {
+        "final_median": 322.5541752542169,
+        "final_pct5": 257.966772134359,
+        "final_pct25": 295.02850402631145,
+        "final_pct75": 352.05033154514774,
+        "final_pct95": 397.76344581053223,
+        "min_price_mae_from_start_pct5": -21.036375062700078,
+        "min_price_mae_from_start_median": -5.89955445902206,
+        "max_price_runup_from_start_pct95": 29.61530868535243,
+        "prob_touch_or_below_stop_1x5": 0.6486,
+        "prob_touch_or_below_stop_2x": 0.5722,
+        "prob_touch_or_below_cost": 0.8988,
+        "prob_final_at_or_above_tp_aggressive": 0.4752,
+        "prob_paths_always_above_cost": 0.1012,
+        "prob_touch_or_below_ma200": 0.9992,
+        "probability_matrix_final": {
+          "+5%": 0.4364,
+          "-5%": 0.7214,
+          "+10%": 0.2994,
+          "-10%": 0.833,
+          "+15%": 0.1896,
+          "-15%": 0.92
+        }
+      }
+    }
+  },
+  "iv_analysis": {
+    "iv_latest": 0.2516936782191918,
+    "iv_percentile": 44.44,
+    "iv_mean_180d": 0.269565,
+    "iv_std_180d": 0.059944,
+    "iv_regime": "neutral",
+    "window_rows": 180
+  },
+  "risk_matrix": {
+    "latest_close": 314.31,
+    "latest_atr": 7.3419,
+    "stop_1x5_atr": 303.2971,
+    "stop_2x_atr": 299.6262,
+    "tp_conservative": 317.981,
+    "tp_moderate": 321.6519,
+    "tp_aggressive": 325.3229,
+    "risk_reward_1x5": 1.0,
+    "risk_reward_2x": 0.75,
+    "rr_score": 4,
+    "rr_note": "risk_measured_as_cost_minus_stop_1x5"
+  },
+  "technicals": {
+    "rsi_14": 46.72,
+    "ma_5": 316.65,
+    "ma_20": 321.1615,
+    "ma_60": 314.3125,
+    "ma_200": 336.3386,
+    "macd_line": -0.0838,
+    "signal_line": 1.0694,
+    "histogram": -1.1532,
+    "momentum": "bearish",
+    "upper_band": 334.1206,
+    "middle_band": 321.1615,
+    "lower_band": 308.2024,
+    "bandwidth": 0.0807,
+    "position": "within_bands",
+    "vix_current": null,
+    "fear_level": "error"
+  },
+  "sentiment": {
+    "total_articles": 11,
+    "net_sentiment_score": 4,
+    "top_bearish_title": "Why Amex’s CEO scrapped a bonus system that made executives compete for cash",
+    "top_bullish_title": "Bernstein Hikes Delta Air Lines Price Target to $88 on Better Fuel Insulation",
+    "keyword_freq": {
+      "ai": 10,
+      "delivery": 0,
+      "earnings": 0,
+      "recall": 0,
+      "fsd": 0,
+      "cybertruck": 0,
+      "margin": 0
+    }
+  },
+  "extra_dimensions": {
+    "pe_percentile": 7.69,
+    "ten_year_treasury_corr": null,
+    "sentiment_price_divergence": 5.33
+  }
+}

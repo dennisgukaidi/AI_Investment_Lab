@@ -78,6 +78,50 @@ def load_price_data(ticker: str) -> pd.DataFrame:
     df.columns = df.columns.str.lower()
     return df
 
+# ---------------------------------------------------------------------------
+# 1.b 额外数据加载：基本面、宏观、替代数据
+# ---------------------------------------------------------------------------
+
+def _load_json(path: pathlib.Path) -> dict[str, Any]:
+    """安全读取 JSON 文件，若不存在或解析错误返回空字典。"""
+    if not path.is_file():
+        return {}
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, OSError):
+        return {}
+
+def load_fundamentals(ticker: str) -> dict[str, Any]:
+    """加载 data/fundamentals/{ticker}_fundamentals.json"""
+    path = DATA_DIR / "fundamentals" / f"{ticker}_fundamentals.json"
+    return _load_json(path)
+
+def load_all_fundamentals_pe() -> list[float]:
+    """遍历 data/fundamentals/ 下所有文件，收集 PE ratio（跳过缺失或非数值）。"""
+    pe_vals: list[float] = []
+    fundamentals_dir = DATA_DIR / "fundamentals"
+    for file in fundamentals_dir.iterdir():
+        if file.suffix != ".json":
+            continue
+        data = _load_json(file)
+        try:
+            pe = float(data.get("current_ratios", {}).get("valuation_ratios", {}).get("pe_ratio"))
+            if math.isfinite(pe):
+                pe_vals.append(pe)
+        except Exception:
+            continue
+    return pe_vals
+
+def load_macro() -> dict[str, Any]:
+    """加载宏观数据 data/macroeconomic/macro_data.json"""
+    path = DATA_DIR / "macroeconomic" / "macro_data.json"
+    return _load_json(path)
+
+def load_alternative(ticker: str) -> dict[str, Any]:
+    """加载 data/alternative/{ticker}_alternative.json"""
+    path = DATA_DIR / "alternative" / f"{ticker}_alternative.json"
+    return _load_json(path)
+
 
 def load_recent_news(ticker: str, days: int = 14) -> list[dict]:
     """加载最近 ``days`` 天的新闻条目（向量化日期解析）。"""
@@ -104,14 +148,28 @@ def load_recent_news(ticker: str, days: int = 14) -> list[dict]:
 
 
 def extract_cost_price(ticker: str, price_df: pd.DataFrame | None = None) -> float:
-    """从 ``rules.md`` 中提取持仓成本价，若未找到则回退到最新收盘价。
-
-    表格格式示例： ``| TSLA | 20.0 | $390.55 | ...``
-    当 ``rules.md`` 中不存在对应 ticker 时，使用该 ticker 最近的收盘价作为成本价，
-    这样可以让引擎对任意股票都能运行，而不必手动维护 ``rules.md``。
+    """优先从 `data/holdings/holdings.json` 中读取成本价；找不到时回退到 `rules.md`，再回退到最新收盘价。
 
     若已在分析流程中加载过行情，传入 ``price_df`` 可避免重复读盘。
     """
+    # 1) holdings.json
+    holdings_path = BASE_DIR / "data" / "holdings" / "holdings.json"
+    try:
+        if holdings_path.is_file():
+            obj = json.loads(holdings_path.read_text(encoding="utf-8"))
+            h = obj.get("holdings", {})
+            if ticker in h:
+                val = h[ticker].get("averageCost")
+                if val is not None:
+                    try:
+                        return float(val)
+                    except Exception:
+                        pass
+    except Exception:
+        # 若解析失败，回退到下一种方式
+        pass
+
+    # 2) 兼容旧流程：rules.md 中的成本价
     rules_path = BASE_DIR / "rules.md"
     try:
         text = rules_path.read_text(encoding="utf-8")
@@ -120,9 +178,12 @@ def extract_cost_price(ticker: str, price_df: pd.DataFrame | None = None) -> flo
     pattern = rf"\|\s*{re.escape(ticker)}\s*\|[^|]*\|\s*\$(?P<price>[0-9,.]+)"
     match = re.search(pattern, text)
     if match:
-        return float(match.group("price").replace(",", ""))
+        try:
+            return float(match.group("price").replace(",", ""))
+        except Exception:
+            pass
 
-    # 回退：使用已加载的行情或再读 CSV
+    # 3) 最后回退：使用已加载的行情或再读 CSV
     df = price_df if price_df is not None else load_price_data(ticker)
     return float(df["close"].iloc[-1])
 
@@ -146,16 +207,27 @@ def _generate_target_levels(ticker: str, df: pd.DataFrame, cost_price: float) ->
     # 这里假设在 ``rules.md`` 中的持仓表格会有一个可选的备注列，格式类似 ``| TSLA | ... | $390.55 | ... | +5% |``
     # 为简化实现，若未匹配到此类信息则回退到自动生成。
     try:
-        rules_path = BASE_DIR / "rules.md"
-        text = rules_path.read_text(encoding="utf-8")
-        # 持仓表：代码 | 股数 | 成本 | 市价 | 每股盈亏 | 备注（可选百分比目标）
-        pattern = (
-            rf"\|\s*{re.escape(ticker)}\s*\|[^|]*\|\s*\$(?P<price>[0-9,.]+)\s*\|"
-            rf"[^|]*\|[^|]*\|\s*(?P<note>[^|]*)"
-        )
-        match = re.search(pattern, text)
-        if match:
-            note = match.group("note").strip()
+        # 优先尝试从 holdings.json 的备注字段读取自定义目标
+        holdings_path = BASE_DIR / "data" / "holdings" / "holdings.json"
+        if holdings_path.is_file():
+            obj = json.loads(holdings_path.read_text(encoding="utf-8"))
+            h = obj.get("holdings", {})
+            if ticker in h:
+                note = str(h[ticker].get("note", "") or "").strip()
+            else:
+                note = ""
+        else:
+            # 兼容旧流程：从 rules.md 中解析备注列
+            rules_path = BASE_DIR / "rules.md"
+            text = rules_path.read_text(encoding="utf-8")
+            # 持仓表：代码 | 股数 | 成本 | 市价 | 每股盈亏 | 备注（可选百分比目标）
+            pattern = (
+                rf"\|\s*{re.escape(ticker)}\s*\|[^|]*\|\s*\$(?P<price>[0-9,.]+)\s*\|"
+                rf"[^|]*\|[^|]*\|\s*(?P<note>[^|]*)"
+            )
+            match = re.search(pattern, text)
+            if match:
+                note = match.group("note").strip()
             # 解析类似 ``+5%,-10%`` 的逗号分隔列表
             targets: dict[str, float] = {}
             for token in re.split(r"[,;]", note):
@@ -795,6 +867,55 @@ def analyze(ticker: str = "TSLA") -> dict[str, Any]:
     # --- 新闻情绪 ---
     sentiment = news_sentiment(news_items)
 
+    # ---------------------------------------------------------------------
+    # 7. 额外维度计算：PE 百分位、10Y 国债相关性、情绪‑价格背离度
+    # ---------------------------------------------------------------------
+    # 7.1 PE 百分位（相对于所有已收集的基本面数据）
+    fundamentals = load_fundamentals(ticker)
+    current_pe = fundamentals.get("current_ratios", {}).get("valuation_ratios", {}).get("pe_ratio")
+    pe_percentile: float | None = None
+    if isinstance(current_pe, (int, float)) and not math.isnan(current_pe):
+        all_pe = load_all_fundamentals_pe()
+        if all_pe:
+            # 计算当前 PE 在所有 PE 中的百分位（<= 当前值的比例）
+            pe_percentile = 100.0 * sum(1 for p in all_pe if p <= current_pe) / len(all_pe)
+
+    # 7.2 与 10 年期国债收益率的相关性（使用对数收益率）
+    treasury_corr: float | None = None
+    macro = load_macro()
+    ten_year = (
+        macro.get("indicators", {})
+        .get("ten_year_treasury", {})
+        .get("series", {})
+    )
+    if ten_year and not price_df.empty:
+        # 构建 pandas Series，索引为日期
+        treasury_series = pd.Series(ten_year, dtype=float)
+        treasury_series.index = pd.to_datetime(treasury_series.index)
+        # 对齐到股票交易日，向前填充缺失值
+        treasury_aligned = treasury_series.reindex(price_df["date"], method="ffill")
+        # 计算对数收益率（若出现 0 或负值则使用 pct_change）
+        stock_lr = np.log(price_df["close"].astype(float) / price_df["close"].astype(float).shift(1)).dropna()
+        treasury_lr = np.log(treasury_aligned.astype(float) / treasury_aligned.astype(float).shift(1)).dropna()
+        # 取交集
+        common = stock_lr.index.intersection(treasury_lr.index)
+        if len(common) > 1:
+            treasury_corr = float(stock_lr.loc[common].corr(treasury_lr.loc[common]))
+
+    # 7.3 情绪‑价格背离度：情绪净分数 与 最近 14 天价格涨跌幅的差异
+    sentiment_divergence: float | None = None
+    net_sent = sentiment.get("net_sentiment_score")
+    if isinstance(net_sent, (int, float)) and len(price_df) >= 14:
+        price_change = float(price_df["close"].iloc[-1] / price_df["close"].iloc[-14] - 1.0)
+        # 将价格涨跌幅转为百分比后比较
+        sentiment_divergence = net_sent - (price_change * 100.0)
+
+    extra_dimensions = {
+        "pe_percentile": round(pe_percentile, 2) if pe_percentile is not None else None,
+        "ten_year_treasury_corr": round(treasury_corr, 4) if treasury_corr is not None else None,
+        "sentiment_price_divergence": round(sentiment_divergence, 2) if sentiment_divergence is not None else None,
+    }
+
     dcol = price_df["date"] if "date" in price_df.columns else None
     if dcol is not None:
         h_first = str(pd.to_datetime(dcol.iloc[0]).date())
@@ -829,6 +950,7 @@ def analyze(ticker: str = "TSLA") -> dict[str, Any]:
             **vix,
         },
         "sentiment": sentiment,
+        "extra_dimensions": extra_dimensions,
     }
     return output
 
@@ -909,6 +1031,21 @@ def main(ticker: str = "TSLA") -> None:
     out_path = save_metrics(metrics, ticker)
     print(f"[OK] 分析完成 → {out_path}")
     _print_summary(metrics, ticker)
+    # ---------------------------------------------------------------------
+    # 自动入库钩子：将本次分析结果、基本面和宏观数据写入 SQLite
+    # ---------------------------------------------------------------------
+    try:
+        # 动态加载内部帮助模块（避免相对导入在 __main__ 执行时失效）
+        import importlib.util
+        helper_path = BASE_DIR / "scripts" / "_db_ingest_helper.py"
+        spec = importlib.util.spec_from_file_location("_db_ingest_helper", helper_path)
+        helper = importlib.util.module_from_spec(spec)
+        assert spec and spec.loader  # 类型检查安全
+        spec.loader.exec_module(helper)
+        helper.ingest_all(ticker, out_path)
+        print(f"[OK] 数据已入库 (quantitative, fundamentals, macro)")
+    except Exception as exc:  # pragma: no cover
+        print(f"[WARN] 入库失败: {exc}")
 
 
 def _cli_main() -> None:

@@ -178,57 +178,25 @@ def update_portfolio():
 
     ib.disconnect()
 
-    rules_path = ROOT / "rules.md"
-    bak_path = ROOT / "rules.md.bak"
+    # 写入独立的持仓文件：data/holdings/holdings.json
+    holdings_dir = ROOT / "data" / "holdings"
+    holdings_dir.mkdir(parents=True, exist_ok=True)
+    holdings_path = holdings_dir / "holdings.json"
 
-    # 备份原始 rules.md
-    if rules_path.is_file():
-        os.replace(rules_path, bak_path)
+    out = {
+        "meta": {
+            "generated_at": datetime.utcnow().isoformat() + "Z",
+            "source": "tws",
+        },
+        "holdings": holdings,
+    }
+    try:
+        import json
 
-    # 读取原文件，定位表格起止位置，以便保留表格前后的其他内容
-    with open(bak_path, 'r', encoding='utf-8') as src:
-        lines = src.readlines()
-
-    # 找到表格开始（标题行）和结束（下一个二级标题或文件结束）
-    table_start = None
-    table_end = None
-    for idx, line in enumerate(lines):
-        if line.strip().startswith('| 股票代码'):
-            table_start = idx
-        elif table_start is not None and line.strip().startswith('##'):
-            table_end = idx
-            break
-    if table_start is None:
-        print('[WARN] 未在 rules.md 中找到持仓表格起始行，放弃更新。')
-        return
-    if table_end is None:
-        table_end = len(lines)
-
-    # 生成新的表格内容，包含持仓股数、持仓成本、最新市价、每股盈亏
-    header = "| 股票代码 | 持仓股数 | 持仓成本 | 市价 | 每股盈亏 | 备注 |\n"
-    separator = "|---|---|---|---|---|---|\n"
-    rows = []
-    for symbol, data in holdings.items():
-        position = data['position']
-        avg_cost = data['averageCost']
-        market_price = data['marketPrice']
-        # 每股盈亏 = 市价 - 持仓成本
-        pl_per_share = market_price - avg_cost if market_price is not None else float('nan')
-        row = f"| {symbol} | {position} | ${avg_cost:.2f} | ${market_price:.2f} | ${pl_per_share:.2f} |  |\n"
-        rows.append(row)
-
-    new_table = [header, separator] + rows
-
-    # 重新写入文件：表格前的内容 + 新表格 + 表格后的内容
-    with open(rules_path, 'w', encoding='utf-8') as dst:
-        # 前半部分（包括表格标题行之前的所有行）
-        dst.writelines(lines[:table_start])
-        # 写入新表格
-        dst.writelines(new_table)
-        # 写入表格之后的其余内容（如果有的话）
-        dst.writelines(lines[table_end:])
-
-    print('[OK] 已使用 TWS 实时持仓更新 rules.md（已备份为 rules.md.bak）')
+        holdings_path.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
+        print(f"[OK] 已将实时持仓写入 {holdings_path.as_posix()}")
+    except Exception as e:
+        print(f"[ERR] 写入持仓文件失败: {e}")
 
 
 # ---------------------------------------------------------------------------
@@ -390,6 +358,48 @@ def main():
     update_portfolio()
     download_history()
     enrich_data()
+    # ---------------------------------------------------------------------
+    # 自动入库最近生成的量化指标 JSON（位于 data/analysis/）
+    # ---------------------------------------------------------------------
+    try:
+        import json
+        import sqlite3
+        from pathlib import Path
+
+        analysis_dir = Path(__file__).resolve().parents[1] / "data" / "analysis"
+        db_path = Path(__file__).resolve().parents[1] / "investment_lab.db"
+        conn = sqlite3.connect(db_path)
+        cur = conn.cursor()
+        # 确保表存在（防止用户未运行 init_db）
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS quantitative (
+                ticker  TEXT NOT NULL,
+                date    TEXT NOT NULL,
+                metrics TEXT NOT NULL,
+                PRIMARY KEY (ticker, date)
+            )
+            """
+        )
+        for json_file in analysis_dir.glob("*_metrics.json"):
+            try:
+                data = json.loads(json_file.read_text(encoding="utf-8"))
+                meta = data.get("meta", {})
+                ticker = meta.get("ticker")
+                date = meta.get("history_last_date")
+                if ticker and date:
+                    cur.execute(
+                        "INSERT OR REPLACE INTO quantitative (ticker, date, metrics) VALUES (?, ?, ?)",
+                        (ticker, date, json.dumps(data, ensure_ascii=False)),
+                    )
+            except Exception as e:
+                print(f"[WARN] 入库 {json_file.name} 失败: {e}")
+        conn.commit()
+    except Exception as e:  # pragma: no cover
+        print(f"[WARN] 自动入库过程出现异常: {e}")
+    finally:
+        if 'conn' in locals():
+            conn.close()
 
 
 if __name__ == '__main__':

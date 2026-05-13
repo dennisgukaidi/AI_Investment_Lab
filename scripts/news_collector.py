@@ -41,6 +41,7 @@ except ImportError as e:  # pragma: no cover
 # ---------------------------------------------------------------------------
 BASE_DIR = Path(__file__).resolve().parents[1]  # project root (d:/Program/AI_Investment_Lab)
 RULES_FILE = BASE_DIR / "rules.md"
+HOLDINGS_FILE = BASE_DIR / "data" / "holdings" / "holdings.json"
 NEWS_DIR = BASE_DIR / "data" / "news"
 NEWS_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -63,11 +64,21 @@ def extract_tickers(rules_path: Path) -> Set[str]:
     """
     tickers: Set[str] = set()
 
-    # --- Extract from rules.md ---
-    ticker_pattern = re.compile(r"^\|\s*([A-Z]{1,5})\s*\|", re.MULTILINE)
-    if rules_path.is_file():
-        content = rules_path.read_text(encoding="utf-8")
-        tickers.update({m.group(1) for m in ticker_pattern.finditer(content)})
+    # 1) 优先从 holdings.json 提取（若存在）
+    try:
+        if HOLDINGS_FILE.is_file():
+            obj = json.loads(HOLDINGS_FILE.read_text(encoding="utf-8"))
+            holdings = obj.get("holdings", {})
+            tickers.update([s.upper() for s in holdings.keys()])
+    except Exception:
+        pass
+
+    # 2) 回退到 rules.md 的表格（兼容旧流程）
+    if not tickers:
+        ticker_pattern = re.compile(r"^\|\s*([A-Z]{1,5})\s*\|", re.MULTILINE)
+        if rules_path.is_file():
+            content = rules_path.read_text(encoding="utf-8")
+            tickers.update({m.group(1) for m in ticker_pattern.finditer(content)})
 
     # --- Extract from watchlist.csv (comma‑separated) ---
     watchlist_path = BASE_DIR / "data" / "watchlist.csv"

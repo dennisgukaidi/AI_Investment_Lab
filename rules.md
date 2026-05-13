@@ -1,134 +1,67 @@
-# 投资原则与持仓记录 (v4.5 定稿版)
+# rules — 项目操作手册（供 AI 执行）
 
-## 📊 实时持仓看板
-> **注意**：本表格由 `portfolio_pipeline.py` 自动通过 TWS 实盘同步，禁止手动修改。
+目的：为 AI 助手（Cline）提供一份可直接执行的、步骤化操作手册。任何自动化操作必须严格按本文件中的“触发词 → 步骤”执行，发生异常时按“故障处理”流程上报。
 
-| 股票代码 | 持仓股数 | 持仓成本 | 市价 | 每股盈亏 | 备注 |
-|---|---|---|---|---|---|
-| CEG | 10.0 | $289.61 | $292.49 | $2.88 |  |
-| IBKR | 6.144 | $65.10 | $84.58 | $19.48 |  |
-| TSLA | 20.0 | $390.55 | $430.33 | $39.78 |  |
-| VST | 20.0 | $166.05 | $146.77 | $-19.28 |  |
-## 🎯 核心投资原则
-1. **健康第一**：不熬夜看盘，不进行情绪化交易。
-2. **稳健增值**：追求长期跑赢通胀，不追求高频短线。
-3. **数据驱动**：所有操作逻辑必须经过 180 天量价数据与 14 天舆情分析。
+前提与约束
+- 在运行脚本前请激活虚拟环境：Windows: `.venv\\Scripts\\activate`。
+- Python 版本应为 3.8+
+- 禁止直接手动编辑持仓表（由 `scripts/portfolio_pipeline.py` 自动维护）。
 
-## ⚙️ 自动化工作流 (Standard Operating Procedure)
-当用户输入以下“触发词”时，Cline 必须严格执行对应脚本：
 
-1. **“更新数据”**：
-   - 运行 `scripts/portfolio_pipeline.py`：同步 TWS 实盘到本文件，补齐 180d 历史数据。
-   - 运行 `scripts/news_collector.py`：抓取最近 14 天新闻摘要。
-   
-2. **“分析股市”或“分析 [Ticker]”**：
-1. **触发脚本**：运行 `python scripts/analyze_report.py [Ticker]`。
-2. **读取结论**：解析 `data/analysis/[Ticker]_metrics.json`。
-3. **撰写内参**：Cline 必须基于 JSON 里的硬核数据（如 Monte Carlo 概率、IV 分位、RR 评分），结合自己的理解写出一份有深度、有人性的研报。
+触发词与明确执行步骤（AI 应按序执行并报告每步结果）
 
-3. **“自检”**：
-   - 检查 7496 端口连接及 `data/` 目录下文件的修改日期。
-   - 当需要更新脚本或需要写新脚本去查询 cline_rules.md
+1) "更新数据" — 完整数据流水线
+   - 命令：
+     - `python scripts/portfolio_pipeline.py`
+     - `python scripts/news_collector.py`
+     - 可选（批量）：`python scripts/fundamental_data_collector.py <TICKER>`、`python scripts/alternative_data_collector.py <TICKER>`、`python scripts/macroeconomic_data_collector.py --api-key <FRED_KEY>`
+   - 预期输出：`data/raw/{ticker}_ohlcv.csv`、`data/news/{ticker}_news.json`、`data/fundamentals/{ticker}_fundamentals.json`、`data/macroeconomic/macro_data.json`
+   - 验证：脚本退出码为 0，且对应文件的修改时间更新（检查 `os.path.getmtime`）。
 
-## 📋 详细项目运行流程
+2) "分析 [TICKER]" — 单只股票分析并自动入库
+   - 命令：`python scripts/analyze_report.py <TICKER>`
+   - 预期输出：`data/analysis/<TICKER>_metrics.json`，`reports/<TICKER>_report.md`（若脚本生成）
+   - 自动入库：`analyze_report.py` 会在保存 metrics 后调用 `_db_ingest_helper.ingest_all()`（若启用），将数据写入 `investment_lab.db`。
+   - 验证：检查 metrics JSON 存在并包含 `summary` 或 `probability` 字段；若启用入库，验证数据库中存在对应记录。
 
-### 整体运行逻辑
-本项目基于数据驱动的投资分析系统，通过自动化脚本收集市场数据、新闻舆情和持仓信息，然后使用量化算法进行风险评估和趋势分析，最终生成投资报告。系统遵循“动静分离”原则，数据存储在 `data/` 目录，脚本逻辑在 `scripts/` 目录，报告输出在 `reports/` 目录。
+3) "入库全部" — 批量导入并验证（验收脚本）
+   - 命令：`python scripts/ingest_all_and_show_tsla.py`
+   - 预期输出：数据库写入日志；控制台打印 TSLA 验证结果。
 
-### 核心组件
-- **数据源**：Interactive Brokers TWS API（主） + yfinance（备用）
-- **分析引擎**：基于历史波动率（HV）、隐含波动率（IV）、蒙特卡洛模拟、引导分析等量化方法
-- **风控机制**：动态止损（基于ATR）、概率分布评估
-- **输出格式**：JSON metrics + Markdown 研报
+4) "获取上下文 [TICKER]" — 为大模型构建上下文
+   - 命令：`python scripts/get_context_for_ai.py --ticker <TICKER> > reports/ai_<TICKER>.txt`
+   - 预期输出：`reports/ai_<TICKER>.txt`（包含最近 30 天的量化、基本面、宏观与舆情摘要）
 
-### 详细运行流程
-1. **环境准备**：
-   - 确保 TWS 或 IB Gateway 运行在端口 7496，客户端ID 10
-   - 激活 Python 虚拟环境（.venv）
-   - 检查依赖：ib_insync, pandas, numpy, yfinance 等
+5) "自检" — 系统健康检查
+   - 步骤：检查 TWS/IB Gateway 是否监听端口 7496（或尝试通过 ib_insync 连接）；检查 `data/` 目录关键文件（raw、analysis、macro）最近修改时间；检查虚拟环境依赖是否安装（可通过 `pip list` 校验关键包）。
+   - 命令示例（Windows PowerShell）：
+     - `netstat -ano | Select-String ":7496"`
+     - `python -c "import ib_insync; print('ib_insync ok')"`
 
-2. **数据更新阶段**：
-   - 执行 `scripts/portfolio_pipeline.py`：
-     - 连接 TWS，同步实盘持仓到 `rules.md`
-     - 下载观察清单（watchlist.csv）+ SPY 的 500 日历日 OHLCV 数据
-     - 丰富数据：计算滚动 HV 填充 IV，使用 yfinance 获取分析师数据
-     - 输出：`data/raw/{ticker}_ohlcv.csv`
-   - 执行 `scripts/news_collector.py`：
-     - 从 yfinance 获取最近 30 天新闻
-     - 集成 TextBlob 情绪分析（polarity + subjectivity）
-     - 增量更新，保留最多 50 条或 14 天内新闻
-     - 输出：`data/news/{ticker}_news.json`（含情绪评分）
-   - 执行 `scripts/fundamental_data_collector.py [Ticker]`：
-     - 收集基本面估值数据：P/E、P/B、P/S 比率
-     - 财务健康指标：债务比率、流动比率、ROE/ROA
-     - 增长指标：EPS 增长率、营收增长、市值信息
-     - 输出：`data/fundamentals/{ticker}_fundamentals.json`
-   - 执行 `scripts/alternative_data_collector.py [Ticker]`：
-     - Google Trends 搜索热度数据（12 个月历史）
-     - 新闻情绪聚合分析（基于 news_collector.py 数据）
-     - 输出：`data/alternative/{ticker}_alternative.json`
-   - 执行 `scripts/macroeconomic_data_collector.py --api-key [FRED_KEY]`：
-     - 联邦基金利率、10 年期国债收益率
-     - CPI、PPI 通胀数据
-     - 非农就业、失业率等就业数据
-     - GDP 季度数据、ISM PMI 指数
-     - 输出：`data/macroeconomic/macro_data.json`
+故障处理（AI 必须在执行失败时遵循）
+- 若脚本非零退出：收集 stderr、stdout 与返回码，保存到 `reports/error_<command>_<timestamp>.log`，并向用户报告执行步骤与异常摘要。
+- 若关键输出文件未生成：回滚并提示用户（或在确认下重试一次）。
+- 对任何会引发真实交易或改动账户的操作（需与 TWS 交互写入订单），AI 必须先向用户确认并获得明确许可。
 
-3. **分析阶段**：
-   - 执行 `python scripts/analyze_report.py [Ticker]`：
-     - 输入：`data/raw/{ticker}_ohlcv.csv`, `data/news/{ticker}_news.json`, `rules.md`
-     - 算法执行：
-       - 蒙特卡洛模拟（5000 次，基于最新 IV）
-       - IV 分位计算（180 日）
-       - 风险矩阵（ATR 止损）
-       - 趋势分析（MA20/60/200）
-       - 引导分析（历史收益抽样）
-       - 大盘对比（SPY 趋势、相关性）
-     - 输出：`data/analysis/{ticker}_metrics.json`
+脚本与文件说明（核心、简明）
+- `scripts/portfolio_pipeline.py` — 持仓同步 + 历史行情下载，更新 `data/raw/` 和 `rules.md`（持仓部分）。
+- `scripts/news_collector.py` — 新闻抓取与情绪打分，输出到 `data/news/`。
+- `scripts/analyze_report.py` — 量化分析引擎，生成 `data/analysis/*_metrics.json`，并触发自动入库（如配置）。
+- `scripts/_db_ingest_helper.py` — 数据入库助手，`ingest_all(ticker, metrics_path)` 将 metrics、fundamentals、macro 写入 `investment_lab.db`。
+- `scripts/ingest_all_and_show_tsla.py` — 批量入库并打印 TSLA 验证信息。
+- `scripts/get_context_for_ai.py` — 从 DB/文件提取最近 30 天上下文，供大模型使用。
+ - `scripts/strategy_advisor.py` — 策略顾问报告生成器（基于 `quantitative` 表的 `metrics`）。
+    - 功能：从 `investment_lab.db` 读取最新 `metrics`，解析 bootstrap 回本概率、风险矩阵、技术面与估值分位，并生成结构化的 Markdown 报告。
+    - 输出位置：默认打印到 `stdout`，推荐写入 `reports/strategy_<TICKER>.md` 以便归档与审阅。
+    - 运行示例：
+       - `python scripts/strategy_advisor.py --ticker TSLA --output reports/strategy_TSLA.md`
+       - 若需对 watchlist 全部标的生成报告，可在 AI 控制下循环调用（每只单独指定 `--output` 以免覆盖）。
+    - 验证：运行后应在 `reports/` 下看到对应 `strategy_*.md` 文件，且文件内容包含“回本概率（10/20/60d）”与“风险对冲位”小节。
 
-4. **报告生成阶段**：
-   - 基于 metrics.json 生成 Markdown 研报
-   - 结合基本面、宏观、情绪等多维度数据
-   - 结合持仓成本计算回本概率
-   - 强调核心结论（概率、IV 分位、抄底信号等）
+安全与权限
+- 默认不在生产账户下执行会造成真实交易的脚本。若需要下单或调整实盘持仓，必须先得到用户口头/书面授权并记录操作理由。
 
-### 需要执行的文件列表
-- **核心脚本**：
-  - `scripts/portfolio_pipeline.py`：投资组合流水线（持仓同步 + 历史数据下载）
-  - `scripts/news_collector.py`：新闻收集器（含情绪分析）
-  - `scripts/analyze_report.py`：量化分析引擎
-  - `scripts/fundamental_data_collector.py`：基本面数据收集器
-  - `scripts/alternative_data_collector.py`：替代数据收集器（Google Trends + 情绪）
-  - `scripts/macroeconomic_data_collector.py`：宏观经济数据收集器（FRED API）
-- **配置文件**：
-  - `data/watchlist.csv`：观察股票清单
-  - `rules.md`：持仓和原则（自动更新）
-- **输出文件**：
-  - `data/raw/{ticker}_ohlcv.csv`：历史价格数据
-  - `data/news/{ticker}_news.json`：新闻数据（含情绪评分）
-  - `data/fundamentals/{ticker}_fundamentals.json`：基本面估值数据
-  - `data/alternative/{ticker}_alternative.json`：替代数据（Google Trends + 情绪）
-  - `data/macroeconomic/macro_data.json`：宏观经济指标
-  - `data/analysis/{ticker}_metrics.json`：分析结果
-  - `reports/{ticker}_report.md`：投资报告
+变更记录与维护
+- 本文件为 AI 可执行手册，任何变更应在 `agent_rules.md` 中记录变更理由与测试步骤。
 
-### 运行出现问题或需要修改脚本的处理
-如果运行过程中出现错误、需要调整参数或编写新脚本，请参考 `agent_rules.md` 文件，该文件包含机器人更新脚本的详细规则和参数设置指南。所有脚本修改必须遵循 `cline_rules.md` 中的开发规范。
-
-## ✅ 验证状态
-
-已对项目中的所有 Python 脚本进行语法编译检查，未发现错误。以下文件已成功编译：
-
-```
-scripts/alternative_data_collector.py
-scripts/analyze_report.py
-scripts/download_watchlist_data.py
-scripts/fundamental_data_collector.py
-scripts/macroeconomic_data_collector.py
-scripts/news_collector.py
-scripts/portfolio_pipeline.py
-```
-
-文档中引用的脚本路径、文件名称均与实际文件保持一致，确保新手能够顺畅地按照说明进行操作。
-
-*最后更新：2026年5月13日*
+最后更新：2026-05-13
