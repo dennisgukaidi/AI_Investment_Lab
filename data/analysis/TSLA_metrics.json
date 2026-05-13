@@ -1,7 +1,7 @@
 {
   "meta": {
     "ticker": "TSLA",
-    "generated_at": "2026-05-12T15:01:40.836688+00:00",
+    "generated_at": "2026-05-13T01:45:10.501482+00:00",
     "cost_price": 390.55,
     "data_rows": 501,
     "history_first_date": "2024-05-13",
@@ -190,7 +190,18 @@
     "ma_5": 423.818,
     "ma_20": 394.9415,
     "ma_60": 388.6727,
-    "ma_200": 405.6795
+    "ma_200": 405.6795,
+    "macd_line": 13.0059,
+    "signal_line": 6.2186,
+    "histogram": 6.7873,
+    "momentum": "bullish",
+    "upper_band": 435.7132,
+    "middle_band": 394.9415,
+    "lower_band": 354.1698,
+    "bandwidth": 0.2065,
+    "position": "within_bands",
+    "vix_current": null,
+    "fear_level": "error"
   },
   "sentiment": {
     "total_articles": 20,

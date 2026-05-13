@@ -407,6 +407,63 @@ def compute_rsi(df: pd.DataFrame, period: int = 14) -> float:
     return round(float(rsi.iloc[-1]), 2)
 
 
+def compute_macd(df: pd.DataFrame, fast: int = 12, slow: int = 26, signal: int = 9) -> dict[str, float]:
+    """MACD指标：快线、慢线、MACD线、信号线、柱状图"""
+    close = df["close"]
+    ema_fast = close.ewm(span=fast, adjust=False).mean()
+    ema_slow = close.ewm(span=slow, adjust=False).mean()
+    macd_line = ema_fast - ema_slow
+    signal_line = macd_line.ewm(span=signal, adjust=False).mean()
+    histogram = macd_line - signal_line
+    
+    return {
+        "macd_line": round(float(macd_line.iloc[-1]), 4),
+        "signal_line": round(float(signal_line.iloc[-1]), 4),
+        "histogram": round(float(histogram.iloc[-1]), 4),
+        "momentum": "bullish" if histogram.iloc[-1] > 0 else "bearish"
+    }
+
+
+def compute_bollinger_bands(df: pd.DataFrame, period: int = 20, std_dev: float = 2.0) -> dict[str, float]:
+    """布林带：上轨、中轨、下轨，当前价位置"""
+    close = df["close"]
+    sma = close.rolling(window=period).mean()
+    std = close.rolling(window=period).std()
+    upper = sma + (std * std_dev)
+    lower = sma - (std * std_dev)
+    
+    current = float(close.iloc[-1])
+    upper_val = float(upper.iloc[-1])
+    lower_val = float(lower.iloc[-1])
+    
+    position = "above_upper" if current > upper_val else "below_lower" if current < lower_val else "within_bands"
+    
+    return {
+        "upper_band": round(upper_val, 4),
+        "middle_band": round(float(sma.iloc[-1]), 4),
+        "lower_band": round(lower_val, 4),
+        "bandwidth": round((upper_val - lower_val) / float(sma.iloc[-1]), 4),
+        "position": position
+    }
+
+
+def fetch_vix_data() -> dict[str, float]:
+    """获取当前VIX指数值（恐慌指数）"""
+    try:
+        vix = yf.Ticker("^VIX")
+        hist = vix.history(period="1d")
+        if not hist.empty:
+            latest_vix = float(hist['Close'].iloc[-1])
+            return {
+                "vix_current": round(latest_vix, 2),
+                "fear_level": "extreme_fear" if latest_vix > 30 else "fear" if latest_vix > 20 else "neutral" if latest_vix > 15 else "greed"
+            }
+        else:
+            return {"vix_current": None, "fear_level": "unknown"}
+    except Exception as e:
+        return {"vix_current": None, "fear_level": "error"}
+
+
 def compute_ma(df: pd.DataFrame, windows: tuple[int, ...] = (5, 20, 60, 200)) -> dict[str, float | None]:
     """多周期 SMA；``min_periods`` 与窗口相同，故 MA200 在样本不足时为 ``None``。"""
     close = df["close"].astype(float)
@@ -717,10 +774,13 @@ def analyze(ticker: str = "TSLA") -> dict[str, Any]:
     # --- 算法 C: Risk Matrix ---
     rm_metrics = risk_matrix(price_df, cost_price)
 
-    # --- 大趋势 + 均线 ---
+    # --- 大趋势 + 均线 + 新技术指标 ---
     trend = trend_regime(price_df)
     rsi   = compute_rsi(price_df)
     ma_map = compute_ma(price_df, windows=(5, 20, 60, 200))
+    macd = compute_macd(price_df)
+    bb = compute_bollinger_bands(price_df)
+    vix = fetch_vix_data()
 
     spy_df = load_benchmark_data()
     market_ctx = compute_market_context(price_df, spy_df, trend["regime"])
@@ -764,6 +824,9 @@ def analyze(ticker: str = "TSLA") -> dict[str, Any]:
         "technicals": {
             "rsi_14": rsi,
             **ma_map,
+            **macd,
+            **bb,
+            **vix,
         },
         "sentiment": sentiment,
     }
