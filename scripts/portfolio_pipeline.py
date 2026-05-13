@@ -9,15 +9,13 @@ This script implements the three‑step workflow described in ``cline_rules.md``
    market price for each ticker listed in ``rules.md`` and calculate the
    unrealised profit/loss. The original ``rules.md`` is backed up before being
    overwritten.
-2. **download_history()** – Retrieve 180‑day OHLCV data for every ticker in
-   ``data/watchlist.csv``. The primary source is the TWS API; if the request
-   fails or returns no data the function falls back to ``yfinance``. The raw
-   data (only price/volume) is stored as ``data/raw/{ticker}_ohlcv.csv``.
-3. **enrich_data()** – Load the raw OHLCV files, compute a 30‑day historical
-   volatility (HV) to fill the ``IV`` column, and use ``yfinance`` to obtain the
-   analyst target price and rating. The enriched dataframe is saved as
-   ``data/raw/{ticker}_180d.csv`` and the intermediate ``*_ohlcv.csv`` file is
-   removed.
+2. **download_history()** – Retrieve long‑window OHLCV for ``watchlist.csv`` **plus**
+   benchmark **SPY** (S&P 500 ETF). Primary source is TWS; fallback is ``yfinance``.
+   Raw data is stored as ``data/raw/{ticker}_ohlcv.csv``.
+3. **enrich_data()** – Load the raw OHLCV files, fill ``IV`` with **rolling** 30‑day
+   annualised HV (time‑varying), and use ``yfinance`` for analyst fields. The
+   enriched file is still named ``data/raw/{ticker}_180d.csv`` (historical name;
+   rows may exceed 180). The intermediate ``*_ohlcv.csv`` file is removed.
 
 The script is deliberately serial – each step must finish before the next one
 starts – to respect the TWS asynchronous connection requirements outlined in
@@ -27,8 +25,42 @@ the rules.
 import os
 import sys
 import asyncio
+from pathlib import Path
+
+import numpy as np
 import pandas as pd
 from datetime import datetime, timedelta
+
+ROOT = Path(__file__).resolve().parents[1]
+
+# 目标约 500 日历日；IB 要求日线 duration 超过 365 天时使用 ``N Y``（见 ``_tws_duration_str``）
+OHLCV_CALENDAR_DAYS = 500
+
+# 标普 500 ETF，作大盘基准（与 analyze_report.market_context 一致）
+BENCHMARK_SYMBOL = "SPY"
+
+
+def _pipeline_symbols() -> list[str]:
+    """观察清单 + 基准，去重且保持顺序。"""
+    out: list[str] = []
+    seen: set[str] = set()
+    for s in _read_watchlist():
+        u = s.strip().upper()
+        if u and u not in seen:
+            seen.add(u)
+            out.append(u)
+    if BENCHMARK_SYMBOL not in seen:
+        out.append(BENCHMARK_SYMBOL)
+    return out
+
+
+def _tws_duration_str(days: int) -> str:
+    """IB Error 321：大于 365 日的历史请求必须用年，例如 ``2 Y``。"""
+    if days <= 365:
+        return f"{days} D"
+    years = max(1, (days + 364) // 365)
+    return f"{years} Y"
+
 
 # ---------------------------------------------------------------------------
 # Helper utilities (shared across the three phases)
@@ -60,32 +92,39 @@ def _ensure_ib_connection():
         ib.connect('127.0.0.1', 7496, clientId=10)
         return ib, False
     except Exception as e:
-        print(f"⚠️ TWS 连接失败: {e} – 将使用 yfinance 作为回退数据源。")
+        print(f"[WARN] TWS 连接失败: {e} – 将使用 yfinance 作为回退数据源。")
         return None, True
 
 
-def _read_watchlist(path: str = 'data/watchlist.csv') -> list:
+def _read_watchlist(path: str | None = None) -> list:
     """Return a list of ticker symbols from the watchlist CSV.
 
     The file is a single line of comma‑separated symbols.
+    Paths are resolved relative to the project root so scripts work from any cwd.
     """
+    p = Path(path) if path else ROOT / "data" / "watchlist.csv"
+    if not p.is_absolute():
+        p = ROOT / p
     try:
-        with open(path, 'r', encoding='utf-8') as f:
+        with open(p, 'r', encoding='utf-8') as f:
             line = f.read().strip()
         return [sym.strip() for sym in line.split(',') if sym.strip()]
     except Exception as e:
-        print(f"✗ 读取 watchlist 失败: {e}")
+        print(f"[ERR] 读取 watchlist 失败: {e}")
         return []
 
 
-def _extract_tickers_from_rules(path: str = 'rules.md') -> list:
+def _extract_tickers_from_rules(path: str | None = None) -> list:
     """Parse ``rules.md`` and return a list of ticker symbols present in the
     holdings table.
     """
     import re
     tickers = []
+    p = Path(path) if path else ROOT / "rules.md"
+    if not p.is_absolute():
+        p = ROOT / p
     try:
-        with open(path, 'r', encoding='utf-8') as f:
+        with open(p, 'r', encoding='utf-8') as f:
             for line in f:
                 # Table rows start with a pipe and have the ticker as the first
                 # non‑empty cell after the leading pipe.
@@ -95,7 +134,7 @@ def _extract_tickers_from_rules(path: str = 'rules.md') -> list:
                         tickers.append(parts[1])
         return tickers
     except Exception as e:
-        print(f"✗ 读取 rules.md 失败: {e}")
+        print(f"[ERR] 读取 rules.md 失败: {e}")
         return []
 
 
@@ -113,14 +152,14 @@ def update_portfolio():
     # 连接 IB TWS，若连接失败则直接退出（因为任务要求必须使用实盘持仓）
     ib, fallback = _ensure_ib_connection()
     if fallback or ib is None:
-        print('⚠️ 无法连接 TWS，已跳过 rules.md 更新。')
+        print('[WARN] 无法连接 TWS，已跳过 rules.md 更新。')
         return
 
     # 从 TWS 获取持仓列表
     try:
         portfolio = ib.portfolio()
     except Exception as e:
-        print(f'⚠️ 获取 TWS 持仓失败: {e}')
+        print(f'[WARN] 获取 TWS 持仓失败: {e}')
         ib.disconnect()
         return
 
@@ -139,12 +178,15 @@ def update_portfolio():
 
     ib.disconnect()
 
+    rules_path = ROOT / "rules.md"
+    bak_path = ROOT / "rules.md.bak"
+
     # 备份原始 rules.md
-    if os.path.exists('rules.md'):
-        os.replace('rules.md', 'rules.md.bak')
+    if rules_path.is_file():
+        os.replace(rules_path, bak_path)
 
     # 读取原文件，定位表格起止位置，以便保留表格前后的其他内容
-    with open('rules.md.bak', 'r', encoding='utf-8') as src:
+    with open(bak_path, 'r', encoding='utf-8') as src:
         lines = src.readlines()
 
     # 找到表格开始（标题行）和结束（下一个二级标题或文件结束）
@@ -157,7 +199,7 @@ def update_portfolio():
             table_end = idx
             break
     if table_start is None:
-        print('⚠️ 未在 rules.md 中找到持仓表格起始行，放弃更新。')
+        print('[WARN] 未在 rules.md 中找到持仓表格起始行，放弃更新。')
         return
     if table_end is None:
         table_end = len(lines)
@@ -178,7 +220,7 @@ def update_portfolio():
     new_table = [header, separator] + rows
 
     # 重新写入文件：表格前的内容 + 新表格 + 表格后的内容
-    with open('rules.md', 'w', encoding='utf-8') as dst:
+    with open(rules_path, 'w', encoding='utf-8') as dst:
         # 前半部分（包括表格标题行之前的所有行）
         dst.writelines(lines[:table_start])
         # 写入新表格
@@ -186,7 +228,7 @@ def update_portfolio():
         # 写入表格之后的其余内容（如果有的话）
         dst.writelines(lines[table_end:])
 
-    print('✅ 已使用 TWS 实时持仓更新 rules.md（已备份为 rules.md.bak）')
+    print('[OK] 已使用 TWS 实时持仓更新 rules.md（已备份为 rules.md.bak）')
 
 
 # ---------------------------------------------------------------------------
@@ -199,7 +241,7 @@ def _download_ohlcv_tws(ib, symbol: str, days: int = 180) -> pd.DataFrame | None
     from ib_insync import Stock, util
     try:
         contract = Stock(symbol, 'SMART', 'USD')
-        duration = f"{days} D"
+        duration = _tws_duration_str(days)
         bars = ib.reqHistoricalData(
             contract,
             endDateTime='',
@@ -210,15 +252,17 @@ def _download_ohlcv_tws(ib, symbol: str, days: int = 180) -> pd.DataFrame | None
             formatDate=1,
         )
         ib.sleep(2)
+        if bars is None:
+            return None
         df = util.df(bars)
-        if df.empty:
+        if df is None or df.empty:
             return None
         df = df[['date', 'open', 'high', 'low', 'close', 'volume']].copy()
         df.rename(columns={'date': 'Date'}, inplace=True)
         df['Date'] = pd.to_datetime(df['Date'])
         return df
     except Exception as e:
-        print(f"⚠️ TWS 下载 {symbol} OHLCV 失败: {e}")
+        print(f"[WARN] TWS 下载 {symbol} OHLCV 失败: {e}")
         return None
 
 
@@ -234,37 +278,46 @@ def _download_ohlcv_yf(symbol: str, days: int = 180) -> pd.DataFrame | None:
         if hist.empty:
             return None
         df = hist[['Open', 'High', 'Low', 'Close', 'Volume']].copy()
-        df.reset_index(inplace=True)
-        df.rename(columns={'Date': 'Date'}, inplace=True)
+        df = df.reset_index()
+        # yfinance 索引列名因版本而异（Date / Datetime / 无名）
+        first_col = df.columns[0]
+        if first_col != "Date":
+            df.rename(columns={first_col: "Date"}, inplace=True)
+        df["Date"] = pd.to_datetime(df["Date"])
+        if getattr(df["Date"].dt, "tz", None) is not None:
+            df["Date"] = df["Date"].dt.tz_convert(None)
         return df
     except Exception as e:
-        print(f"⚠️ yfinance 下载 {symbol} OHLCV 失败: {e}")
+        print(f"[WARN] yfinance 下载 {symbol} OHLCV 失败: {e}")
         return None
 
 
 def download_history():
-    """Download 180‑day OHLCV for every ticker in ``watchlist.csv``.
+    """Download long‑window OHLCV for watchlist **and** benchmark ``SPY``.
     The result is stored as ``data/raw/{ticker}_ohlcv.csv``.
     """
-    symbols = _read_watchlist()
+    symbols = _pipeline_symbols()
     if not symbols:
-        print('⚠️ watchlist 为空，终止下载。')
+        print('[WARN] watchlist 为空且未加入基准，终止下载。')
         return
+
+    days = OHLCV_CALENDAR_DAYS
+    print(f"[INFO] 历史行情下载窗口: {days} 个日历日（含 MA200 / 模拟用样本）")
 
     ib, fallback = _ensure_ib_connection()
     for sym in symbols:
         df = None
         if not fallback:
-            df = _download_ohlcv_tws(ib, sym)
+            df = _download_ohlcv_tws(ib, sym, days=days)
         if df is None:
-            df = _download_ohlcv_yf(sym)
+            df = _download_ohlcv_yf(sym, days=days)
         if df is None:
-            print(f"✗ 无法获取 {sym} 的历史数据，跳过。")
+            print(f"[ERR] 无法获取 {sym} 的历史数据，跳过。")
             continue
-        out_path = f"data/raw/{sym}_ohlcv.csv"
-        os.makedirs(os.path.dirname(out_path), exist_ok=True)
+        out_path = ROOT / "data" / "raw" / f"{sym}_ohlcv.csv"
+        out_path.parent.mkdir(parents=True, exist_ok=True)
         df.to_csv(out_path, index=False)
-        print(f"✓ 已保存 {sym} 的原始 OHLCV 至 {out_path}")
+        print(f"[OK] 已保存 {sym} 的原始 OHLCV 至 {out_path.as_posix()}")
     if ib:
         ib.disconnect()
 
@@ -273,17 +326,10 @@ def download_history():
 # Phase 3 – enrich_data()
 # ---------------------------------------------------------------------------
 
-def _calc_hv(series: pd.Series, window: int = 30) -> float:
-    """Calculate annualised historical volatility from a price series.
-    ``series`` should be the closing prices. The function returns the volatility
-    as a decimal (e.g., 0.25 for 25%).
-    """
-    import numpy as np
-    log_ret = np.log(series / series.shift(1)).dropna()
-    if len(log_ret) < window:
-        return float('nan')
-    vol = log_ret[-window:].std() * (252 ** 0.5)  # annualise assuming 252 trading days
-    return vol
+def _rolling_annualized_hv(close: pd.Series, window: int = 30) -> pd.Series:
+    """日频收盘价 → 滚动 window 日对数收益年化波动率（与 analyze 中 IV 列语义一致）。"""
+    log_ret = np.log(close.astype(float) / close.astype(float).shift(1))
+    return log_ret.rolling(window, min_periods=window).std() * (252 ** 0.5)
 
 
 def enrich_data():
@@ -292,11 +338,11 @@ def enrich_data():
     intermediate ``*_ohlcv.csv`` file is removed.
     """
     import yfinance as yf
-    symbols = _read_watchlist()
+    symbols = _pipeline_symbols()
     for sym in symbols:
-        raw_path = f"data/raw/{sym}_ohlcv.csv"
-        if not os.path.exists(raw_path):
-            print(f"⚠️ 原始文件 {raw_path} 不存在，跳过 {sym} 的补全。")
+        raw_path = ROOT / "data" / "raw" / f"{sym}_ohlcv.csv"
+        if not raw_path.is_file():
+            print(f"[WARN] 原始文件 {raw_path.as_posix()} 不存在，跳过 {sym} 的补全。")
             continue
         df = pd.read_csv(raw_path)
         # Ensure Date column is datetime
@@ -313,12 +359,10 @@ def enrich_data():
                 close_col = cand
                 break
         if close_col is None:
-            print(f"⚠️ {sym} 的原始文件缺少收盘价列，跳过 HV 计算。")
-            hv = float('nan')
+            print(f"[WARN] {sym} 的原始文件缺少收盘价列，跳过 HV 计算。")
+            df["IV"] = np.nan
         else:
-            hv = _calc_hv(df[close_col])
-        # Store IV (whether calculated or NaN)
-        df['IV'] = hv
+            df['IV'] = _rolling_annualized_hv(df[close_col], window=30)
         # Fetch analyst data via yfinance
         try:
             ticker = yf.Ticker(sym)
@@ -328,18 +372,18 @@ def enrich_data():
             df['AnalystTargetPrice'] = target if target is not None else pd.NA
             df['AnalystRating'] = rating if rating is not None else pd.NA
         except Exception as e:
-            print(f"⚠️ 获取 {sym} 分析师数据失败: {e}")
+            print(f"[WARN] 获取 {sym} 分析师数据失败: {e}")
             df['AnalystTargetPrice'] = pd.NA
             df['AnalystRating'] = pd.NA
-        out_path = f"data/raw/{sym}_180d.csv"
+        out_path = ROOT / "data" / "raw" / f"{sym}_180d.csv"
         df.to_csv(out_path, index=False)
-        print(f"✅ 已生成完整 CSV: {out_path}")
+        print(f"[OK] 已生成完整 CSV: {out_path.as_posix()}")
         # 删除临时文件
         try:
-            os.remove(raw_path)
-            print(f"🗑 已删除临时文件 {raw_path}")
+            raw_path.unlink()
+            print(f"[OK] 已删除临时文件 {raw_path.as_posix()}")
         except Exception as e:
-            print(f"⚠️ 删除临时文件失败: {e}")
+            print(f"[WARN] 删除临时文件失败: {e}")
 
 
 def main():

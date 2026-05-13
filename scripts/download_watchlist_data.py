@@ -6,7 +6,7 @@ for the tickers listed in ``data/watchlist.csv``.
 The script follows the data‑download conventions defined in ``cline_rules.md``:
 
 * Data source – Interactive Brokers TWS API (``ib_insync``)
-* 默认下载天数 – 180 天
+* 默认下载天数 – **500** 个日历日（与 ``portfolio_pipeline`` 一致，覆盖 MA200）
 * 存储路径 – ``data/raw/{ticker}_180d.csv``
 
 Only the first ticker from the watchlist is processed as a *quick test* (as
@@ -26,8 +26,21 @@ import sys
 import asyncio
 import os
 import re
-import numpy as np
 from datetime import datetime
+from pathlib import Path
+
+import numpy as np
+
+ROOT = Path(__file__).resolve().parents[1]
+OHLCV_CALENDAR_DAYS = 500
+
+
+def _tws_duration_str(days: int) -> str:
+    if days <= 365:
+        return f"{days} D"
+    years = max(1, (days + 364) // 365)
+    return f"{years} Y"
+
 
 # ---------------------------------------------------------------------------
 # Global event‑loop fix for Windows (required by ``ib_insync`` / ``eventkit``)
@@ -99,7 +112,7 @@ def read_watchlist(path: str) -> list:
         return []
 
 
-def download_symbol(ib, symbol: str, days: int = 180):
+def download_symbol(ib, symbol: str, days: int = OHLCV_CALENDAR_DAYS):
     """Download OHLCV, IV and analyst fundamentals for ``symbol``.
 
     The function performs three separate IB API calls:
@@ -108,15 +121,16 @@ def download_symbol(ib, symbol: str, days: int = 180):
     3. Fundamental snapshot to extract the analyst target price.
 
     A short ``ib.sleep`` is inserted after each request to give the TWS
-    server time to push the data back. The returned ``DataFrame`` contains the
-    columns required by ``cline_rules.md``.
+    server time to push the data back. Returns ``(DataFrame, latest_quote)``
+    where ``latest_quote`` is the last price from the IV market-data request
+    (for sanity-checking), or returns ``None`` if price history is empty.
     """
     from ib_insync import Stock, util
     import pandas as pd
     import re
 
     contract = Stock(symbol, 'SMART', 'USD')
-    duration = f"{days} D"
+    duration = _tws_duration_str(days)
     bar_size = '1 day'
 
     # ------------------- price data -------------------
@@ -169,7 +183,7 @@ def download_symbol(ib, symbol: str, days: int = 180):
     # Analyst rating is not directly available via the snapshot; leave as NA.
     price_df['AnalystRating'] = pd.NA
 
-    return price_df
+    return price_df, latest_price
 
 
 def main():
@@ -179,15 +193,15 @@ def main():
     from ib_insync import IB
     import pandas as pd
 
-    # 读取 watchlist
-    symbols = read_watchlist('data/watchlist.csv')
+    # 读取 watchlist（相对项目根目录）
+    symbols = read_watchlist(str(ROOT / "data" / "watchlist.csv"))
     if not symbols:
         print('✗ 未在 watchlist 中找到股票代码')
         sys.exit(1)
 
     # 只取第一个作为快速测试
     test_symbol = symbols[0]
-    print(f"⚙️ 仅下载第一个股票作为测试: {test_symbol}")
+    print(f"⚙️ 仅下载第一个股票作为测试: {test_symbol}（{OHLCV_CALENDAR_DAYS} 日历日）")
 
     # 连接 TWS（如果不可用则使用本地模拟数据）
     ib = IB()
@@ -200,11 +214,14 @@ def main():
         ib = None
         use_fallback = True
 
-    # 必须使用真实的 TWS 连接获取数据，若连接失败则直接退出并提示用户。
     df = None
+    latest_quote = None
     if ib:
         try:
-            df = download_symbol(ib, test_symbol, days=180)
+            result = download_symbol(ib, test_symbol, days=OHLCV_CALENDAR_DAYS)
+            if result is None:
+                sys.exit(1)
+            df, latest_quote = result
         except Exception as e:
             print(f"✗ 实时下载失败: {e}")
             sys.exit(1)
@@ -214,7 +231,7 @@ def main():
             import yfinance as yf
             import pandas as pd
             end_date = datetime.now()
-            start_date = end_date - pd.Timedelta(days=180)
+            start_date = end_date - pd.Timedelta(days=OHLCV_CALENDAR_DAYS)
             ticker = yf.Ticker(test_symbol)
             hist = ticker.history(start=start_date, end=end_date, interval='1d')
             if hist.empty:
@@ -231,38 +248,29 @@ def main():
             sys.exit(1)
 
     if df is not None:
-        output_path = f"data/raw/{test_symbol}_180d.csv"
-        import os
-        os.makedirs(os.path.dirname(output_path), exist_ok=True)
+        output_path = ROOT / "data" / "raw" / f"{test_symbol}_180d.csv"
+        output_path.parent.mkdir(parents=True, exist_ok=True)
         df.to_csv(output_path)
-        print(f"✓ 数据已保存至 {output_path}")
+        print(f"✓ 数据已保存至 {output_path.as_posix()}")
 
-        # 实时获取最新价格以校验
-        try:
-            ticker = ib.reqMktData(ib.qualifyContracts(ib.reqContractDetails(ib.reqMktData(contract=None))) or [ib.reqMktData(contract=None)])
-        except Exception:
-            # 简化获取最新价格的方式：直接使用 reqMktData 同上已请求的 market_data
-            ticker = None
-        # 如果上面获取不到，使用之前的 market_data snapshot（如果仍在作用域）
-        if 'market_data' in locals():
-            latest_price = getattr(market_data, 'last', None) or getattr(market_data, 'close', None)
-        else:
-            latest_price = None
-        if latest_price is not None:
-            print(f"⚡ 实时最新价: {latest_price}")
-            # 与 CSV 最后一行的收盘价对比
-            last_close = df['Close'].iloc[-1]
-            print(f"📊 CSV 最后收盘价: {last_close}")
-            if abs(float(latest_price) - float(last_close)) < 0.01:
+        last_close = float(df["Close"].iloc[-1])
+        print(f"📊 CSV 最后收盘价: {last_close}")
+        if latest_quote is not None:
+            print(f"⚡ TWS 校验用最新价: {latest_quote}")
+            if abs(float(latest_quote) - last_close) < 0.01:
                 print("✅ 实时价与 CSV 收盘价基本一致")
             else:
-                print("⚠️ 实时价与 CSV 收盘价存在差异，请检查数据完整性")
+                print("⚠️ 实时价与 CSV 收盘价存在差异（可能非同一时刻或盘前盘后）")
         else:
-            print("⚠️ 未能获取实时最新价进行校验")
+            print("⚠️ 未能获取 TWS 实时价校验（回退数据源或无行情权限时属正常）")
     else:
         print('✗ 下载过程出现错误')
 
-    ib.disconnect()
+    if ib is not None:
+        try:
+            ib.disconnect()
+        except Exception:
+            pass
 
 
 if __name__ == '__main__':

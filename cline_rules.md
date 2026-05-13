@@ -22,6 +22,7 @@
 - **数文分离**：禁止在 Python 脚本中硬编码 Markdown 排版。脚本仅负责输出 `metrics.json`。
 - **Cline 职责**：读取 JSON 后，利用内置模型能力进行舆情摘要和趋势研判。
 - **排版要求**：必须引用 JSON 中的 `prob_always_above` 和 `iv_percentile`，并配合 `> ` 引用块强调核心建议。
+- **大盘基准**：流水线会下载 **SPY**；分析 JSON 含 `market_context`（SPY 趋势、相对超额、与标的 60 日收益相关）。撰写内参时应结合大盘与个股的 **regime 是否分化**。
 
 ## 4. 维护红线
 - **禁止逻辑破坏**：更新 `rules.md` 表格时，严禁将观察清单（Watchlist）混入持仓列表。

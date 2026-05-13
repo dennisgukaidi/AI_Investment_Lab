@@ -1,75 +1,210 @@
 {
   "meta": {
     "ticker": "TSLA",
-    "generated_at": "2026-05-12T10:18:49.099463+00:00",
+    "generated_at": "2026-05-12T15:01:40.836688+00:00",
     "cost_price": 390.55,
-    "data_rows": 180
+    "data_rows": 501,
+    "history_first_date": "2024-05-13",
+    "history_last_date": "2026-05-12",
+    "iv_percentile_window_rows": 180,
+    "bootstrap_horizons": [
+      10,
+      20,
+      60
+    ],
+    "benchmark_ticker": "SPY"
+  },
+  "trend": {
+    "regime": "bull_partial",
+    "close_vs_ma200": 29.5405,
+    "ma_spread_20_60": 6.2688,
+    "slope_ma20_5d": 0.048399,
+    "slope_ma60_5d": 0.000591,
+    "ma200_available": true,
+    "positioning_hint": "中期仍强但未确认年线多头；可等待突破/回踩 MA200 再加大仓位。"
+  },
+  "market_context": {
+    "benchmark_ticker": "SPY",
+    "available": true,
+    "aligned_trading_days": 501,
+    "spy_trend_regime": "bull_core",
+    "spy_trend": {
+      "regime": "bull_core",
+      "close_vs_ma200": 59.8925,
+      "ma_spread_20_60": 31.3353,
+      "slope_ma20_5d": 0.018499,
+      "slope_ma60_5d": 0.005754,
+      "ma200_available": true,
+      "positioning_hint": "多头排列+价在 MA200 上方：大趋势偏多；减仓宜分批止盈，加仓宜等回撤至均线带。"
+    },
+    "spy_ma": {
+      "ma_20": 717.7165,
+      "ma_60": 686.3812,
+      "ma_200": 674.4375
+    },
+    "stock_total_return_20d": 0.195003,
+    "spy_total_return_20d": 0.057412,
+    "excess_return_20d": 0.137591,
+    "stock_total_return_60d": 0.042593,
+    "spy_total_return_60d": 0.077125,
+    "excess_return_60d": -0.034532,
+    "log_return_corr_60d": 0.6368,
+    "benchmark_notes": [
+      "大盘与个股趋势组合未见极端分化；仍以标的自身 bootstrap 与 ATR 为主。"
+    ]
   },
   "monte_carlo": {
-    "prob_always_above": 0.903,
-    "prob_touch_below": 0.097,
-    "expected_final_price": 444.95013955381586,
-    "pct5_final_price": 385.2742312068197,
-    "pct95_final_price": 511.018896135237,
+    "model": "lognormal_iv",
+    "horizon_days": 10,
+    "iv_input": 0.4318164897880415,
+    "prob_always_above": 0.831,
+    "prob_touch_below": 0.169,
+    "expected_final_price": 435.17106298404167,
+    "pct5_final_price": 376.5269802672495,
+    "pct95_final_price": 500.12639924438815,
     "prob_by_day": [
       1.0,
-      0.9994,
-      0.998,
-      0.9918,
-      0.983,
-      0.9744,
-      0.9624,
-      0.9552,
-      0.9414,
-      0.9324
+      0.9984,
+      0.99,
+      0.975,
+      0.9622,
+      0.9442,
+      0.9286,
+      0.9156,
+      0.9004,
+      0.8838
     ],
     "probability_matrix": {
-      "+5%": 0.2726,
-      "-5%": 0.7062,
+      "+5%": 0.2742,
+      "-5%": 0.7048,
       "+10%": 0.1288,
-      "-10%": 0.8784,
-      "+15%": 0.0478,
-      "-15%": 0.9702
+      "-10%": 0.877,
+      "+15%": 0.0486,
+      "-15%": 0.9694
+    }
+  },
+  "bootstrap": {
+    "method": "historical_log_return_bootstrap",
+    "simulations": 5000,
+    "return_pool_len": 252,
+    "s0": 435.22,
+    "ma200_level": 405.6795,
+    "horizons": {
+      "10": {
+        "final_median": 443.08279361066064,
+        "final_pct5": 378.38877025335313,
+        "final_pct25": 416.02925357372635,
+        "final_pct75": 471.9259928141779,
+        "final_pct95": 515.6746400889728,
+        "min_price_mae_from_start_pct5": -14.818762333151756,
+        "min_price_mae_from_start_median": -3.47456874396155,
+        "max_price_runup_from_start_pct95": 20.265568646775595,
+        "prob_touch_or_below_stop_1x5": 0.3504,
+        "prob_touch_or_below_stop_2x": 0.2526,
+        "prob_touch_or_below_cost": 0.145,
+        "prob_final_at_or_above_tp_aggressive": 0.3462,
+        "prob_paths_always_above_cost": 0.855,
+        "prob_touch_or_below_ma200": 0.2856,
+        "probability_matrix_final": {
+          "+5%": 0.3698,
+          "-5%": 0.7684,
+          "+10%": 0.2028,
+          "-10%": 0.9002,
+          "+15%": 0.0994,
+          "-15%": 0.9672
+        }
+      },
+      "20": {
+        "final_median": 449.8550366284262,
+        "final_pct5": 359.65657066765647,
+        "final_pct25": 411.340040710465,
+        "final_pct75": 492.2717541280956,
+        "final_pct95": 557.6650334930337,
+        "min_price_mae_from_start_pct5": -20.288279271790337,
+        "min_price_mae_from_start_median": -5.229275688156536,
+        "max_price_runup_from_start_pct95": 30.645682853649753,
+        "prob_touch_or_below_stop_1x5": 0.4778,
+        "prob_touch_or_below_stop_2x": 0.3804,
+        "prob_touch_or_below_cost": 0.2702,
+        "prob_final_at_or_above_tp_aggressive": 0.4364,
+        "prob_paths_always_above_cost": 0.7298,
+        "prob_touch_or_below_ma200": 0.4142,
+        "probability_matrix_final": {
+          "+5%": 0.4528,
+          "-5%": 0.736,
+          "+10%": 0.3176,
+          "-10%": 0.8454,
+          "+15%": 0.2076,
+          "-15%": 0.923
+        }
+      },
+      "60": {
+        "final_median": 477.10745881890034,
+        "final_pct5": 324.72473280062314,
+        "final_pct25": 408.65452586728395,
+        "final_pct75": 555.0461801382758,
+        "final_pct95": 689.3390900134353,
+        "min_price_mae_from_start_pct5": -30.769421344046748,
+        "min_price_mae_from_start_median": -8.962776226740457,
+        "max_price_runup_from_start_pct95": 66.40451594472677,
+        "prob_touch_or_below_stop_1x5": 0.626,
+        "prob_touch_or_below_stop_2x": 0.5512,
+        "prob_touch_or_below_cost": 0.4562,
+        "prob_final_at_or_above_tp_aggressive": 0.5644,
+        "prob_paths_always_above_cost": 0.5438,
+        "prob_touch_or_below_ma200": 0.5768,
+        "probability_matrix_final": {
+          "+5%": 0.5732,
+          "-5%": 0.734,
+          "+10%": 0.492,
+          "-10%": 0.7964,
+          "+15%": 0.4126,
+          "-15%": 0.8608
+        }
+      }
     }
   },
   "iv_analysis": {
-    "iv_latest": 0.4296564869052784,
-    "iv_percentile": 100.0,
-    "iv_mean_180d": 0.429656,
-    "iv_std_180d": 0.0,
-    "iv_regime": "expensive"
+    "iv_latest": 0.4318164897880415,
+    "iv_percentile": 55.0,
+    "iv_mean_180d": 0.424243,
+    "iv_std_180d": 0.063706,
+    "iv_regime": "neutral",
+    "window_rows": 180
   },
   "risk_matrix": {
-    "latest_close": 445.0,
-    "latest_atr": 16.1996,
-    "stop_1x5_atr": 420.7005,
-    "stop_2x_atr": 412.6007,
-    "tp_conservative": 453.0998,
-    "tp_moderate": 461.1996,
-    "tp_aggressive": 469.2995,
-    "risk_reward_1x5": Infinity,
-    "risk_reward_2x": Infinity,
-    "rr_score": 10
+    "latest_close": 435.22,
+    "latest_atr": 16.1518,
+    "stop_1x5_atr": 410.9923,
+    "stop_2x_atr": 402.9164,
+    "tp_conservative": 443.2959,
+    "tp_moderate": 451.3718,
+    "tp_aggressive": 459.4477,
+    "risk_reward_1x5": null,
+    "risk_reward_2x": null,
+    "rr_score": 10,
+    "rr_note": "structural_stop_above_cost; rr_vs_cost_not_applicable"
   },
   "technicals": {
-    "rsi_14": 74.06,
-    "ma_5": 414.648,
-    "ma_20": 391.3905,
-    "ma_60": 388.3763
+    "rsi_14": 68.08,
+    "ma_5": 423.818,
+    "ma_20": 394.9415,
+    "ma_60": 388.6727,
+    "ma_200": 405.6795
   },
   "sentiment": {
-    "total_articles": 11,
-    "net_sentiment_score": -1,
+    "total_articles": 20,
+    "net_sentiment_score": 2,
     "top_bearish_title": "Panasonic forecasts profit rebound for battery unit after quarterly loss",
-    "top_bullish_title": "These Stocks Are Today’s Movers: Nvidia, Lumentum, Intel, Micron, Qualcomm, Tesla, Moderna, Circle Internet, and More",
+    "top_bullish_title": "2 Mega-Cap Stocks to Target This Week and 1 That Underwhelm",
     "keyword_freq": {
-      "ai": 15,
+      "ai": 27,
       "delivery": 0,
       "earnings": 0,
       "recall": 0,
       "fsd": 0,
       "cybertruck": 0,
-      "margin": 1
+      "margin": 2
     }
   }
 }
