@@ -18,6 +18,16 @@
    - 预期输出：`data/raw/{ticker}_ohlcv.csv`、`data/news/{ticker}_news.json`、`data/fundamentals/{ticker}_fundamentals.json`、`data/macroeconomic/macro_data.json`
    - 验证：脚本退出码为 0，且对应文件的修改时间更新（检查 `os.path.getmtime`）。
 
+1.1) "跑全流程" / "更新数据并出报告" — 一键串联（支持不开 TWS）
+   - 命令：
+     - `python scripts/run_pipeline_and_reports.py --summary`
+   - 行为说明：
+     - 若本机未开启 TWS/IB Gateway（端口 7496 不可达），脚本会自动回退到 yfinance 下载行情，不会中断。
+     - 报告默认对「持仓 + watchlist」生成到 `reports/`，文件名自动附加日期后缀：`strategy_{TICKER}_{YYYYMMDD}.md`
+     - `--summary` 会额外生成 `reports/holdings_summary_YYYYMMDD.md`（从 DB 汇总持仓关键指标）
+   - 注意：
+     - 报告生成依赖 `investment_lab.db` 中 `quantitative` 表已有 `metrics` 记录；该脚本不会生成新的 `*_metrics.json`。
+
 2) "分析 [TICKER]" — 单只股票分析并自动入库
    - 命令：`python scripts/analyze_report.py <TICKER>`
    - 预期输出：`data/analysis/<TICKER>_metrics.json`，`reports/<TICKER>_report.md`（若脚本生成）
@@ -57,6 +67,9 @@
        - `python scripts/strategy_advisor.py --ticker TSLA --output reports/strategy_TSLA.md`
        - 若需对 watchlist 全部标的生成报告，可在 AI 控制下循环调用（每只单独指定 `--output` 以免覆盖）。
     - 验证：运行后应在 `reports/` 下看到对应 `strategy_*.md` 文件，且文件内容包含“回本概率（10/20/60d）”与“风险对冲位”小节。
+ - `scripts/run_pipeline_and_reports.py` — 一键串联“更新数据（行情/新闻）→ 生成报告（持仓+watchlist）”。
+    - 功能：按序执行 `portfolio_pipeline.py`、`news_collector.py`，并为选定标的生成 `strategy_*.md`；可选输出持仓摘要。
+    - 运行示例：`python scripts/run_pipeline_and_reports.py --summary`
 
 安全与权限
 - 默认不在生产账户下执行会造成真实交易的脚本。若需要下单或调整实盘持仓，必须先得到用户口头/书面授权并记录操作理由。

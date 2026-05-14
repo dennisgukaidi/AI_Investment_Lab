@@ -37,13 +37,29 @@ ENV/
 .ipynb_checkpoints
 
 # Data files (large files)
+# 默认：仓库只保留“代码 + 规则/配置”，运行产物（数据、报告、数据库）不入库。
+# 如需提交数据样例，请自行在此处放开对应路径。
+investment_lab.db
+*.db
+
+# data/ 下只保留 watchlist 与必要的 .gitkeep，其余一律视为运行产物
+data/alternative/
+data/analysis/
+data/fundamentals/
+data/holdings/
+data/macroeconomic/
+data/news/
 data/raw/*.csv
 data/raw/*.xlsx
 data/raw/*.parquet
+!data/raw/.gitkeep
+!data/watchlist.csv
 
 # Reports with sensitive data
 reports/*.pdf
 reports/private_*.md
+reports/**
+!reports/.gitkeep
 
 # Environment variables
 .env

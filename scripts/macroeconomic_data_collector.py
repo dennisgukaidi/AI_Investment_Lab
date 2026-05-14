@@ -36,7 +36,13 @@ MACRO_DIR = BASE_DIR / "data" / "macroeconomic"
 MACRO_DIR.mkdir(parents=True, exist_ok=True)
 
 # FRED API Key - 用户需要设置
-FRED_API_KEY = "your_fred_api_key_here"  # 需要用户替换为实际API密钥
+import os
+
+# FRED API Key
+# - 推荐：使用环境变量 `FRED_API_KEY`
+# - 或者：运行时通过命令行参数 `--api-key` 传入
+# 注意：不要把真实密钥硬编码进仓库（避免泄露）。
+FRED_API_KEY = os.environ.get("FRED_API_KEY") or "your_fred_api_key_here"
 
 # FRED系列ID映射
 FRED_SERIES = {

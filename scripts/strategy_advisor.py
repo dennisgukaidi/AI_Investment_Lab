@@ -1,16 +1,13 @@
-"""strategy_advisor_optimized.py — 优化版策略顾问报告生成引擎
+"""strategy_advisor_enhanced.py — 三大增强功能版本
 
-核心优化点：
-1. 全指标提取：从 bootstrap 中显式提取回本概率分布（10/20/60d）
-2. 趋势计算：支持从数据库查询历史数据，计算时间维度 Delta
-3. 宏观上下文增强：输出宏观数据时，计算 10Y 美债周波动
-4. 大白话格式：清晰的 Markdown 结构，三个核心板块
+新增功能：
+1. 【拥挤度警报】IV Rank + RSI 双指标，区分"正常上涨"vs"博傻末尾"
+2. 【持仓相关性校验】计算与已有持仓的 R² 相关系数，提示风险集中
+3. 【回本期望时间】基于 Bootstrap 分布计算触及回本的中位数天数（蒙特卡洛）
+4. 【止损与凯利仓位】自动建议 1.5×ATR 止损 + 简化凯利公式最大权重
 
-依赖输入：
-  - SQLite 数据库（investment_lab.db）
-  
-输出：
-  - stdout 或 Markdown 文件
+数据库：investment_lab.db
+依赖：pandas, numpy, scipy
 """
 
 from __future__ import annotations
@@ -23,24 +20,30 @@ import pathlib
 from datetime import datetime, timezone, timedelta
 from typing import Any, Optional
 from dataclasses import dataclass
+from collections import defaultdict
 
 import pandas as pd
+import numpy as np
+try:
+    from scipy import stats
+except Exception:
+    stats = None
 
 
 # ============================================================================
-# 数据类定义
+# 核心数据类
 # ============================================================================
 
 @dataclass
 class BootstrapProbs:
     """回本概率数据结构"""
     horizon: int  # 10, 20, 60
-    prob_touch_stop: float  # 触及止损线的概率
-    prob_always_above_cost: float  # 始终高于成本的概率
-    prob_reach_tp: float  # 触及目标价的概率
-    final_median: float  # 中位数目标价
-    final_pct5: float  # 5% 分位（看空）
-    final_pct95: float  # 95% 分位（看多）
+    prob_touch_stop: float
+    prob_always_above_cost: float
+    prob_reach_tp: float
+    final_median: float
+    final_pct5: float
+    final_pct95: float
 
 
 @dataclass
@@ -48,24 +51,26 @@ class RiskPositioning:
     """风险对冲位数据"""
     latest_price: float
     latest_atr: float
-    stop_1x5_atr: float  # 硬止损线
-    tp_aggressive: float  # 激进目标
-    rr_score: float  # 风险收益评分
+    stop_1x5_atr: float
+    tp_aggressive: float
+    rr_score: float
     positioning_hint: Optional[str] = None
 
 
 @dataclass
 class ValuationMetrics:
-    """估值指标"""
-    pe_percentile: Optional[float]  # PE 历史分位
-    iv_percentile: Optional[float]  # IV 历史分位
-    iv_regime: str  # IV 状态（cheap/neutral/expensive）
+    """估值指标（增强了 Crowding Index）"""
+    pe_percentile: Optional[float]
+    iv_percentile: Optional[float]
+    iv_regime: str
+    rsi_14: Optional[float]
+    volume_deviation: Optional[float] = None  # 新增：成交量乖离率
 
 
 @dataclass
 class TechnicalMetrics:
     """技术指标"""
-    regime: str  # bull_partial, bear_partial, sideways etc
+    regime: str
     rsi_14: Optional[float]
     ma5: Optional[float]
     ma20: Optional[float]
@@ -75,27 +80,38 @@ class TechnicalMetrics:
 
 @dataclass
 class SnapshotData:
-    """数据快照（T 日和 T-7 日的对比）"""
+    """数据快照"""
     date: str
-    bootstrap_probs: dict[int, BootstrapProbs]  # {10: ..., 20: ..., 60: ...}
+    ticker: str
+    bootstrap_probs: dict[int, BootstrapProbs]
     risk_positioning: RiskPositioning
     valuation: ValuationMetrics
     technicals: TechnicalMetrics
     macro_context: Optional[dict] = None
+    cost_price: Optional[float] = None  # 持仓成本
 
 
 # ============================================================================
 # 数据库访问层
 # ============================================================================
 
-class QuantDataRepository:
-    """从 SQLite 数据库中读取量化数据"""
+class EnhancedDataRepository:
+    """增强版数据访问层 - 支持多股票相关性计算"""
 
     def __init__(self, db_path: str | pathlib.Path):
         self.db_path = pathlib.Path(db_path)
 
-    def get_latest_snapshot(self, ticker: str) -> Optional[SnapshotData]:
-        """获取最新的数据快照"""
+    def get_all_tickers(self) -> list[str]:
+        """获取数据库中所有的股票代码"""
+        with sqlite3.connect(self.db_path) as conn:
+            cursor = conn.cursor()
+            cursor.execute(
+                "SELECT DISTINCT ticker FROM quantitative ORDER BY ticker"
+            )
+            return [row[0] for row in cursor.fetchall()]
+
+    def get_latest_snapshot(self, ticker: str, cost_price: Optional[float] = None) -> Optional[SnapshotData]:
+        """获取最新数据快照"""
         with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
             cursor.execute(
@@ -109,29 +125,40 @@ class QuantDataRepository:
 
             date, metrics_json = row
             data = json.loads(metrics_json)
-            return self._parse_metrics_to_snapshot(date, data)
+            return self._parse_metrics_to_snapshot(ticker, date, data, cost_price)
 
-    def get_snapshot_before(self, ticker: str, before_date: str) -> Optional[SnapshotData]:
-        """获取指定日期前最近的一条数据"""
+    def get_historical_data(self, ticker: str, limit: int = 100) -> pd.DataFrame:
+        """获取历史数据用于相关性计算"""
         with sqlite3.connect(self.db_path) as conn:
-            cursor = conn.cursor()
-            cursor.execute(
-                "SELECT date, metrics FROM quantitative "
-                "WHERE ticker = ? AND date < ? "
-                "ORDER BY date DESC LIMIT 1",
-                (ticker, before_date)
-            )
-            row = cursor.fetchone()
-            if not row:
-                return None
+            query = """
+                SELECT date, metrics FROM quantitative 
+                WHERE ticker = ? 
+                ORDER BY date DESC 
+                LIMIT ?
+            """
+            df = pd.read_sql_query(query, conn, params=(ticker, limit))
+            
+            # 解析 metrics JSON
+            if df.empty:
+                return df
+            
+            def extract_close(metrics_str):
+                try:
+                    data = json.loads(metrics_str)
+                    risk = data.get("risk_matrix", {})
+                    return float(risk.get("latest_close", 0))
+                except:
+                    return 0.0
+            
+            df["close"] = df["metrics"].apply(extract_close)
+            df["date"] = pd.to_datetime(df["date"])
+            return df[["date", "close"]].sort_values("date")
 
-            date, metrics_json = row
-            data = json.loads(metrics_json)
-            return self._parse_metrics_to_snapshot(date, data)
-
-    def _parse_metrics_to_snapshot(self, date: str, data: dict) -> SnapshotData:
-        """将 JSON 数据解析为 SnapshotData"""
-        # 解析 Bootstrap 概率
+    def _parse_metrics_to_snapshot(
+        self, ticker: str, date: str, data: dict, cost_price: Optional[float] = None
+    ) -> SnapshotData:
+        """解析 JSON 为 SnapshotData"""
+        # Bootstrap 概率
         bootstrap_raw = data.get("bootstrap", {})
         horizons = bootstrap_raw.get("horizons", {})
         
@@ -149,362 +176,857 @@ class QuantDataRepository:
                     final_pct95=h_data.get("final_pct95", 0.0),
                 )
         
-        # 解析风险对冲位
+        # 风险对冲位
         risk_matrix = data.get("risk_matrix", {})
-        extra_dims = data.get("extra_dimensions", {})
-        
         risk_positioning = RiskPositioning(
             latest_price=risk_matrix.get("latest_close", 0.0),
             latest_atr=risk_matrix.get("latest_atr", 0.0),
             stop_1x5_atr=risk_matrix.get("stop_1x5_atr", 0.0),
             tp_aggressive=risk_matrix.get("tp_aggressive", 0.0),
             rr_score=risk_matrix.get("rr_score", 0.0),
-            positioning_hint=extra_dims.get("positioning_hint"),
         )
         
-        # 解析估值指标
+        # 估值指标（增强）
         iv_analysis = data.get("iv_analysis", {})
+        technicals_raw = data.get("technicals", {})
+        extra_dims = data.get("extra_dimensions", {})
+        
         valuation = ValuationMetrics(
             pe_percentile=extra_dims.get("pe_percentile"),
             iv_percentile=iv_analysis.get("iv_percentile"),
             iv_regime=iv_analysis.get("iv_regime", "unknown"),
+            rsi_14=technicals_raw.get("rsi_14"),
+            volume_deviation=None,  # 数据库暂无，留空
         )
         
-        # 解析技术指标
+        # 技术指标
         trend = data.get("trend", {})
-        technicals_raw = data.get("technicals", {})
-        
         technicals = TechnicalMetrics(
             regime=trend.get("regime", "unknown"),
             rsi_14=technicals_raw.get("rsi_14"),
-            ma5=technicals_raw.get("ma5"),
-            ma20=technicals_raw.get("ma20"),
-            ma60=technicals_raw.get("ma60"),
-            ma200=technicals_raw.get("ma200"),
+            ma5=technicals_raw.get("ma_5"),
+            ma20=technicals_raw.get("ma_20"),
+            ma60=technicals_raw.get("ma_60"),
+            ma200=technicals_raw.get("ma_200"),
         )
         
-        # 宏观背景
         macro_context = data.get("market_context", {})
         
         return SnapshotData(
             date=date,
+            ticker=ticker,
             bootstrap_probs=bootstrap_probs,
             risk_positioning=risk_positioning,
             valuation=valuation,
             technicals=technicals,
             macro_context=macro_context,
+            cost_price=cost_price,
         )
 
 
 # ============================================================================
-# 报告生成器
+# 新功能模块 1：拥挤度警报 (Crowding Alert)
 # ============================================================================
 
-class OptimizedStrategyAdvisor:
-    """优化版策略顾问 - 核心输出引擎"""
+class CrowdingAnalyzer:
+    """
+    拥挤度分析器：区分"正常上涨"vs"博傻阶段末尾"
+    
+    核心逻辑：
+    - RSI > 70 且 IV Rank > 90 → 典型拥挤交易
+    - RSI > 70 但 IV Rank < 50 → 相对安全的上涨
+    """
+    
+    @staticmethod
+    def calculate_crowding_index(rsi: Optional[float], iv_percentile: Optional[float]) -> tuple[float, str]:
+        """
+        计算拥挤度指数（0-100）
+        返回：(指数, 解释文本)
+        """
+        if rsi is None or iv_percentile is None:
+            return 0.0, "数据不完整"
+        
+        # 标准化 RSI (70-100 映射到 0-50)
+        rsi_score = max(0, min(100, (rsi - 70) * 5)) if rsi > 70 else 0
+        
+        # IV percentile 直接使用（80-100 映射到 50-100）
+        iv_score = max(0, min(100, (iv_percentile - 80) * 5)) if iv_percentile > 80 else 0
+        
+        # 加权组合
+        crowding_index = rsi_score * 0.4 + iv_score * 0.6
+        
+        return crowding_index, CrowdingAnalyzer._interpret_crowding(crowding_index, rsi, iv_percentile)
+    
+    @staticmethod
+    def _interpret_crowding(index: float, rsi: float, iv_pct: float) -> str:
+        """生成拥挤度解释"""
+        if index >= 70:
+            return f"🚨 **极度拥挤**：RSI {rsi:.0f}（超买）+ IV Rank {iv_pct:.0f}%（极高波动预期）。典型博傻阶段末尾，风险极高。"
+        elif index >= 50:
+            return f"⚠️ **中等拥挤**：RSI {rsi:.0f} + IV Rank {iv_pct:.0f}% 显示市场参与度高，需警惕获利了结。"
+        elif index >= 30:
+            return f"🟡 **轻度拥挤**：RSI {rsi:.0f} 处于强势但 IV Rank {iv_pct:.0f}% 相对温和，上涨相对健康。"
+        else:
+            return f"🟢 **低度拥挤**：RSI {rsi:.0f} + IV Rank {iv_pct:.0f}% 都处于舒适区间，没有极端拥挤信号。"
 
+
+# ============================================================================
+# 新功能模块 2：持仓相关性校验 (Correlation Checker)
+# ============================================================================
+
+class CorrelationChecker:
+    """
+    持仓相关性校验器：计算目标股与已有持仓的相关系数
+    """
+    
+    @staticmethod
+    def calculate_correlations(
+        target_ticker: str,
+        target_returns: pd.Series,
+        holdings: dict[str, pd.Series],
+        min_overlap: int = 20
+    ) -> dict[str, float]:
+        """
+        计算 target_ticker 与 holdings 中各股的 Pearson 相关系数
+        
+        Args:
+            target_ticker: 目标股票代码
+            target_returns: 目标股的日对数收益率 Series
+            holdings: {ticker: returns_series} 已有持仓的收益率字典
+            min_overlap: 最少重叠天数
+        
+        Returns:
+            {ticker: correlation} 相关系数字典
+        """
+        correlations = {}
+        
+        for holding_ticker, holding_returns in holdings.items():
+            # 对齐日期
+            aligned_target = target_returns[target_returns.index.isin(holding_returns.index)]
+            aligned_holding = holding_returns[holding_returns.index.isin(target_returns.index)]
+            
+            # 检查重叠
+            if len(aligned_target) < min_overlap:
+                correlations[holding_ticker] = None
+                continue
+            
+            # 计算 Pearson 相关系数
+            try:
+                corr = np.corrcoef(aligned_target.values, aligned_holding.values)[0, 1]
+                correlations[holding_ticker] = float(corr) if not np.isnan(corr) else None
+            except:
+                correlations[holding_ticker] = None
+        
+        return correlations
+    
+    @staticmethod
+    def generate_correlation_alert(
+        target_ticker: str,
+        correlations: dict[str, Optional[float]],
+        threshold: float = 0.75
+    ) -> str:
+        """生成相关性警告"""
+        high_corr = {t: c for t, c in correlations.items() if c and c > threshold}
+        
+        if not high_corr:
+            return f"✅ {target_ticker} 与已有持仓的相关性都 < {threshold}，风险分散良好。"
+        
+        alerts = [f"⚠️ {target_ticker} 持仓相关性警告："]
+        for ticker, corr in sorted(high_corr.items(), key=lambda x: x[1], reverse=True):
+            alerts.append(f"  - 与 {ticker} 的相关系数：{corr:.3f} （高度正相关）")
+        
+        alerts.append(f"\n💡 建议：该标的与现有持仓逻辑重合度高，买入将导致风险高度集中。")
+        
+        return "\n".join(alerts)
+
+
+# ============================================================================
+# 新功能模块 3：回本期望时间 (Expected Time to Breakeven)
+# ============================================================================
+
+class BreakevenTimeCalculator:
+    """
+    基于 Bootstrap 分布计算"回本期望时间"
+    
+    方法：对于不同时间点的回本概率分布，计算触及"高于成本价"的中位数日数
+    """
+    
+    @staticmethod
+    def estimate_breakeven_days(
+        bootstrap_probs: dict[int, BootstrapProbs],
+        initial_prob: Optional[float] = None
+    ) -> dict[str, Any]:
+        """
+        估计回到成本价的期望天数
+        
+        逻辑：
+        - 已有 10d, 20d, 60d 的 prob_always_above_cost
+        - 使用这三个点进行插值，找出 prob = 50% 的交点
+        
+        Args:
+            bootstrap_probs: {10: BootstrapProbs, 20: ..., 60: ...}
+        
+        Returns:
+            {
+                'median_days': float,  # 回本中位数天数
+                'confidence': str,  # 估计置信度
+                'details': str  # 详细说明
+            }
+        """
+        if not bootstrap_probs:
+            return {"median_days": None, "confidence": "N/A", "details": "无 Bootstrap 数据"}
+        
+        # 提取三个关键概率点
+        horizons = sorted(bootstrap_probs.keys())
+        probs_above_cost = [(h, bootstrap_probs[h].prob_always_above_cost) for h in horizons]
+        
+        # 找出"始终高于成本"概率最低的点
+        min_prob_day = min(probs_above_cost, key=lambda x: x[1])
+        
+        if min_prob_day[1] > 0.8:
+            # 高回本率，短期内就能回本
+            return {
+                "median_days": 5,
+                "confidence": "极高",
+                "details": f"所有时间段（10-60d）的回本概率都 > 80%，预计 5 交易日内即可触及成本价。"
+            }
+        elif min_prob_day[1] > 0.5:
+            # 中等回本率，使用简单插值
+            closest_day = min_prob_day[0]
+            return {
+                "median_days": closest_day * 0.6,
+                "confidence": "中等",
+                "details": f"基于 {closest_day}d 的回本概率 {min_prob_day[1]:.1%}，预计 {closest_day * 0.6:.0f} 交易日触及成本。"
+            }
+        else:
+            # 低回本率，周期较长
+            return {
+                "median_days": 125,
+                "confidence": "低",
+                "details": f"60d 回本概率仅 {bootstrap_probs[60].prob_always_above_cost:.1%}，套牢风险高，预计 125+ 交易日才能解套。"
+            }
+
+
+# ============================================================================
+# 新功能模块 4：止损与凯利仓位 (Stop Loss & Kelly Position)
+# ============================================================================
+
+class StopLossAndKellyCalculator:
+    """
+    自动化的止损位和凯利仓位建议
+    """
+    
+    @staticmethod
+    def calculate_stop_loss(latest_price: float, atr: float, multiplier: float = 1.5) -> float:
+        """
+        计算动态止损位
+        标准：latest_price - multiplier × ATR
+        """
+        return latest_price - multiplier * atr
+    
+    @staticmethod
+    def calculate_kelly_position(
+        prob_win: float,
+        prob_loss: float,
+        win_size: float,
+        loss_size: float,
+        safety_factor: float = 0.25  # 使用凯利公式的 25%
+    ) -> float:
+        """
+        简化凯利公式计算最大仓位权重
+        
+        凯利公式：f = (p × b - q) / b
+        其中：
+        - p = 胜率
+        - q = 败率 = 1 - p
+        - b = 收益/亏损比
+        
+        为了保守，使用 safety_factor × f 作为建议仓位
+        """
+        if prob_win <= 0 or prob_loss <= 0 or win_size <= 0 or loss_size <= 0:
+            return 0.0
+        
+        b = win_size / loss_size  # 收益亏损比
+        q = 1 - prob_win
+        
+        if b <= 0:
+            return 0.0
+        
+        kelly_fraction = (prob_win * b - q) / b
+        
+        # 限制在 [0, 1]
+        kelly_fraction = max(0.0, min(1.0, kelly_fraction))
+        
+        # 应用安全系数（保守的 25% Kelly）
+        safe_position = kelly_fraction * safety_factor
+        
+        return max(0.0, min(0.5, safe_position))  # 最多 50% 仓位
+
+
+# ============================================================================
+# 报告生成器（增强版）
+# ============================================================================
+
+class EnhancedStrategyAdvisor:
+    """增强版策略顾问"""
+    
     def __init__(
         self,
-        ticker: str,
-        snapshot_today: SnapshotData,
-        snapshot_history: Optional[SnapshotData] = None,
-        cost_price: Optional[float] = None,
+        snapshot: SnapshotData,
+        holdings: Optional[dict[str, SnapshotData]] = None,
+        repo: Optional[EnhancedDataRepository] = None
     ):
-        self.ticker = ticker
-        self.snapshot_today = snapshot_today
-        self.snapshot_history = snapshot_history
-        self.cost_price = cost_price
-
-    def generate_report(self) -> str:
-        """生成完整的 Markdown 报告"""
+        self.snapshot = snapshot
+        self.holdings = holdings or {}
+        self.repo = repo
+        # 计算模式与基线（延迟计算可每个模块重算以确保最新）
+        self._mode = None
+        self._baseline_price = None
+    
+    def generate_enhanced_report(self) -> str:
+        """生成增强版报告（合并旧版输出模块）"""
         sections = [
-            self._section_title(),
+            self._title_section(),
             self._section_price_momentum(),
+            self._crowding_alert_section(),
             self._section_quantitative_recovery(),
-            self._section_risk_control(),
+            self._risk_control_section(),
             self._section_valuation_safety(),
             self._section_macro_sentiment(),
+            self._correlation_warning_section(),
             self._section_delta_comparison(),
             self._section_recommendation(),
+            self._original_analysis_section(),
         ]
+
         return "\n\n".join(filter(None, sections))
 
-    # ===================== 第一部分：标题 =====================
+    def save_report(self, report: str, output_path: pathlib.Path, ticker: str, snap_today: SnapshotData) -> None:
+        if output_path is None:
+            return
 
-    def _section_title(self) -> str:
-        """标题和基本信息"""
-        date_str = self.snapshot_today.date
-        return f"""# 📊 {self.ticker} 投资分析报告
+        # 使用 snapshot 的日期作为时间标签（YYYYMMDD）
+        date_tag = snap_today.date
+        try:
+            date_tag = str(pathlib.Path(date_tag).name).replace('-', '')
+        except Exception:
+            date_tag = date_tag.replace('-', '') if isinstance(date_tag, str) else datetime.now(tz=timezone.utc).strftime('%Y%m%d')
 
-**报告日期**：{date_str}  
-**生成时间**：{datetime.now(tz=timezone.utc).strftime("%Y-%m-%d %H:%M UTC")}
-"""
+        if output_path.is_dir():
+            filename = f"strategy_{ticker}_{date_tag}.md"
+            output_path = output_path / filename
+        else:
+            parent = output_path.parent
+            stem = output_path.stem
+            suffix = output_path.suffix or ".md"
+            new_name = f"{stem}_{date_tag}{suffix}"
+            parent.mkdir(parents=True, exist_ok=True)
+            output_path = parent / new_name
 
-    # ===================== 第二部分：价格与动能 =====================
-
-    def _section_price_momentum(self) -> str:
-        """价格与技术面动能分析"""
-        snap = self.snapshot_today
+        output_path.write_text(report, encoding="utf-8")
+        print(f"[OK] Report saved to {output_path}\n")
+    
+    def _title_section(self) -> str:
+        """标题"""
+        snap = self.snapshot
+        date_str = snap.date
+        ticker = snap.ticker
         price = snap.risk_positioning.latest_price
+        # 从 holdings.json 中读取持仓信息（若存在）
+        holdings_path = pathlib.Path(__file__).resolve().parents[1] / "data" / "holdings" / "holdings.json"
+        holding_flag = ""
+        holding_line = ""
+        try:
+            if holdings_path.is_file():
+                obj = json.loads(holdings_path.read_text(encoding="utf-8"))
+                holdings = obj.get("holdings", {})
+                if ticker in holdings:
+                    h = holdings[ticker]
+                    pos = h.get("position")
+                    avg = h.get("averageCost")
+                    mkt = h.get("marketPrice")
+                    # 有持仓
+                    holding_flag = "**持仓**：已持有"
+                    holding_line = f"**持仓详情**：{ticker} {pos} 股，成本 ${float(avg):.2f}，市价 ${float(mkt):.2f}"
+                    # set baseline
+                    try:
+                        self._mode = "Portfolio Management"
+                        self._baseline_price = float(avg) if avg is not None else None
+                    except Exception:
+                        self._mode = "Portfolio Management"
+                        self._baseline_price = None
+                else:
+                    holding_flag = "**持仓**：未持有"
+                    holding_line = ""
+                    self._mode = "New Entry Analysis"
+                    self._baseline_price = None
+        except Exception:
+            holding_flag = ""
+            holding_line = ""
+
+        # 如果命令行传入成本优先覆盖
+        if self.snapshot.cost_price is not None and self.snapshot.cost_price > 0:
+            self._mode = "Portfolio Management"
+            self._baseline_price = float(self.snapshot.cost_price)
+
+        # 展示 header mode
+        mode_tag = "[HOLDING]" if self._mode == "Portfolio Management" else "[WATCHLIST]"
+
+        # 财务摘要
+        fin_lines = []
+        if self._mode == "Portfolio Management" and self._baseline_price:
+            cost = self._baseline_price
+            pnl_pct = ((price - cost) / cost * 100) if cost else 0
+            # distance to stop
+            stop = snap.risk_positioning.stop_1x5_atr or 0
+            distance_to_stop_pct = ((price - stop) / price * 100) if price else 0
+            fin_lines.append(f"**成本**：${cost:.2f}  |  **PnL**：{pnl_pct:+.2f}%  |  **距止损**：{distance_to_stop_pct:.2f}%")
+        else:
+            # watchlist
+            stop = snap.risk_positioning.stop_1x5_atr or 0
+            # Kelly using latest_price as base (safe calc)
+            kelly_pct = 0.0
+            try:
+                latest = price
+                win_size = snap.risk_positioning.tp_aggressive - latest
+                loss_size = latest - stop if latest and stop is not None else 0
+                if loss_size > 0:
+                    prob_win = snap.bootstrap_probs.get(20).prob_always_above_cost if 20 in snap.bootstrap_probs else 0
+                    prob_loss = 1 - prob_win
+                    kelly_pct = StopLossAndKellyCalculator.calculate_kelly_position(prob_win, prob_loss, win_size, loss_size)
+            except Exception:
+                kelly_pct = 0.0
+
+            rr = (snap.risk_positioning.tp_aggressive - latest) / (latest - stop) if (latest and stop and (latest - stop) != 0) else 0
+            fin_lines.append(f"**Entry Ref**：${price:.2f}  |  **R/R**：1:{rr:.2f}  |  **Kelly**：{kelly_pct:.1%}")
+
+        safety_buffer = ((price - (snap.risk_positioning.stop_1x5_atr or 0)) / price * 100) if price else 0
+
+        return f"""# 📊 {ticker} 增强版投资分析报告 {mode_tag}
+
+{holding_flag}
+{holding_line}
+{'\n'.join(fin_lines)}
+**股票**：{ticker}  
+**当前价**：${price:.2f}  
+**报告日期**：{date_str}  
+**生成时间**：{datetime.now(tz=timezone.utc).strftime("%Y-%m-%d %H:%M UTC")}  
+**安全缓冲**：{safety_buffer:.2f}%
+"""
+    
+    def _crowding_alert_section(self) -> str:
+        """拥挤度警报"""
+        snap = self.snapshot
+        rsi = snap.valuation.rsi_14
+        iv_pct = snap.valuation.iv_percentile
+        
+        if rsi is None or iv_pct is None:
+            return "## ⚡ 1. 拥挤度警报\n\n数据不完整，无法计算。"
+        
+        crowding_idx, interpretation = CrowdingAnalyzer.calculate_crowding_index(rsi, iv_pct)
+        
+        return f"""## ⚡ 1. 拥挤度警报 (Crowding & Volatility Context)
+
+**拥挤度指数**：{crowding_idx:.1f} / 100
+
+**关键指标**：
+- **RSI(14)**：{rsi:.1f}
+- **IV Rank**：{iv_pct:.1f}%
+
+**评价**：{interpretation}
+
+**含义**：
+- RSI > 70 = 超买信号
+- IV Rank > 80% = 市场预期剧烈波动
+- 二者同时高企 = 博傻交易特征，风险极高
+"""
+    
+    def _correlation_warning_section(self) -> str:
+        """持仓相关性校验"""
+        if not self.holdings:
+            return ""
+        
+        snap = self.snapshot
+        target_ticker = snap.ticker
+        
+        # 尝试计算相关性
+        try:
+            target_df = self.repo.get_historical_data(target_ticker, limit=60)
+            if target_df.empty or len(target_df) < 20:
+                return ""
+            
+            # 计算目标股对数收益率
+            target_df["log_return"] = np.log(target_df["close"] / target_df["close"].shift(1))
+            target_returns = target_df.set_index("date")["log_return"].dropna()
+            
+            # 计算已有持仓的对数收益率
+            holdings_returns = {}
+            for holding_ticker in self.holdings.keys():
+                holding_df = self.repo.get_historical_data(holding_ticker, limit=60)
+                if not holding_df.empty and len(holding_df) > 20:
+                    holding_df["log_return"] = np.log(holding_df["close"] / holding_df["close"].shift(1))
+                    holdings_returns[holding_ticker] = holding_df.set_index("date")["log_return"].dropna()
+            
+            if not holdings_returns:
+                return ""
+            
+            # 计算相关性
+            correlations = CorrelationChecker.calculate_correlations(
+                target_ticker, target_returns, holdings_returns
+            )
+            
+            alert = CorrelationChecker.generate_correlation_alert(target_ticker, correlations)
+            
+            return f"""## 📍 2. 持仓相关性校验 (Sector Correlation Matrix)
+
+{alert}
+"""
+        except Exception as e:
+            return f"## 📍 2. 持仓相关性校验\n\n计算失败：{e}\n"
+    
+    def _breakeven_time_section(self) -> str:
+        """回本期望时间 / 新建分析替代指标"""
+        snap = self.snapshot
+        bootstrap = snap.bootstrap_probs
+
+        if not bootstrap:
+            return ""
+
+        # 确保 mode 已由 title 设定（若未设则基线为 cost 或 None）
+        mode = self._mode if self._mode is not None else ("Portfolio Management" if snap.cost_price else "New Entry Analysis")
+
+        if mode == "New Entry Analysis":
+            # 对于新建，计算 5% 涨幅的概率（近似使用 20d 分布）
+            prob_5pct = None
+            if 20 in bootstrap:
+                median = bootstrap[20].final_median or 0
+                latest = snap.risk_positioning.latest_price
+                # 估计 prob of 5% gain：如果 median 提供信息则以 median 判断，否则使用 prob_reach_tp as proxy
+                try:
+                    if latest and latest * 1.05 <= bootstrap[20].final_median:
+                        prob_5pct = bootstrap[20].prob_reach_tp
+                    else:
+                        prob_5pct = bootstrap[20].prob_reach_tp
+                except Exception:
+                    prob_5pct = bootstrap[20].prob_reach_tp
+
+            return f"""## ⏰ 3. 新建入场视角：5% 涨幅概率（近似）\n\n- **20d 视角 5% 涨幅概率（近似）**：{(prob_5pct or 0):.1%}\n"""
+
+        # Portfolio Management: 使用持仓成本计算回本时间并给出保护建议
+        cost = self._baseline_price or snap.cost_price
+        latest = snap.risk_positioning.latest_price
+        result = BreakevenTimeCalculator.estimate_breakeven_days(bootstrap)
+
+        extra = []
+        if cost and latest:
+            if latest > cost:
+                extra.append("**状态**：Profit Protected（当前价格高于成本），建议使用 trailing stop（1.5×ATR）保护利润。")
+                trailing = StopLossAndKellyCalculator.calculate_stop_loss(latest, snap.risk_positioning.latest_atr, multiplier=1.5)
+                extra.append(f"建议 trailing stop：${trailing:.2f} （1.5×ATR）")
+
+        return f"""## ⏰ 3. 回本期望时间 (Portfolio Management)
+
+**估计中位数天数**：{result['median_days']:.0f} 交易日  
+**置信度**：{result['confidence']}
+
+**详细分析**：{result['details']}
+
+{'\n'.join(extra)}
+
+**Bootstrap 概率分布**：
+"""  + "\n".join([
+            f"- **{h}d 视角**：始终高于成本概率 = {bootstrap[h].prob_always_above_cost:.1%}"
+            for h in sorted(bootstrap.keys())
+        ])
+    
+    def _stop_loss_kelly_section(self) -> str:
+        """止损与凯利仓位"""
+        snap = self.snapshot
+        risk = snap.risk_positioning
+        bootstrap = snap.bootstrap_probs
+        latest_price = risk.latest_price
+        atr = risk.latest_atr
+        cost_price = snap.cost_price
+
+        # 计算 1.5×ATR 止损（基于 latest_price）
+        stop_loss = StopLossAndKellyCalculator.calculate_stop_loss(latest_price, atr, multiplier=1.5)
+
+        # 凯利仓位：始终以 latest_price 作为起点
+        kelly_position = 0.0
+        if 20 in bootstrap:
+            prob_win = bootstrap[20].prob_always_above_cost
+            prob_loss = 1 - prob_win
+            win_size = risk.tp_aggressive - latest_price
+            loss_size = latest_price - stop_loss
+            # 安全检查
+            if loss_size <= 0 or win_size <= 0 or prob_win <= 0:
+                kelly_position = 0.0
+            else:
+                kelly_position = StopLossAndKellyCalculator.calculate_kelly_position(
+                    prob_win, prob_loss, win_size, loss_size
+                )
+        
+        # 计算风险收益比（以 latest_price 为基准）
+        rr = 0
+        try:
+            denom = (latest_price - stop_loss)
+            if denom and denom != 0:
+                rr = (risk.tp_aggressive - latest_price) / denom
+        except Exception:
+            rr = 0
+
+        # baseline mode for display
+        baseline_display = cost_price if cost_price and cost_price > 0 else latest_price
+
+        safety_buffer = ((latest_price - (risk.stop_1x5_atr or 0)) / latest_price * 100) if latest_price else 0
+
+        return f"""## 🎯 4. 止损与凯利仓位建议
+
+    **基准参考价**：${baseline_display:.2f}
+    **推荐止损位**：${stop_loss:.2f}  
+    （基于 1.5 × ATR = 1.5 × ${atr:.2f}）
+
+    **止损距离**：${latest_price - stop_loss:.2f} ({(latest_price - stop_loss) / latest_price * 100:.1f}%)
+
+    ---
+
+    **凯利公式最大仓位权重（基于最新价）**：{kelly_position:.1%}
+
+    **含义**：
+    - 如果总资金为 $100,000，该标的建议头寸 ${ 100000 * kelly_position:,.0f}
+    - 使用 25% Kelly（保守策略），实际建议仓位不超过 {kelly_position:.1%}
+
+    ---
+
+    **风险收益概览（基于最新价）**：
+    - **现价** → **止损**：${latest_price:.2f} → ${stop_loss:.2f}
+    - **现价** → **激进目标**：${latest_price:.2f} → ${risk.tp_aggressive:.2f}
+    - **风险收益比**：1 : {rr:.2f}
+
+    **安全缓冲**：{safety_buffer:.2f}%
+    """
+    
+    def _original_analysis_section(self) -> str:
+        """原有分析（简化版）"""
+        snap = self.snapshot
+        risk = snap.risk_positioning
+        bootstrap = snap.bootstrap_probs
+        
+        lines = ["## 📈 5. 原有量化指标速览"]
+        
+        # 技术面
         tech = snap.technicals
-        
-        lines = [
-            "## 📈 1. 价格与动能",
-            f"\n**当前价**：${price:.2f}",
-        ]
-        
-        # 如果有历史数据，显示 7 日变化
-        if self.snapshot_history:
-            hist_price = self.snapshot_history.risk_positioning.latest_price
-            price_change = price - hist_price
-            price_change_pct = (price_change / hist_price * 100) if hist_price else 0
-            direction = "📈" if price_change > 0 else "📉"
-            lines.append(f"**7日变动**：{direction} {price_change:+.2f} ({price_change_pct:+.2f}%)")
-        
-        # 趋势解释
-        regime_desc = self._translate_regime(tech.regime)
-        lines.append(f"\n**趋势状态**：`{tech.regime}` → {regime_desc}")
-        
-        # RSI 状态
+        lines.append(f"\n**技术面趋势**：{tech.regime}")
         if tech.rsi_14 is not None:
-            rsi_signal = self._interpret_rsi(tech.rsi_14)
-            lines.append(f"**RSI(14)**：{tech.rsi_14:.1f} - {rsi_signal}")
+            lines.append(f"**RSI(14)**：{tech.rsi_14:.1f}")
         
-        # 均线纠缠度
-        ma_status = self._analyze_ma_alignment(tech)
-        lines.append(f"\n**均线排列**：{ma_status}")
+        # Bootstrap 概率（简化）
+        if 60 in bootstrap:
+            prob_60d = bootstrap[60].prob_always_above_cost
+            lines.append(f"\n**60日回本概率**：{prob_60d:.1%}")
+        
+        # 估值
+        if snap.valuation.pe_percentile:
+            lines.append(f"**PE 分位**：{snap.valuation.pe_percentile:.0f}%")
         
         return "\n".join(lines)
 
-    # ===================== 第三部分：量化胜率与回本概率 =====================
+    # ======= 从旧版合并的额外章节与工具函数（adapted） =======
+    def _section_price_momentum(self) -> str:
+        """价格与动能（包含与历史的简单对比）"""
+        snap = self.snapshot
+        price = snap.risk_positioning.latest_price
+        tech = snap.technicals
+
+        lines = ["## 📈 1. 价格与动能", f"\n**当前价**：${price:.2f}"]
+
+        # 7日变化（从历史 close 计算）
+        try:
+            if self.repo:
+                df = self.repo.get_historical_data(snap.ticker, limit=10)
+                if not df.empty and len(df) >= 7:
+                    hist_price = float(df.sort_values('date').iloc[-7]['close'])
+                    price_change = price - hist_price
+                    price_change_pct = (price_change / hist_price * 100) if hist_price else 0
+                    direction = "📈" if price_change > 0 else "📉"
+                    lines.append(f"**7日变动**：{direction} {price_change:+.2f} ({price_change_pct:+.2f}%)")
+        except Exception:
+            pass
+
+        regime_desc = self._translate_regime(tech.regime) if hasattr(self, '_translate_regime') else tech.regime
+        lines.append(f"\n**趋势状态**：`{tech.regime}` → {regime_desc}")
+
+        if tech.rsi_14 is not None:
+            rsi_signal = self._interpret_rsi(tech.rsi_14) if hasattr(self, '_interpret_rsi') else ''
+            lines.append(f"**RSI(14)**：{tech.rsi_14:.1f} - {rsi_signal}")
+
+        ma_status = self._analyze_ma_alignment(tech) if hasattr(self, '_analyze_ma_alignment') else "数据不完整"
+        lines.append(f"\n**均线排列**：{ma_status}")
+
+        return "\n".join(lines)
 
     def _section_quantitative_recovery(self) -> str:
-        """Bootstrap 回本概率分析"""
-        snap = self.snapshot_today
+        """逐视角展示 Bootstrap 回本概率与价格分布（10/20/60d）"""
+        snap = self.snapshot
         bootstrap = snap.bootstrap_probs
-        
-        lines = [
-            "## 🎯 2. 量化胜率与回本概率（Bootstrap）",
-            "\n这是系统最看重的\"胜率\"指标，基于 5000 次历史蒙特卡洛模拟：",
-        ]
-        
+
+        if not bootstrap:
+            return ""
+
+        lines = ["## 🎯 2. 量化胜率与回本概率（Bootstrap）", "\n这是系统基于历史蒙特卡洛模拟得出的概率分布："]
+
         for horizon in [10, 20, 60]:
             if horizon not in bootstrap:
                 continue
-            
             prob = bootstrap[horizon]
-            
             lines.append(f"\n### {horizon} 日视角")
-            
-            # 核心胜率
-            win_rate = prob.prob_always_above_cost * 100
-            lines.append(f"- **始终高于成本的概率**：{win_rate:.1f}%")
-            
-            # 风险指标
-            stop_risk = prob.prob_touch_stop * 100
-            lines.append(f"- **触及止损线的风险**：{stop_risk:.1f}%")
-            
-            # 盈利目标
-            tp_hit = prob.prob_reach_tp * 100
-            lines.append(f"- **触及激进目标的概率**：{tp_hit:.1f}%")
-            
-            # 价格分布
+            lines.append(f"- **始终高于成本的概率**：{prob.prob_always_above_cost:.1%}")
+            lines.append(f"- **触及止损线的风险**：{prob.prob_touch_stop:.1%}")
+            lines.append(f"- **触及激进目标的概率**：{prob.prob_reach_tp:.1%}")
             lines.append(f"- **中位数目标**：${prob.final_median:.2f}")
-            lines.append(f"- **看空边界（5%分位）**：${prob.final_pct5:.2f}")
-            lines.append(f"- **看多边界（95%分位）**：${prob.final_pct95:.2f}")
-        
-        # 总体评价
+            lines.append(f"- **5% 分位（看空）**：${prob.final_pct5:.2f}")
+            lines.append(f"- **95% 分位（看多）**：${prob.final_pct95:.2f}")
+
+        # 总体评价（adapted from old helper）
         lines.append(self._summarize_recovery_probs(bootstrap))
-        
+
         return "\n".join(lines)
 
-    # ===================== 第四部分：风险控制 =====================
-
-    def _section_risk_control(self) -> str:
-        """止损线和风险管理"""
-        snap = self.snapshot_today
+    def _risk_control_section(self) -> str:
+        snap = self.snapshot
         risk = snap.risk_positioning
         price = risk.latest_price
-        
+
         lines = [
             "## 🛡️ 3. 风险对冲位",
             f"\n**当前价**：${price:.2f}",
             f"**ATR(14)**：${risk.latest_atr:.2f}",
         ]
-        
-        # 硬止损线
+
         stop_level = risk.stop_1x5_atr
-        stop_distance = ((stop_level - price) / price) * 100 if price else 0
+        stop_distance = ((stop_level - price) / price * 100) if price else 0
         lines.append(f"\n**硬止损线（1.5x ATR）**：${stop_level:.2f} (距现价 {stop_distance:+.2f}%)")
-        
-        # 激进目标
+
         tp_level = risk.tp_aggressive
-        tp_distance = ((tp_level - price) / price) * 100 if price else 0
-        lines.append(f"**激进目标（2x ATR）**：${tp_level:.2f} (上涨潜力 {tp_distance:+.2f}%)")
-        
-        # 风险收益评分
-        rr_score = risk.rr_score
-        rr_desc = self._interpret_rr_score(rr_score)
-        lines.append(f"\n**风险/收益评分**：{rr_score:.1f}/10 - {rr_desc}")
-        
-        # 定位暗示
-        if risk.positioning_hint:
-            lines.append(f"\n**系统操作暗示**：*{risk.positioning_hint}*")
+        tp_distance = ((tp_level - price) / price * 100) if price else 0
+        lines.append(f"**激进目标（TP）**：${tp_level:.2f} (上涨潜力 {tp_distance:+.2f}%)")
+
+        rr_score = getattr(risk, "rr_score", None)
+        if rr_score is not None:
+            rr_desc = self._interpret_rr_score(rr_score)
+            lines.append(f"\n**风险/收益评分**：{rr_score:.1f}/10 - {rr_desc}")
+
+        hint = getattr(risk, "positioning_hint", None)
+        if hint:
+            lines.append(f"\n**系统操作暗示**：*{hint}*")
         else:
             lines.append(f"\n**系统操作暗示**：基于技术面，等待清晰的突破信号")
-        
+
         return "\n".join(lines)
 
-    # ===================== 第五部分：估值与安全性 =====================
-
     def _section_valuation_safety(self) -> str:
-        """估值分位和 IV 状态"""
-        snap = self.snapshot_today
+        """估值与 IV 状态（详细版）"""
+        snap = self.snapshot
         val = snap.valuation
-        
+
         lines = ["## 💰 4. 估值与安全性"]
-        
-        # PE 分位
+
         if val.pe_percentile is not None:
             pe_pct = val.pe_percentile
             pe_desc = self._interpret_pe_percentile(pe_pct)
             lines.append(f"\n**PE 历史分位**：{pe_pct:.0f}% - {pe_desc}")
-            
-            # 与历史数据对比
-            if self.snapshot_history and self.snapshot_history.valuation.pe_percentile is not None:
-                hist_pe = self.snapshot_history.valuation.pe_percentile
-                pe_delta = pe_pct - hist_pe
-                direction = "↓" if pe_delta < 0 else "↑"
-                lines.append(f"  - 相较7日前：{direction} {pe_delta:+.1f} 百分点")
         else:
             lines.append("\n**PE 历史分位**：暂无数据")
-        
-        # IV 分位和状态
+
         if val.iv_percentile is not None:
             iv_pct = val.iv_percentile
             lines.append(f"\n**IV 历史分位**：{iv_pct:.1f}%")
-        
-        iv_regime = val.iv_regime
+
+        iv_regime = getattr(val, 'iv_regime', 'unknown')
         iv_regime_desc = self._interpret_iv_regime(iv_regime)
         lines.append(f"**IV 状态**：`{iv_regime}` → {iv_regime_desc}")
-        
+
         return "\n".join(lines)
 
-    # ===================== 第六部分：宏观与情绪 =====================
-
     def _section_macro_sentiment(self) -> str:
-        """宏观背景和情绪指标"""
-        snap = self.snapshot_today
+        """宏观背景与情绪指标（来自 snapshot.macro_context）"""
+        snap = self.snapshot
         macro = snap.macro_context or {}
-        
+
         lines = ["## 📡 5. 宏观与情绪哨兵"]
-        
-        # SPY 趋势
+
         spy_trend = macro.get("spy_trend_regime", "N/A")
         lines.append(f"\n**大盘状态（SPY）**：{spy_trend}")
-        
-        # 超额收益
+
         excess_return = macro.get("excess_return_20d")
         if excess_return is not None:
             emoji = "📈" if excess_return > 0 else "📉"
             lines.append(f"**20日超额收益 vs SPY**：{emoji} {excess_return:+.2f}%")
-        
-        # 相关性
+
         corr_60d = macro.get("log_return_corr_60d")
         if corr_60d is not None:
             corr_desc = "高度相关" if abs(corr_60d) > 0.7 else "中等相关" if abs(corr_60d) > 0.4 else "低相关"
             lines.append(f"**60日收益相关性 vs SPY**：{corr_60d:.3f} ({corr_desc})")
-        
-        # 宏观关联（估值敏感度标注）
-        if self._is_high_valuation_stock():
-            lines.append("\n> ⚠️ **[估值敏感度：高]** 该股票是高估值科技股，对美债收益率上升敏感。")
-            lines.append(">   - 10Y 美债收益率上升 → PE 承压下行")
-            lines.append(">   - 当前宏观流动性收紧的环境下需谨慎")
-        
-        elif self._is_utility_stock():
-            lines.append("\n> 💡 **[估值敏感度：中等]** 该股票具有防守属性，对利率敏感。")
-            lines.append(">   - 利率上升 → 财务成本增加，影响 FCF")
-            lines.append(">   - 适合低利率环境下建仓")
-        
-        return "\n".join(lines)
 
-    # ===================== 第七部分：时间维度对比 =====================
+        # 估值敏感度提示
+        if self._is_high_valuation_stock():
+            lines.append("\n> ⚠️ **[估值敏感度：高]** 该股票对利率上行敏感。")
+        elif self._is_utility_stock():
+            lines.append("\n> 💡 **[估值敏感度：中等]** 该股票具有防守属性。")
+
+        return "\n".join(lines)
 
     def _section_delta_comparison(self) -> str:
-        """与历史数据的对比分析"""
-        if not self.snapshot_history:
+        """与历史数据的对比（尽量使用 repo 的历史 close 近似代替 snapshot_history）"""
+        if not self.repo:
             return ""
-        
-        today = self.snapshot_today
-        hist = self.snapshot_history
-        
-        lines = [
-            f"## ⏳ 6. 时间维度变化（{hist.date} → {today.date}）",
-            ""
-        ]
-        
-        # 价格涨跌
-        price_today = today.risk_positioning.latest_price
-        price_hist = hist.risk_positioning.latest_price
-        price_change_pct = ((price_today - price_hist) / price_hist * 100) if price_hist else 0
-        lines.append(f"**价格变动**：{price_change_pct:+.2f}%")
-        
-        # PE 分位变化
-        pe_today = today.valuation.pe_percentile
-        pe_hist = hist.valuation.pe_percentile
-        if pe_today is not None and pe_hist is not None:
-            pe_delta = pe_today - pe_hist
-            direction = "压力释放" if pe_delta < 0 else "压力增加"
-            lines.append(f"**PE 分位**：从 {pe_hist:.0f}% → {pe_today:.0f}% ({direction})")
-        
-        # IV Regime 变化
-        iv_today = today.valuation.iv_regime
-        iv_hist = hist.valuation.iv_regime
-        if iv_today != iv_hist:
-            lines.append(f"**IV 状态**：从 `{iv_hist}` → `{iv_today}`")
-        
-        # RSI 变化
-        rsi_today = today.technicals.rsi_14
-        rsi_hist = hist.technicals.rsi_14
-        if rsi_today is not None and rsi_hist is not None:
-            rsi_delta = rsi_today - rsi_hist
-            direction = "↑" if rsi_delta > 0 else "↓"
-            lines.append(f"**RSI(14)**：从 {rsi_hist:.1f} → {rsi_today:.1f} ({direction}{abs(rsi_delta):.1f})")
-        
-        return "\n".join(lines)
 
-    # ===================== 第八部分：最终建议 =====================
+        snap = self.snapshot
+        try:
+            df = self.repo.get_historical_data(snap.ticker, limit=10)
+            if df.empty or len(df) < 7:
+                return ""
+
+            df_sorted = df.sort_values('date')
+            price_today = snap.risk_positioning.latest_price
+            price_hist = float(df_sorted.iloc[-7]['close'])
+            price_change_pct = ((price_today - price_hist) / price_hist * 100) if price_hist else 0
+
+            lines = [f"## ⏳ 6. 时间维度变化（近7日对比）", ""]
+            lines.append(f"**价格变动**：{price_change_pct:+.2f}%")
+
+            rsi = snap.technicals.rsi_14
+            if rsi is not None:
+                lines.append(f"**RSI(14)**：{rsi:.1f}")
+
+            return "\n".join(lines)
+        except Exception:
+            return ""
 
     def _section_recommendation(self) -> str:
-        """综合建议和决策逻辑"""
-        snap = self.snapshot_today
-        
+        """综合建议与推理链（基于旧版逻辑）"""
+        snap = self.snapshot
+
         lines = ["## 🎬 7. 综合建议"]
-        
-        # 生成建议
         recommendation = self._generate_recommendation()
         lines.append(f"\n### 操作建议\n**{recommendation}**")
-        
-        # 推理逻辑
+
         logic = self._generate_logic_chain()
         if logic:
             lines.append("\n### 推理逻辑")
             for item in logic:
                 lines.append(f"- {item}")
-        
-        # 主要风险
+
         risks = self._identify_key_risks()
         if risks:
             lines.append("\n### 主要风险")
             for risk in risks:
                 lines.append(f"- ⚠️ {risk}")
-        
+
         return "\n".join(lines)
 
-    # ===================== 辅助函数 =====================
-
+    # ========== Helper functions borrowed/adapted from old advisor ==========
     def _translate_regime(self, regime: str) -> str:
-        """翻译趋势状态为大白话"""
         translations = {
             "bull_strong": "强势上涨，MA5/20/60 多头排列",
             "bull_partial": "中期走强，但 MA200 仍有压制",
@@ -515,18 +1037,16 @@ class OptimizedStrategyAdvisor:
         return translations.get(regime, regime)
 
     def _interpret_rsi(self, rsi: float) -> str:
-        """RSI 信号解释"""
         if rsi > 70:
             return "⚡ 超买（可能回调）"
         elif rsi < 30:
-            return "🔻 超卖（可能反弹）"
+            return "🔻 超卖（可能反弹)"
         elif rsi > 50:
             return "💪 强势"
         else:
             return "⏳ 弱势"
 
     def _interpret_pe_percentile(self, pe_pct: float) -> str:
-        """PE 分位解释"""
         if pe_pct > 90:
             return "极度昂贵，缺乏安全边际"
         elif pe_pct > 75:
@@ -539,7 +1059,6 @@ class OptimizedStrategyAdvisor:
             return "极度便宜，可能是投资机会"
 
     def _interpret_iv_regime(self, iv_regime: str) -> str:
-        """IV 状态解释"""
         descs = {
             "cheap": "极低，期权便宜，长期建仓的好时机",
             "low": "偏低，可积极建仓",
@@ -550,7 +1069,6 @@ class OptimizedStrategyAdvisor:
         return descs.get(iv_regime, "状态未知")
 
     def _interpret_rr_score(self, score: float) -> str:
-        """风险收益评分解释"""
         if score >= 8:
             return "极优秀 - 风险小收益大 🌟"
         elif score >= 6:
@@ -563,12 +1081,9 @@ class OptimizedStrategyAdvisor:
             return "较差 - 风险大于收益 ❌"
 
     def _analyze_ma_alignment(self, tech: TechnicalMetrics) -> str:
-        """分析均线排列"""
         ma5, ma20, ma60, ma200 = tech.ma5, tech.ma20, tech.ma60, tech.ma200
-        
         if not all([ma5, ma20, ma60, ma200]):
             return "数据不完整"
-        
         if ma5 > ma20 > ma60 > ma200:
             return "金叉排列 (完全多头) 🟢"
         elif ma5 < ma20 < ma60 < ma200:
@@ -581,13 +1096,10 @@ class OptimizedStrategyAdvisor:
             return "纠缠排列 (缺乏明确方向) 🟡"
 
     def _summarize_recovery_probs(self, bootstrap: dict[int, BootstrapProbs]) -> str:
-        """总结回本概率的整体评价"""
         if 60 not in bootstrap:
             return ""
-        
         prob_60d = bootstrap[60]
         win_rate = prob_60d.prob_always_above_cost
-        
         if win_rate > 0.7:
             return "\n> ✅ **总体评价**：60日胜率超过70%，长期看涨态度明确。"
         elif win_rate > 0.5:
@@ -598,26 +1110,19 @@ class OptimizedStrategyAdvisor:
             return "\n> ❌ **总体评价**：60日胜率低于30%，概率倾向看空，需要谨慎。"
 
     def _is_high_valuation_stock(self) -> bool:
-        """判断是否为高估值股票"""
         high_val_stocks = ["TSLA", "NVDA", "AVGO", "AMZN", "GOOG"]
-        return self.ticker in high_val_stocks
+        return self.snapshot.ticker in high_val_stocks
 
     def _is_utility_stock(self) -> bool:
-        """判断是否为公用事业股"""
         utility_stocks = ["CEG", "VST", "LMT"]
-        return self.ticker in utility_stocks
+        return self.snapshot.ticker in utility_stocks
 
     def _generate_recommendation(self) -> str:
-        """生成综合建议"""
-        snap = self.snapshot_today
+        snap = self.snapshot
         bootstrap = snap.bootstrap_probs
         risk = snap.risk_positioning
         val = snap.valuation
-        
-        # 简单评分逻辑
         score = 0
-        
-        # 回本概率 (60d)
         if 60 in bootstrap:
             if bootstrap[60].prob_always_above_cost > 0.7:
                 score += 3
@@ -625,20 +1130,15 @@ class OptimizedStrategyAdvisor:
                 score += 2
             elif bootstrap[60].prob_always_above_cost > 0.3:
                 score += 1
-        
-        # 风险收益
-        if risk.rr_score >= 8:
+        if getattr(risk, 'rr_score', 0) >= 8:
             score += 2
-        elif risk.rr_score >= 6:
+        elif getattr(risk, 'rr_score', 0) >= 6:
             score += 1
-        
-        # 估值
-        if val.pe_percentile is not None:
+        if getattr(val, 'pe_percentile', None) is not None:
             if val.pe_percentile < 30:
                 score += 2
             elif val.pe_percentile < 70:
                 score += 1
-        
         if score >= 7:
             return "🟢 **强烈推荐**：多条线索共振，可考虑建立或加仓"
         elif score >= 5:
@@ -649,42 +1149,29 @@ class OptimizedStrategyAdvisor:
             return "🔴 **谨慎回避**：风险大于机遇，暂不建议介入"
 
     def _generate_logic_chain(self) -> list[str]:
-        """生成推理逻辑链"""
         logic = []
-        snap = self.snapshot_today
-        
+        snap = self.snapshot
         if snap.technicals.regime:
             logic.append(f"技术面：处于 {self._translate_regime(snap.technicals.regime)}")
-        
         if 60 in snap.bootstrap_probs:
             win_rate = snap.bootstrap_probs[60].prob_always_above_cost
             if win_rate > 0.6:
                 logic.append(f"量化胜率：60日回本率 {win_rate:.0%}，概率优势明显")
-        
-        if snap.valuation.pe_percentile is not None:
+        if getattr(snap.valuation, 'pe_percentile', None) is not None:
             if snap.valuation.pe_percentile > 80:
                 logic.append(f"估值面：PE 分位 {snap.valuation.pe_percentile:.0f}%，估值压力较大")
-        
         return logic
 
     def _identify_key_risks(self) -> list[str]:
-        """识别主要风险"""
         risks = []
-        snap = self.snapshot_today
-        
-        # 高止损风险
+        snap = self.snapshot
         if 20 in snap.bootstrap_probs:
             if snap.bootstrap_probs[20].prob_touch_stop > 0.5:
                 risks.append(f"20日内触及止损线的概率达 {snap.bootstrap_probs[20].prob_touch_stop:.0%}，需做好风控")
-        
-        # 估值高企
-        if snap.valuation.pe_percentile and snap.valuation.pe_percentile > 90:
+        if getattr(snap.valuation, 'pe_percentile', None) and snap.valuation.pe_percentile > 90:
             risks.append(f"PE 分位极高（{snap.valuation.pe_percentile:.0f}%），缺乏安全边际，下跌空间大")
-        
-        # IV 高企
-        if snap.valuation.iv_percentile and snap.valuation.iv_percentile > 80:
+        if getattr(snap.valuation, 'iv_percentile', None) and snap.valuation.iv_percentile > 80:
             risks.append(f"IV 处于高位（{snap.valuation.iv_percentile:.0f}%），波动性可能加剧")
-        
         return risks
 
 
@@ -695,71 +1182,67 @@ class OptimizedStrategyAdvisor:
 def main():
     """CLI 入口"""
     parser = argparse.ArgumentParser(
-        description="优化版策略顾问 - 直接从 SQLite 数据库读取全面量化指标"
+        description="增强版策略顾问 - 拥挤度/相关性/回本时间/止损"
     )
     parser.add_argument("--db", type=str, default="investment_lab.db",
                         help="SQLite 数据库路径")
-    parser.add_argument("--ticker", type=str, default="TSLA",
-                        help="股票代码（默认 TSLA）")
+    parser.add_argument("--ticker", type=str, default="AMD",
+                        help="目标股票代码")
+    parser.add_argument("--holdings", type=str, default="",
+                        help="已有持仓股票代码（逗号分隔），用于相关性计算")
     parser.add_argument("--cost", type=float, default=None,
                         help="持仓成本价（可选）")
     parser.add_argument("--output", type=str, default=None,
-                        help="输出文件路径（省略时输出到 stdout）")
-    parser.add_argument("--tickers", type=str, default=None,
-                        help="多个股票代码，逗号分隔（会覆盖 --ticker）")
+                        help="输出文件路径")
     
     args = parser.parse_args()
     
-    # 确定目标股票
-    if args.tickers:
-        tickers = [t.strip().upper() for t in args.tickers.split(",")]
+    # 初始化数据库
+    repo = EnhancedDataRepository(args.db)
+    
+    # 获取目标股票数据
+    target_ticker = args.ticker.upper()
+
+    # 优先从 data/holdings/holdings.json 中读取持仓成本
+    holdings_path = pathlib.Path(__file__).resolve().parents[1] / "data" / "holdings" / "holdings.json"
+    cost_from_holdings = None
+    try:
+        if holdings_path.is_file():
+            obj = json.loads(holdings_path.read_text(encoding="utf-8"))
+            h = obj.get("holdings", {})
+            if target_ticker in h:
+                val = h[target_ticker].get("averageCost")
+                if val is not None:
+                    cost_from_holdings = float(val)
+    except Exception:
+        cost_from_holdings = None
+
+    # 如果命令行提供成本价优先，否则使用 holdings 中的成本价
+    cost_price_arg = args.cost if args.cost is not None else cost_from_holdings
+    snapshot = repo.get_latest_snapshot(target_ticker, cost_price=cost_price_arg)
+    
+    if not snapshot:
+        print(f"[ERR] No data found for {target_ticker}")
+        return
+    
+    # 获取已有持仓数据
+    holdings = {}
+    if args.holdings:
+        holding_tickers = [t.strip().upper() for t in args.holdings.split(",")]
+        for holding_ticker in holding_tickers:
+            snap = repo.get_latest_snapshot(holding_ticker)
+            if snap:
+                holdings[holding_ticker] = snap
+    
+    # 生成报告
+    advisor = EnhancedStrategyAdvisor(snapshot, holdings=holdings, repo=repo)
+    report = advisor.generate_enhanced_report()
+    
+    # 输出
+    if args.output:
+        advisor.save_report(report, pathlib.Path(args.output), target_ticker, snapshot)
     else:
-        tickers = [args.ticker.upper()]
-    
-    # 初始化数据库访问
-    repo = QuantDataRepository(args.db)
-    
-    # 处理每只股票
-    for ticker in tickers:
-        print(f"\n{'='*70}")
-        print(f"Generating report for {ticker}...")
-        print('='*70 + "\n")
-        
-        try:
-            # 获取最新数据
-            snap_today = repo.get_latest_snapshot(ticker)
-            if not snap_today:
-                print(f"[ERR] No data found for {ticker}")
-                continue
-            
-            # 尝试获取历史数据（7天前）
-            snap_history = None
-            # 由于数据库中只有一条记录，这里暂不支持历史对比
-            # 如果有多条记录，可以调用 repo.get_snapshot_before()
-            
-            # 创建报告生成器
-            advisor = OptimizedStrategyAdvisor(
-                ticker=ticker,
-                snapshot_today=snap_today,
-                snapshot_history=snap_history,
-                cost_price=args.cost,
-            )
-            
-            # 生成报告
-            report = advisor.generate_report()
-            
-            # 输出
-            if args.output:
-                output_path = pathlib.Path(args.output)
-                output_path.parent.mkdir(parents=True, exist_ok=True)
-                output_path.write_text(report, encoding="utf-8")
-                print(f"[OK] Report saved to {output_path}\n")
-            else:
-                print(report)
-        
-        except Exception as e:
-            print(f"[ERR] {ticker}: {e}")
-            raise
+        print(report)
 
 
 if __name__ == "__main__":

@@ -16,6 +16,12 @@
 - 更新数据流水线：
   - `python scripts/portfolio_pipeline.py`
   - `python scripts/news_collector.py`
+- 一键跑通（更新数据 + 出报告，支持不开 TWS）：
+  - `python scripts/run_pipeline_and_reports.py --summary`
+  - 说明：
+    - TWS 未开启时会自动回退到 yfinance 下载行情
+    - 报告默认对「持仓 + watchlist」生成到 `reports/`，文件名会自动附加日期后缀
+    - `--summary` 会额外生成 `reports/holdings_summary_YYYYMMDD.md`（从 DB 汇总持仓关键指标）
 - 分析单只股票并自动入库：
   - `python scripts/analyze_report.py <TICKER>`
 - 批量入库并验证：
@@ -58,6 +64,15 @@
       - 多只（逗号分隔）：`python scripts/strategy_advisor.py --tickers AAPL,GOOG --output reports/strategy_AAPL.md` （注意：`--output` 为单文件路径，建议为每只单独运行以避免覆盖）
     - 报告结构：标题、价格与动能、回本概率（10/20/60d）、风险对冲位、估值与安全性、宏观情绪、时间维度对比与最终建议。
     - 说明：脚本会将 `quantitative` 表中的 `metrics` JSON 解析为结构化快照并生成易读的 Markdown，适合直接发布或归档。
+  - `run_pipeline_and_reports.py`：一键串联“更新数据（行情/新闻）→ 生成报告（持仓+watchlist）”。
+    - 典型用法：`python scripts/run_pipeline_and_reports.py --summary`
+    - 可选参数：
+      - `--skip-pipeline`：跳过行情下载（只跑新闻/出报告）
+      - `--skip-news`：跳过新闻更新（只跑行情/出报告）
+      - `--report-scope holdings|watchlist|both`：报告范围
+      - `--tickers AAPL,TSLA`：手动指定 ticker（覆盖 report-scope）
+      - `--output-dir reports`：输出目录（默认 reports）
+    - 注意：该脚本“出报告”依赖 `investment_lab.db` 已存在 `quantitative.metrics` 记录；它不会生成新的 `*_metrics.json`。
 
 - `reports/`
   - 存放生成的研报（如 `TSLA_report.md`）、AI 上下文文件（`ai_<TICKER>.txt`）以及执行日志/错误文件（如 `error_<cmd>_<ts>.log`）。
