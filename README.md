@@ -1,92 +1,185 @@
-# AI_Investment_Lab — 项目说明与详细文件结构
+# AI_Investment_Lab — 美股投研自动化流水线
 
-一句话：基于 Python 的美股投研流水线，整合 TWS/yfinance、新闻舆情与量化分析，输出结构化 metrics 与人性化研报。
+## 一句话
+基于 Python 的美股投研流水线，整合行情下载、新闻舆情、基本面数据与量化分析，输出结构化 metrics 与人性化研报。
 
-快速上手（最小步骤）
-- 克隆并进入项目：
-  - `git clone <repo>`
-  - `cd AI_Investment_Lab`
-- 创建并激活虚拟环境（Windows）：
-  - `python -m venv .venv`
-  - `.venv\Scripts\activate`
-- 安装依赖：
-  - `pip install ib_insync pandas numpy yfinance textblob pytrends fredapi`
+## 快速上手
 
-常用命令
-- 更新数据流水线：
-  - `python scripts/portfolio_pipeline.py`
-  - `python scripts/news_collector.py`
-- 一键跑通（更新数据 + 出报告，支持不开 TWS）：
-  - `python scripts/run_pipeline_and_reports.py --summary`
-  - 说明：
-    - TWS 未开启时会自动回退到 yfinance 下载行情
-    - 报告默认对「持仓 + watchlist」生成到 `reports/`，文件名会自动附加日期后缀
-    - `--summary` 会额外生成 `reports/holdings_summary_YYYYMMDD.md`（从 DB 汇总持仓关键指标）
-- 分析单只股票并自动入库：
-  - `python scripts/analyze_report.py <TICKER>`
-- 批量入库并验证：
-  - `python scripts/ingest_all_and_show_tsla.py`
-- 构建 AI 上下文：
-  - `python scripts/get_context_for_ai.py --ticker <TICKER> > reports/ai_<TICKER>.txt`
+```bash
+# 克隆
+git clone https://github.com/dennisgukaidi/AI_Investment_Lab.git
+cd AI_Investment_Lab
 
-详细文件与目录说明
-- `data/`
-  - `raw/`：历史行情 CSV，命名格式 `{TICKER}_180d.csv`，包含 OHLCV、IV 与占位的分析师字段。
-  - `news/`：新闻与情绪 JSON，格式 `{TICKER}_news.json`，包含标题、摘要、发布时间与情绪分值。
-  - `fundamentals/`：基本面 JSON，`{TICKER}_fundamentals.json`，含估值、财报摘要与关键比率。
-  - `alternative/`：替代数据 JSON（如 Google Trends、聚合舆情），格式 `{TICKER}_alternative.json`。
-  - `analysis/`：分析结果 JSON，`{TICKER}_metrics.json`，含概率分布、风险指标、趋势与 summary 字段。
-  - `macroeconomic/`：宏观数据文件 `macro_data.json`，包含 FRED 指标（利率、CPI、GDP 等）。
-  - `watchlist.csv`：观察清单，逗号分隔的股票代码。
+# 创建并激活虚拟环境（Windows）
+python -m venv .venv
+.venv\Scripts\activate
 
-- `scripts/`（核心脚本）
-  - `portfolio_pipeline.py`：完整流水线脚本。功能：连接 TWS（优先）或回退至 yfinance，同步持仓、下载历史行情、更新 `data/raw/`，并可生成持仓快照到 `rules.md`。
-    - 典型用法：`python scripts/portfolio_pipeline.py`
-  - `download_watchlist_data.py`：轻量测试脚本。默认只处理 `watchlist.csv` 的第一个 ticker，并在无法连接 TWS 时回退到 yfinance。适合快速调试或 CI 快速检查。
-    - 建议：保留作为测试工具或扩展为 `--all/--tickers` 参数。
-  - `news_collector.py`：抓取新闻并做情绪分析（TextBlob），输出到 `data/news/`。
-  - `fundamental_data_collector.py`：抓取/计算基本面指标并保存到 `data/fundamentals/`。
-  - `alternative_data_collector.py`：收集 Google Trends 与其他替代数据，输出到 `data/alternative/`。
-  - `macroeconomic_data_collector.py`：通过 FRED API 下载宏观指标，保存到 `data/macroeconomic/macro_data.json`（需要 `--api-key`）。
-  - `analyze_report.py`：量化分析引擎。输入：`data/raw/`、`data/news/`、`data/fundamentals/` 等，输出：`data/analysis/{TICKER}_metrics.json`，并可生成 `reports/{TICKER}_report.md`。
-    - 内置行为：保存 metrics 后会调用 `_db_ingest_helper.ingest_all()`（若可用）将数据写入 `investment_lab.db`。
-  - `_db_ingest_helper.py`：数据库入库助手，封装将 JSON 写入 SQLite 的逻辑。
-  - `ingest_all_and_show_tsla.py`：遍历 `data/analysis/` 入库并打印 TSLA 验证信息，常用于验收。
-  - `get_context_for_ai.py`：从 DB 或文件提取最近 30 天上下文并输出自然语言文本，方便将数据喂给大模型。
-  - `init_db.py`：初始化 `investment_lab.db` 的表结构（`fundamentals`、`quantitative`、`macro`、`sentiment`），并提供 `--clean` 清理旧数据。应在首次使用库功能前运行。
-  - `import_analysis_to_db.py`：备选的批量导入工具（若不依赖自动入库，可用此脚本导入历史 metrics）。
-  - `strategy_advisor.py`：基于多维度数据（量化+基本面+情绪）生成策略建议与 Markdown 报告。
-  - `strategy_advisor.py`：基于多维度数据（量化+基本面+情绪）生成策略建议与 Markdown 报告。
-    - 输入来源：优先从 `investment_lab.db`（`quantitative` 表）读取最新 `metrics`，也可通过 `--cost` 覆盖成本价。
-    - 输出：默认打印到 `stdout`，可使用 `--output reports/strategy_<TICKER>.md` 将 Markdown 报告保存至 `reports/`。
-    - 典型用法：
-      - 单只：`python scripts/strategy_advisor.py --ticker TSLA --output reports/strategy_TSLA.md`
-      - 多只（逗号分隔）：`python scripts/strategy_advisor.py --tickers AAPL,GOOG --output reports/strategy_AAPL.md` （注意：`--output` 为单文件路径，建议为每只单独运行以避免覆盖）
-    - 报告结构：标题、价格与动能、回本概率（10/20/60d）、风险对冲位、估值与安全性、宏观情绪、时间维度对比与最终建议。
-    - 说明：脚本会将 `quantitative` 表中的 `metrics` JSON 解析为结构化快照并生成易读的 Markdown，适合直接发布或归档。
-  - `run_pipeline_and_reports.py`：一键串联“更新数据（行情/新闻）→ 生成报告（持仓+watchlist）”。
-    - 典型用法：`python scripts/run_pipeline_and_reports.py --summary`
-    - 可选参数：
-      - `--skip-pipeline`：跳过行情下载（只跑新闻/出报告）
-      - `--skip-news`：跳过新闻更新（只跑行情/出报告）
-      - `--report-scope holdings|watchlist|both`：报告范围
-      - `--tickers AAPL,TSLA`：手动指定 ticker（覆盖 report-scope）
-      - `--output-dir reports`：输出目录（默认 reports）
-    - 注意：该脚本“出报告”依赖 `investment_lab.db` 已存在 `quantitative.metrics` 记录；它不会生成新的 `*_metrics.json`。
+# 安装依赖（核心）
+pip install ib_insync pandas numpy yfinance textblob
 
-- `reports/`
-  - 存放生成的研报（如 `TSLA_report.md`）、AI 上下文文件（`ai_<TICKER>.txt`）以及执行日志/错误文件（如 `error_<cmd>_<ts>.log`）。
+# 可选依赖（按需安装）
+pip install fredapi       # 宏观数据收集
+pip install pytrends      # 替代数据（Google Trends）
 
-- 根目录文件
-  - `rules.md`：AI 可执行的操作手册（触发词 → 明确步骤）。
-  - `agent_rules.md` / `cline_rules.md`：团队/Agent 的开发与脚本更新规范。
-  - `README.md`：本文件。
+# 初始化数据库
+python scripts/init_db.py --init
+```
 
-运行与故障排查要点（精要）
-- TWS/IB Gateway：确保运行并允许 API（端口 `7496`，clientId 可配置）。
-- 依赖缺失：脚本通常会在启动时检查依赖并提示 `pip install`。推荐在 `.venv` 中安装依赖并导出 `requirements.txt`。
-- 日志与错误：若命令失败，请查看 `reports/` 下是否有对应的 error 日志，并将 stdout/stderr 一并保存以便排查。
+## 核心工作流
 
-我可以继续：1) 将 `download_watchlist_data.py` 扩展为支持 `--all/--tickers` 参数；2) 给每个脚本补充 CLI 示例；3) 为 `init_db.py` 添加 `--recreate` 与 `--dry-run` 功能。请选择要我接着做的项。 
+```mermaid
+flowchart LR
+    A[portfolio_pipeline] -->|data/raw/*.csv| B[news_collector]
+    B -->|data/news/*.json| C[fundamental_data_collector]
+    C -->|data/fundamentals/*.json| D[macroeconomic_data_collector]
+    D -->|data/macroeconomic/*.json| E[analyze_report]
+    E -->|data/analysis/*_metrics.json| F[import_analysis_to_db]
+    F -->|investment_lab.db| G[strategy_advisor / run_pipeline]
+    G -->|reports/*.md| H[🟢 策略报告]
+```
 
-最后更新：2026-05-13
+### 完整更新流程（7 步）
+
+```bash
+# 1. 行情下载（TWS → yfinance fallback）
+python scripts/portfolio_pipeline.py
+
+# 2. 新闻更新 + 情绪打分
+python scripts/news_collector.py
+
+# 3. 基本面数据收集（P/E, P/B, P/S, 财务健康等）
+python scripts/fundamental_data_collector.py <TICKER>
+# 循环执行：for %t in (AAPL GOOG AMZN TSLA) do python scripts/fundamental_data_collector.py %t
+
+# 4. 宏观经济数据更新（内置 FRED API key，直接运行）
+python scripts/macroeconomic_data_collector.py
+
+# 5. 量化分析计算
+python scripts/analyze_report.py --all
+
+# 6. 批量导入数据库（quantitative + fundamentals + sentiment + macro）
+python scripts/import_analysis_to_db.py
+
+# 7. 生成策略报告
+python scripts/run_pipeline_and_reports.py --skip-pipeline --skip-news --summary
+```
+
+### 一键流程（简化版，不生成新 metrics）
+
+```bash
+python scripts/run_pipeline_and_reports.py --summary
+```
+
+### 单只股票分析（含自动入库）
+
+```bash
+python scripts/analyze_report.py <TICKER>
+```
+
+## 目录结构
+
+```
+AI_Investment_Lab/
+├── data/
+│   ├── raw/                    # 历史行情 CSV
+│   │   └── {TICKER}_180d.csv   # OHLCV + IV + 分析师数据
+│   ├── news/                    # 新闻与情绪
+│   │   └── {TICKER}_news.json   # 标题/摘要/发布时间/sentiment_polarity
+│   ├── fundamentals/            # 基本面估值数据
+│   │   └── {TICKER}_fundamentals.json
+│   ├── analysis/                # 量化分析结果
+│   │   └── {TICKER}_metrics.json  # Bootstrap/IV分位/Monte Carlo/风险矩阵
+│   ├── alternative/             # 替代数据（需 pytrends）
+│   ├── macroeconomic/           # 宏观数据（需 FRED key）
+│   ├── holdings/                # 持仓快照（TWS 同步）
+│   └── watchlist.csv            # 观察清单（逗号分隔）
+│
+├── scripts/
+│   ├── portfolio_pipeline.py          # ⭐核心 持仓同步 + 行情下载 + 数据补全
+│   ├── news_collector.py              # ⭐核心 新闻抓取 + TextBlob 情绪分析
+│   ├── fundamental_data_collector.py  # ⭐核心 基本面数据收集
+│   ├── macroeconomic_data_collector.py# ⭐核心 宏观经济数据（内置 FRED key）
+│   ├── analyze_report.py              # ⭐核心 量化分析引擎（MC/Bootstrap/技术面）
+│   ├── _db_ingest_helper.py           # ⭐核心 数据库入库助手
+│   ├── import_analysis_to_db.py       # ⭐核心 批量导入 metrics 到 SQLite
+│   ├── strategy_advisor.py            # ⭐核心 策略顾问报告生成
+│   ├── run_full_pipeline.py    # 辅助 一键流数据收集
+│   ├── init_db.py                     # 辅助 数据库初始化/清理
+│   └── alternative_data_collector.py  # ⭐核心 Google Trends
+│
+├── reports/                     # 生成的策略报告/日志
+│   └── strategy_{TICKER}_{YYYYMMDD}.md
+│
+├── investment_lab.db            # SQLite 数据库
+├── rules.md                     # AI 可执行操作手册（触发词→步骤）
+└── README.md                    # 本文件
+```
+
+## 数据库（investment_lab.db）
+
+| 表名 | 主键 | 存储内容 |
+|------|------|---------|
+| `quantitative` | `id` (自增) | 量化分析指标 JSON（Monte Carlo、Bootstrap、IV 分位、风险矩阵等） |
+| `fundamentals` | `(ticker, date)` | 基本面数据 JSON（P/E、P/B、P/S、财务健康、增长指标） |
+| `sentiment` | `(ticker, date)` | 舆情得分（新闻平均极性，-1 ~ 1） |
+| `macro` | `date` | 宏观数据 JSON（利率、CPI、非农就业等） |
+
+### 重要说明
+- `analyze_report.py --all` 模式**不会自动触发入库**，需手动运行 `import_analysis_to_db.py`
+- `analyze_report.py <TICKER>`（单只模式）会自动触发 `_db_ingest_helper.ingest_all()` 完成全表入库
+- DB 文件 `.gitignore` 已忽略，不会提交到仓库
+
+## 策略报告内容
+
+`strategy_advisor.py` 生成的 Markdown 报告包含：
+1. **价格与动能**：当前价、MA20/60/200 趋势、RSI-14
+2. **回本概率（10/20/60d）**：Bootstrap 方法+结构止损触达概率
+3. **风险对冲位**：1.5×ATR 止损、激进目标价、RR 评分
+4. **估值与安全性**：IV 分位、拥挤度（IV Rank + RSI 双指标）
+5. **宏观情绪**：SPY 趋势、超额收益、收益相关性
+6. **持仓相关性校验**：与已有持仓的 R² 相关系数
+7. **止损与凯利仓位**：建议止损位 + 简化凯利公式最大权重
+
+## 故障排查
+
+| 问题 | 检查 |
+|------|------|
+| TWS 连接失败 | 确保 TWS/IB Gateway 运行，端口 7496 已启用 API |
+| `pip install` 失败 | 检查 Python 版本 ≥ 3.8，在 `.venv` 中操作 |
+| `yfinance` 数据为空 | 股票代码可能已退市/改名，或超出 yfinance 覆盖范围 |
+| `fundamentals` 表无更新 | 需运行 `fundamental_data_collector.py` + `_db_ingest_helper` 批量入库 |
+| 报告缺少内容 | 检查 `investment_lab.db` 中 `quantitative` 表是否有最新 metrics |
+| 日期不对 | 脚本内可能还在使用旧的日期后缀模式，检查 `strategy_advisor` 的自动日期命名 |
+
+## 注意事项
+- 所有脚本执行前需激活虚拟环境：`.venv\Scripts\activate`
+- 禁止直接手动编辑持仓数据（由 `portfolio_pipeline.py` 通过 TWS 自动维护）
+- 如需实盘交易操作，AI 必须先向用户确认并获得明确许可
+- `.gitignore` 已排除所有运行产物（data/ 子目录、reports/、*.db），仅仓库保留代码+配置
+
+## 替代数据 API
+
+`alternative_data_collector.py` 包含 2 个数据源：
+
+| 数据源 | 是否需要 API Key | 获取方式 |
+|--------|-----------------|---------|
+| **Google Trends** | ❌ 无需 key | `pip install pytrends` 后直接使用，无需注册 |
+| **Reddit 情绪** | ✅ 免费注册（占位） | https://www.reddit.com/prefs/apps → 创建应用获取 `client_id` 和 `client_secret`；使用 `pip install praw` 集成 |
+
+> Google Trends 可直接使用；Reddit 部分当前为占位返回 0 分，如需启用需实现 PRAW API 集成。
+
+## 依赖
+
+**核心依赖（必须安装）：**
+```
+ib_insync pandas numpy yfinance textblob
+```
+
+**可选依赖（按需）：**
+```
+fredapi          # 宏观经济数据收集器（内置 FRED API key，无需额外配置）
+pytrends         # 替代数据收集器（Google Trends，无需 API key）
+```
+
+## 最后更新
+2026-05-20

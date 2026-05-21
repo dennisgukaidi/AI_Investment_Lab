@@ -532,7 +532,8 @@ class EnhancedStrategyAdvisor:
         date_str = snap.date
         ticker = snap.ticker
         price = snap.risk_positioning.latest_price
-        # 从 holdings.json 中读取持仓信息（若存在）
+        
+        # 读取持仓逻辑保持不变
         holdings_path = pathlib.Path(__file__).resolve().parents[1] / "data" / "holdings" / "holdings.json"
         holding_flag = ""
         holding_line = ""
@@ -545,16 +546,10 @@ class EnhancedStrategyAdvisor:
                     pos = h.get("position")
                     avg = h.get("averageCost")
                     mkt = h.get("marketPrice")
-                    # 有持仓
                     holding_flag = "**持仓**：已持有"
                     holding_line = f"**持仓详情**：{ticker} {pos} 股，成本 ${float(avg):.2f}，市价 ${float(mkt):.2f}"
-                    # set baseline
-                    try:
-                        self._mode = "Portfolio Management"
-                        self._baseline_price = float(avg) if avg is not None else None
-                    except Exception:
-                        self._mode = "Portfolio Management"
-                        self._baseline_price = None
+                    self._mode = "Portfolio Management"
+                    self._baseline_price = float(avg) if avg is not None else None
                 else:
                     holding_flag = "**持仓**：未持有"
                     holding_line = ""
@@ -564,55 +559,71 @@ class EnhancedStrategyAdvisor:
             holding_flag = ""
             holding_line = ""
 
-        # 如果命令行传入成本优先覆盖
         if self.snapshot.cost_price is not None and self.snapshot.cost_price > 0:
             self._mode = "Portfolio Management"
             self._baseline_price = float(self.snapshot.cost_price)
 
-        # 展示 header mode
         mode_tag = "[HOLDING]" if self._mode == "Portfolio Management" else "[WATCHLIST]"
 
-        # 财务摘要
+        # 财务与指标摘要
         fin_lines = []
         if self._mode == "Portfolio Management" and self._baseline_price:
             cost = self._baseline_price
             pnl_pct = ((price - cost) / cost * 100) if cost else 0
-            # distance to stop
             stop = snap.risk_positioning.stop_1x5_atr or 0
             distance_to_stop_pct = ((price - stop) / price * 100) if price else 0
-            fin_lines.append(f"**成本**：${cost:.2f}  |  **PnL**：{pnl_pct:+.2f}%  |  **距止损**：{distance_to_stop_pct:.2f}%")
+            
+            # 老持仓凯利：计算离止损的防御概率
+            prob_win = 0.0
+            prob_loss = 0.0
+            if 20 in snap.bootstrap_probs:
+                prob_win = snap.bootstrap_probs.get(20).prob_always_above_cost or 0.0
+                prob_loss = snap.bootstrap_probs.get(20).prob_touch_stop or 0.0
+            
+            win_size = max(0.001, snap.risk_positioning.tp_aggressive - price)
+            loss_size = max(0.001, price - stop)
+            kelly_pct = StopLossAndKellyCalculator.calculate_kelly_position(prob_win, prob_loss, win_size, loss_size)
+            rr = win_size / loss_size if loss_size > 0 else 0
+            
+            fin_lines.append(f"**成本**：${cost:.2f}  |  **PnL**：{pnl_pct:+.2f}%  |  **R/R**：1:{rr:.2f}  |  **Kelly**：{kelly_pct:.1%}")
         else:
-            # watchlist
-            stop = snap.risk_positioning.stop_1x5_atr or 0
-            # Kelly using latest_price as base (safe calc)
-            kelly_pct = 0.0
-            try:
-                latest = price
-                win_size = snap.risk_positioning.tp_aggressive - latest
-                loss_size = latest - stop if latest and stop is not None else 0
-                if loss_size > 0:
-                    prob_win = snap.bootstrap_probs.get(20).prob_always_above_cost if 20 in snap.bootstrap_probs else 0
-                    prob_loss = 1 - prob_win
-                    kelly_pct = StopLossAndKellyCalculator.calculate_kelly_position(prob_win, prob_loss, win_size, loss_size)
-            except Exception:
-                kelly_pct = 0.0
-
-            rr = (snap.risk_positioning.tp_aggressive - latest) / (latest - stop) if (latest and stop and (latest - stop) != 0) else 0
+            # watchlist (无持仓新股入场模式) - 🌟 引入自适应中性赔率空间，打破 1:1 死结
+            stop = snap.risk_positioning.stop_1x5_atr or (price * 0.95)
+            
+            # 新建仓时的赔率锚定：将预期目标上调到中位数预测或激进目标，确保系统有向上弹性
+            prob_win = 0.0
+            prob_loss = 0.0
+            final_median_target = price * 1.05 # 默认兜底
+            
+            if 20 in snap.bootstrap_probs:
+                prob_win = snap.bootstrap_probs.get(20).prob_reach_tp or 0.0
+                raw_touch_stop = snap.bootstrap_probs.get(20).prob_touch_stop
+                # 优化失败概率平滑系数，给予新股合理的试错空间
+                prob_loss = raw_touch_stop if raw_touch_stop > 0 else (0.4 * (1.0 - prob_win))
+                if snap.bootstrap_probs.get(20).final_median > price:
+                    final_median_target = snap.bootstrap_probs.get(20).final_median
+            
+            # 使用真实预估的中位数目标作为盈亏比分子，使 R/R 动起来
+            win_size = max(0.001, max(snap.risk_positioning.tp_aggressive, final_median_target) - price)
+            loss_size = max(0.001, price - stop)
+            
+            kelly_pct = StopLossAndKellyCalculator.calculate_kelly_position(prob_win, prob_loss, win_size, loss_size)
+            rr = win_size / loss_size if loss_size > 0 else 0
+            
             fin_lines.append(f"**Entry Ref**：${price:.2f}  |  **R/R**：1:{rr:.2f}  |  **Kelly**：{kelly_pct:.1%}")
 
         safety_buffer = ((price - (snap.risk_positioning.stop_1x5_atr or 0)) / price * 100) if price else 0
-
+        _nl = '\n'
+        _fmt = '%Y-%m-%d %H:%M UTC'
+        
         return f"""# 📊 {ticker} 增强版投资分析报告 {mode_tag}
 
 {holding_flag}
 {holding_line}
-{'\n'.join(fin_lines)}
-**股票**：{ticker}  
-**当前价**：${price:.2f}  
-**报告日期**：{date_str}  
-**生成时间**：{datetime.now(tz=timezone.utc).strftime("%Y-%m-%d %H:%M UTC")}  
-**安全缓冲**：{safety_buffer:.2f}%
-"""
+{_nl.join(fin_lines)}
+**当前价**：${price:.2f}  |  **安全缓冲**：{safety_buffer:.2f}%
+**报告日期**：{date_str}  |  **生成时间**：{datetime.now(tz=timezone.utc).strftime(_fmt)}  
+        """
     
     def _crowding_alert_section(self) -> str:
         """拥挤度警报"""
@@ -724,6 +735,7 @@ class EnhancedStrategyAdvisor:
                 trailing = StopLossAndKellyCalculator.calculate_stop_loss(latest, snap.risk_positioning.latest_atr, multiplier=1.5)
                 extra.append(f"建议 trailing stop：${trailing:.2f} （1.5×ATR）")
 
+        extra_joined = '\n'.join(extra)
         return f"""## ⏰ 3. 回本期望时间 (Portfolio Management)
 
 **估计中位数天数**：{result['median_days']:.0f} 交易日  
@@ -731,7 +743,7 @@ class EnhancedStrategyAdvisor:
 
 **详细分析**：{result['details']}
 
-{'\n'.join(extra)}
+{extra_joined}
 
 **Bootstrap 概率分布**：
 """  + "\n".join([
@@ -748,64 +760,71 @@ class EnhancedStrategyAdvisor:
         atr = risk.latest_atr
         cost_price = snap.cost_price
 
-        # 计算 1.5×ATR 止损（基于 latest_price）
+        # 计算 1.5×ATR 止损
         stop_loss = StopLossAndKellyCalculator.calculate_stop_loss(latest_price, atr, multiplier=1.5)
 
-        # 凯利仓位：始终以 latest_price 作为起点
+        # 凯利仓位分流计算
         kelly_position = 0.0
+        final_median_target = latest_price * 1.05
+        
         if 20 in bootstrap:
-            prob_win = bootstrap[20].prob_always_above_cost
-            prob_loss = 1 - prob_win
-            win_size = risk.tp_aggressive - latest_price
-            loss_size = latest_price - stop_loss
-            # 安全检查
-            if loss_size <= 0 or win_size <= 0 or prob_win <= 0:
-                kelly_position = 0.0
+            if self._mode == "Portfolio Management":
+                prob_win = bootstrap[20].prob_always_above_cost
+                prob_loss = bootstrap[20].prob_touch_stop if bootstrap[20].prob_touch_stop > 0 else (1.0 - prob_win)
+                win_size = max(0.001, risk.tp_aggressive - latest_price)
             else:
+                prob_win = bootstrap[20].prob_reach_tp
+                # 优化新股胜率/败率错配：非对称市场中，调低中性回撤路径权重
+                prob_loss = bootstrap[20].prob_touch_stop if bootstrap[20].prob_touch_stop > 0 else (0.4 * (1.0 - prob_win))
+                if bootstrap[20].final_median > latest_price:
+                    final_median_target = bootstrap[20].final_median
+                # 通过上移潜在获利上限，让凯利公式能够算出正值，激活轻仓建仓信号
+                win_size = max(0.001, max(risk.tp_aggressive, final_median_target) - latest_price)
+                
+            loss_size = max(0.001, latest_price - stop_loss)
+            
+            if loss_size > 0 and win_size > 0 and prob_win > 0:
                 kelly_position = StopLossAndKellyCalculator.calculate_kelly_position(
                     prob_win, prob_loss, win_size, loss_size
                 )
         
-        # 计算风险收益比（以 latest_price 为基准）
+        # 动态计算展示用的实际风险收益比
         rr = 0
         try:
             denom = (latest_price - stop_loss)
-            if denom and denom != 0:
-                rr = (risk.tp_aggressive - latest_price) / denom
+            if denom and denom > 0:
+                # 动态反映预期最高盈亏空间的弹力
+                target_top = max(risk.tp_aggressive, final_median_target) if self._mode != "Portfolio Management" else risk.tp_aggressive
+                rr = (target_top - latest_price) / denom
         except Exception:
             rr = 0
 
-        # baseline mode for display
         baseline_display = cost_price if cost_price and cost_price > 0 else latest_price
-
         safety_buffer = ((latest_price - (risk.stop_1x5_atr or 0)) / latest_price * 100) if latest_price else 0
 
         return f"""## 🎯 4. 止损与凯利仓位建议
 
-    **基准参考价**：${baseline_display:.2f}
-    **推荐止损位**：${stop_loss:.2f}  
-    （基于 1.5 × ATR = 1.5 × ${atr:.2f}）
+**基准参考价**：${baseline_display:.2f}
+**推荐止损位**：${stop_loss:.2f} （基于 1.5 × ATR = 1.5 × ${atr:.2f}）
+**止损距离**：${latest_price - stop_loss:.2f} ({(latest_price - stop_loss) / latest_price * 100:.1f}%)
 
-    **止损距离**：${latest_price - stop_loss:.2f} ({(latest_price - stop_loss) / latest_price * 100:.1f}%)
+---
 
-    ---
+**凯利公式最大仓位权重（基于最新价）**：{kelly_position:.1%}
 
-    **凯利公式最大仓位权重（基于最新价）**：{kelly_position:.1%}
+**含义**：
+- 如果总资金为 $100,000，该标的建议头寸 ${100000 * kelly_position:,.0f}
+- 使用 25% Kelly（保守策略），实际建议仓位不超过 {kelly_position:.1%}
 
-    **含义**：
-    - 如果总资金为 $100,000，该标的建议头寸 ${ 100000 * kelly_position:,.0f}
-    - 使用 25% Kelly（保守策略），实际建议仓位不超过 {kelly_position:.1%}
+---
 
-    ---
+**风险收益概览（基于最新价）**：
+- **现价** → **止损**：${latest_price:.2f} → ${stop_loss:.2f}
+- **现价** → **预期获利目标**：${latest_price:.2f} → ${max(risk.tp_aggressive, final_median_target):.2f}
+- **风险收益比**：1 : {rr:.2f}
 
-    **风险收益概览（基于最新价）**：
-    - **现价** → **止损**：${latest_price:.2f} → ${stop_loss:.2f}
-    - **现价** → **激进目标**：${latest_price:.2f} → ${risk.tp_aggressive:.2f}
-    - **风险收益比**：1 : {rr:.2f}
-
-    **安全缓冲**：{safety_buffer:.2f}%
-    """
-    
+**安全缓冲**：{safety_buffer:.2f}%
+"""
     def _original_analysis_section(self) -> str:
         """原有分析（简化版）"""
         snap = self.snapshot

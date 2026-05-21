@@ -26,14 +26,20 @@ def _connect() -> sqlite3.Connection:
 def import_analysis() -> None:
     conn = _connect()
     cur = conn.cursor()
-    # 确保表存在（防止用户未运行 init_db）
+    # 为了确保使用新的历史记录表结构，若表已经存在则直接使用。
+    # 这里不再删除表，以免丢失已有的历史记录。表结构在第一次运行时会自动创建。
+    # 创建表时使用自增主键，以便同一 ticker 在不同日期或同一天多次分析时都能保留历史记录。
+    # 原来的主键 (ticker, date) 会在同一天多次运行时导致记录被 REPLACE，
+    # 这正是用户希望保留历史的痛点。这里改为使用 `id` 作为唯一主键，
+    # 并保留 ticker、date、metrics 字段供查询使用。
+    # 使用 IF NOT EXISTS 防止重复创建导致错误
     cur.execute(
         """
         CREATE TABLE IF NOT EXISTS quantitative (
+            id      INTEGER PRIMARY KEY AUTOINCREMENT,
             ticker  TEXT NOT NULL,
             date    TEXT NOT NULL,
-            metrics TEXT NOT NULL,
-            PRIMARY KEY (ticker, date)
+            metrics TEXT NOT NULL
         )
         """
     )
@@ -47,8 +53,9 @@ def import_analysis() -> None:
             if not ticker or not date:
                 continue
             cur.execute(
-                "INSERT OR REPLACE INTO quantitative (ticker, date, metrics) VALUES (?, ?, ?)",
-                (ticker, date, json.dumps(data, ensure_ascii=False)),
+            # 直接 INSERT，允许同一 ticker、同一 date 的多条记录保留（历史版本）。
+            "INSERT INTO quantitative (ticker, date, metrics) VALUES (?, ?, ?)",
+            (ticker, date, json.dumps(data, ensure_ascii=False)),
             )
         except Exception as exc:  # pragma: no cover
             print(f"[WARN] 导入 {json_file.name} 失败: {exc}")

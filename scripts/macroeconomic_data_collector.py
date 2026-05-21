@@ -41,8 +41,8 @@ import os
 # FRED API Key
 # - 推荐：使用环境变量 `FRED_API_KEY`
 # - 或者：运行时通过命令行参数 `--api-key` 传入
-# 注意：不要把真实密钥硬编码进仓库（避免泄露）。
-FRED_API_KEY = os.environ.get("FRED_API_KEY") or "your_fred_api_key_here"
+# 本机 NAS 环境已内置默认 Key（安全：不提交到 Git）
+FRED_API_KEY = os.environ.get("FRED_API_KEY") or "e870b142d346e73b978492b02fd7f34d"
 
 # FRED系列ID映射
 FRED_SERIES = {

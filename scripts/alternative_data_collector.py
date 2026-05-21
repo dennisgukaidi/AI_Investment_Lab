@@ -4,12 +4,11 @@ Alternative Data Collector - 替代数据收集器
 
 此脚本收集非传统数据源，包括：
 - Google Trends：股票搜索热度
-- 社交媒体情绪：Twitter/Reddit情绪分析（简化版）
+- Reddit情绪分析（简化版，占位）
 - 新闻情绪量化：基于现有新闻数据的情感分析
 
 数据来源：
-- Google Trends API (pytrends)
-- 社交媒体API（需要额外配置）
+- Google Trends API (pytrends)，无需 API key
 - 存储格式: data/alternative/{ticker}_alternative.json
 """
 
@@ -24,9 +23,8 @@ from typing import Dict, Any, List
 try:
     from pytrends.request import TrendReq
     import pandas as pd
-    import requests
 except ImportError:
-    sys.stderr.write("Required packages: pip install pytrends pandas requests\n")
+    sys.stderr.write("Required packages: pip install pytrends pandas\n")
     sys.exit(1)
 
 # --------------------------------------------------------------------------- 
@@ -98,21 +96,6 @@ def get_reddit_sentiment(ticker: str) -> Dict[str, Any]:
         return {"error": str(e)}
 
 
-def get_twitter_sentiment(ticker: str) -> Dict[str, Any]:
-    """获取Twitter情绪数据（简化版）"""
-    try:
-        # 类似Reddit，这里也需要API配置
-        return {
-            "sentiment_score": 0.0,
-            "tweet_count": 0,
-            "positive_ratio": 0.0,
-            "note": "Twitter sentiment analysis requires API configuration",
-            "last_updated": datetime.now(timezone.utc).isoformat()
-        }
-        
-    except Exception as e:
-        return {"error": str(e)}
-
 
 def aggregate_news_sentiment(ticker: str) -> Dict[str, Any]:
     """聚合现有新闻数据的情感分析"""
@@ -168,9 +151,8 @@ def collect_alternative_data(ticker: str) -> Dict[str, Any]:
     # Google Trends（使用股票代码作为关键词）
     trends_data = get_google_trends_data(ticker)
     
-    # 社交媒体情绪
+    # Reddit 情绪（占位，需配置 API）
     reddit_data = get_reddit_sentiment(ticker)
-    twitter_data = get_twitter_sentiment(ticker)
     
     # 新闻情绪聚合
     news_sentiment = aggregate_news_sentiment(ticker)
@@ -179,10 +161,7 @@ def collect_alternative_data(ticker: str) -> Dict[str, Any]:
         "ticker": ticker,
         "collected_at": datetime.now(timezone.utc).isoformat(),
         "google_trends": trends_data,
-        "social_media": {
-            "reddit": reddit_data,
-            "twitter": twitter_data
-        },
+        "social_media_reddit": reddit_data,
         "news_sentiment_aggregate": news_sentiment
     }
     

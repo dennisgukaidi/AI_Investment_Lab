@@ -88,12 +88,17 @@ def _ensure_ib_connection():
     from ib_insync import IB
 
     ib = IB()
-    try:
-        ib.connect('127.0.0.1', 7496, clientId=10)
-        return ib, False
-    except Exception as e:
-        print(f"[WARN] TWS 连接失败: {e} – 将使用 yfinance 作为回退数据源。")
-        return None, True
+    # 优先连局域网 TWS（用户常用电脑 10.10.10.10），再试本地
+    for host in ('10.10.10.10', '127.0.0.1'):
+        try:
+            ib.connect(host, 7496, clientId=66, timeout=10)
+            print(f"[OK] TWS 已连接: {host}:7496")
+            return ib, False
+        except Exception:
+            continue
+    # 全部失败 → fallback yfinance
+    print(f"[WARN] TWS 连接失败 – 将使用 yfinance 作为回退数据源。")
+    return None, True
 
 
 def _read_watchlist(path: str | None = None) -> list:
