@@ -1,0 +1,31 @@
+{
+  "ticker": "WMT",
+  "collected_at": "2026-05-28T01:15:11.404586+00:00",
+  "current_ratios": {
+    "valuation_ratios": {
+      "pe_ratio": 41.592983,
+      "pb_ratio": 9.482441,
+      "ps_ratio": 1.3027364
+    },
+    "financial_health": {
+      "debt_to_equity": 73.463,
+      "current_ratio": 0.771,
+      "roe": 0.24132,
+      "roa": 0.06876
+    },
+    "growth_indicators": {
+      "eps_growth": 0.188,
+      "revenue_growth": null
+    },
+    "company_info": {
+      "market_cap": 944881205248,
+      "industry": "Discount Stores",
+      "sector": "Consumer Defensive"
+    }
+  },
+  "historical_percentiles": {
+    "pe_percentile": null,
+    "pb_percentile": null,
+    "note": "Historical percentiles require extended market data"
+  }
+}

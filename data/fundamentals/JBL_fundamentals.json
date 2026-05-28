@@ -1,0 +1,31 @@
+{
+  "ticker": "JBL",
+  "collected_at": "2026-05-20T00:58:48.319588+00:00",
+  "current_ratios": {
+    "valuation_ratios": {
+      "pe_ratio": 44.862534,
+      "pb_ratio": 26.20896,
+      "ps_ratio": 1.0750823
+    },
+    "financial_health": {
+      "debt_to_equity": 328.91,
+      "current_ratio": 1.013,
+      "roe": 0.59696996,
+      "roa": 0.053489998
+    },
+    "growth_indicators": {
+      "eps_growth": 0.906,
+      "revenue_growth": null
+    },
+    "company_info": {
+      "market_cap": 35119714304,
+      "industry": "Electronic Components",
+      "sector": "Technology"
+    }
+  },
+  "historical_percentiles": {
+    "pe_percentile": null,
+    "pb_percentile": null,
+    "note": "Historical percentiles require extended market data"
+  }
+}

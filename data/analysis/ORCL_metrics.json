@@ -1,0 +1,226 @@
+{
+  "meta": {
+    "ticker": "ORCL",
+    "generated_at": "2026-05-28T01:15:23.551008+00:00",
+    "cost_price": 190.9600067138672,
+    "data_rows": 344,
+    "history_first_date": "2025-01-13",
+    "history_last_date": "2026-05-27",
+    "iv_percentile_window_rows": 180,
+    "bootstrap_horizons": [
+      10,
+      20,
+      60
+    ],
+    "benchmark_ticker": "SPY"
+  },
+  "trend": {
+    "regime": "bull_partial",
+    "close_vs_ma200": -15.3913,
+    "ma_spread_20_60": 20.3617,
+    "slope_ma20_5d": 0.021382,
+    "slope_ma60_5d": 0.022329,
+    "ma200_available": true,
+    "positioning_hint": "中期仍强但未确认年线多头；可等待突破/回踩 MA200 再加大仓位。"
+  },
+  "market_context": {
+    "benchmark_ticker": "SPY",
+    "available": true,
+    "aligned_trading_days": 344,
+    "spy_trend_regime": "bull_core",
+    "spy_trend": {
+      "regime": "bull_core",
+      "close_vs_ma200": 72.9997,
+      "ma_spread_20_60": 39.8269,
+      "slope_ma20_5d": 0.011709,
+      "slope_ma60_5d": 0.00719,
+      "ma200_available": true,
+      "positioning_hint": "多头排列+价在 MA200 上方：大趋势偏多；减仓宜分批止盈，加仓宜等回撤至均线带。"
+    },
+    "spy_ma": {
+      "ma_20": 735.2935,
+      "ma_60": 695.4666,
+      "ma_200": 677.4603
+    },
+    "stock_total_return_20d": 0.150639,
+    "spy_total_return_20d": 0.054476,
+    "excess_return_20d": 0.096163,
+    "stock_total_return_60d": 0.283933,
+    "spy_total_return_60d": 0.096345,
+    "excess_return_60d": 0.187587,
+    "log_return_corr_60d": 0.4401,
+    "benchmark_notes": [
+      "近60日显著跑赢SPY，注意获利了结与波动放大。"
+    ]
+  },
+  "monte_carlo": {
+    "model": "lognormal_iv",
+    "horizon_days": 10,
+    "iv_input": 0.4855922645833864,
+    "prob_always_above": 0.1654,
+    "prob_touch_below": 0.8346,
+    "expected_final_price": 190.93675953614084,
+    "pct5_final_price": 162.16976813514057,
+    "pct95_final_price": 223.15497136340207,
+    "prob_by_day": [
+      0.485,
+      0.4918,
+      0.4852,
+      0.4858,
+      0.4856,
+      0.4842,
+      0.4838,
+      0.4826,
+      0.4784,
+      0.4768
+    ],
+    "probability_matrix": {
+      "+5%": 0.2928,
+      "-5%": 0.6786,
+      "+10%": 0.153,
+      "-10%": 0.8442,
+      "+15%": 0.072,
+      "-15%": 0.9482
+    }
+  },
+  "bootstrap": {
+    "method": "historical_log_return_bootstrap",
+    "simulations": 5000,
+    "return_pool_len": 252,
+    "s0": 190.9600067138672,
+    "ma200_level": 206.351343460083,
+    "horizons": {
+      "10": {
+        "final_median": 191.07227628213164,
+        "final_pct5": 161.72076523127816,
+        "final_pct25": 178.4530971133614,
+        "final_pct75": 205.1136016496679,
+        "final_pct95": 235.8858974305126,
+        "min_price_mae_from_start_pct5": -16.724085480765574,
+        "min_price_mae_from_start_median": -5.019092741282165,
+        "max_price_runup_from_start_pct95": 26.630141721678974,
+        "prob_touch_or_below_stop_1x5": 0.4156,
+        "prob_touch_or_below_stop_2x": 0.2918,
+        "prob_touch_or_below_cost": 0.829,
+        "prob_final_at_or_above_tp_aggressive": 0.2774,
+        "prob_paths_always_above_cost": 0.171,
+        "prob_touch_or_below_ma200": 0.9896,
+        "probability_matrix_final": {
+          "+5%": 0.3164,
+          "-5%": 0.6896,
+          "+10%": 0.1904,
+          "-10%": 0.8522,
+          "+15%": 0.1144,
+          "-15%": 0.9458
+        }
+      },
+      "20": {
+        "final_median": 191.02694882569386,
+        "final_pct5": 149.91498927776667,
+        "final_pct25": 172.81701531900822,
+        "final_pct75": 213.57532738275108,
+        "final_pct95": 261.18717943010176,
+        "min_price_mae_from_start_pct5": -23.337689752814747,
+        "min_price_mae_from_start_median": -7.67168320409824,
+        "max_price_runup_from_start_pct95": 41.983667404467624,
+        "prob_touch_or_below_stop_1x5": 0.5634,
+        "prob_touch_or_below_stop_2x": 0.456,
+        "prob_touch_or_below_cost": 0.8754,
+        "prob_final_at_or_above_tp_aggressive": 0.3454,
+        "prob_paths_always_above_cost": 0.1246,
+        "prob_touch_or_below_ma200": 0.9914,
+        "probability_matrix_final": {
+          "+5%": 0.3792,
+          "-5%": 0.6362,
+          "+10%": 0.279,
+          "-10%": 0.7624,
+          "+15%": 0.2036,
+          "-15%": 0.8624
+        }
+      },
+      "60": {
+        "final_median": 195.9663966250609,
+        "final_pct5": 126.47314910706322,
+        "final_pct25": 163.2927213610431,
+        "final_pct75": 238.53467898544412,
+        "final_pct95": 327.5832971850689,
+        "min_price_mae_from_start_pct5": -37.89784910778552,
+        "min_price_mae_from_start_median": -13.541659738449566,
+        "max_price_runup_from_start_pct95": 84.09990632413529,
+        "prob_touch_or_below_stop_1x5": 0.728,
+        "prob_touch_or_below_stop_2x": 0.6616,
+        "prob_touch_or_below_cost": 0.9228,
+        "prob_final_at_or_above_tp_aggressive": 0.4466,
+        "prob_paths_always_above_cost": 0.0772,
+        "prob_touch_or_below_ma200": 0.9932,
+        "probability_matrix_final": {
+          "+5%": 0.466,
+          "-5%": 0.6102,
+          "+10%": 0.4034,
+          "-10%": 0.6844,
+          "+15%": 0.3462,
+          "-15%": 0.7588
+        }
+      }
+    }
+  },
+  "iv_analysis": {
+    "iv_latest": 0.4855922645833864,
+    "iv_percentile": 25.0,
+    "iv_mean_180d": 0.615966,
+    "iv_std_180d": 0.19011,
+    "iv_regime": "cheap",
+    "window_rows": 180
+  },
+  "risk_matrix": {
+    "latest_close": 190.96,
+    "latest_atr": 8.1771,
+    "stop_1x5_atr": 178.6944,
+    "stop_2x_atr": 174.6058,
+    "tp_conservative": 195.0486,
+    "tp_moderate": 199.1371,
+    "tp_aggressive": 203.2256,
+    "risk_reward_1x5": 1.0,
+    "risk_reward_2x": 0.75,
+    "rr_score": 4,
+    "rr_note": "risk_measured_as_cost_minus_stop_1x5"
+  },
+  "technicals": {
+    "rsi_14": 57.92,
+    "ma_5": 190.806,
+    "ma_20": 186.4175,
+    "ma_60": 166.0558,
+    "ma_200": 206.3513,
+    "macd_line": 6.0169,
+    "signal_line": 6.8633,
+    "histogram": -0.8464,
+    "momentum": "bearish",
+    "upper_band": 206.5903,
+    "middle_band": 186.4175,
+    "lower_band": 166.2447,
+    "bandwidth": 0.2164,
+    "position": "within_bands",
+    "vix_current": null,
+    "fear_level": "error"
+  },
+  "sentiment": {
+    "total_articles": 50,
+    "net_sentiment_score": 38,
+    "top_bearish_title": "Market Uncertainty? This High-Yield Energy Infrastructure Toll Booth Under $30 Is Best Buy Now",
+    "top_bullish_title": "Forget ServiceNow: 2 High-Growth Software Bargains to Buy on the Dip With Safer AI Exposure",
+    "keyword_freq": {
+      "ai": 80,
+      "delivery": 0,
+      "earnings": 12,
+      "recall": 0,
+      "fsd": 0,
+      "cybertruck": 0,
+      "margin": 1
+    }
+  },
+  "extra_dimensions": {
+    "pe_percentile": 50.0,
+    "ten_year_treasury_corr": null,
+    "sentiment_price_divergence": 39.87
+  }
+}

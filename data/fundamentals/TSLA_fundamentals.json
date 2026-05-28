@@ -1,0 +1,31 @@
+{
+  "ticker": "TSLA",
+  "collected_at": "2026-05-28T01:14:15.226374+00:00",
+  "current_ratios": {
+    "valuation_ratios": {
+      "pe_ratio": 400.32724,
+      "pb_ratio": 20.110518,
+      "ps_ratio": 16.89709
+    },
+    "financial_health": {
+      "debt_to_equity": 18.738,
+      "current_ratio": 2.043,
+      "roe": 0.04901,
+      "roa": 0.022330001
+    },
+    "growth_indicators": {
+      "eps_growth": 0.166,
+      "revenue_growth": null
+    },
+    "company_info": {
+      "market_cap": 1653870428160,
+      "industry": "Auto Manufacturers",
+      "sector": "Consumer Cyclical"
+    }
+  },
+  "historical_percentiles": {
+    "pe_percentile": null,
+    "pb_percentile": null,
+    "note": "Historical percentiles require extended market data"
+  }
+}

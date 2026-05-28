@@ -1,0 +1,31 @@
+{
+  "ticker": "NVDA",
+  "collected_at": "2026-05-28T01:15:22.703177+00:00",
+  "current_ratios": {
+    "valuation_ratios": {
+      "pe_ratio": 32.557426,
+      "pb_ratio": 32.849197,
+      "ps_ratio": 20.313875
+    },
+    "financial_health": {
+      "debt_to_equity": 6.555,
+      "current_ratio": 3.441,
+      "roe": 1.14288,
+      "roa": 0.52727
+    },
+    "growth_indicators": {
+      "eps_growth": 2.106,
+      "revenue_growth": null
+    },
+    "company_info": {
+      "market_cap": 5149384769536,
+      "industry": "Semiconductors",
+      "sector": "Technology"
+    }
+  },
+  "historical_percentiles": {
+    "pe_percentile": null,
+    "pb_percentile": null,
+    "note": "Historical percentiles require extended market data"
+  }
+}

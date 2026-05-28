@@ -1,0 +1,226 @@
+{
+  "meta": {
+    "ticker": "AAPL",
+    "generated_at": "2026-05-28T01:15:23.342946+00:00",
+    "cost_price": 310.8500061035156,
+    "data_rows": 344,
+    "history_first_date": "2025-01-13",
+    "history_last_date": "2026-05-27",
+    "iv_percentile_window_rows": 180,
+    "bootstrap_horizons": [
+      10,
+      20,
+      60
+    ],
+    "benchmark_ticker": "SPY"
+  },
+  "trend": {
+    "regime": "bull_core",
+    "close_vs_ma200": 48.9035,
+    "ma_spread_20_60": 23.011,
+    "slope_ma20_5d": 0.031751,
+    "slope_ma60_5d": 0.011746,
+    "ma200_available": true,
+    "positioning_hint": "多头排列+价在 MA200 上方：大趋势偏多；减仓宜分批止盈，加仓宜等回撤至均线带。"
+  },
+  "market_context": {
+    "benchmark_ticker": "SPY",
+    "available": true,
+    "aligned_trading_days": 344,
+    "spy_trend_regime": "bull_core",
+    "spy_trend": {
+      "regime": "bull_core",
+      "close_vs_ma200": 72.9997,
+      "ma_spread_20_60": 39.8269,
+      "slope_ma20_5d": 0.011709,
+      "slope_ma60_5d": 0.00719,
+      "ma200_available": true,
+      "positioning_hint": "多头排列+价在 MA200 上方：大趋势偏多；减仓宜分批止盈，加仓宜等回撤至均线带。"
+    },
+    "spy_ma": {
+      "ma_20": 735.2935,
+      "ma_60": 695.4666,
+      "ma_200": 677.4603
+    },
+    "stock_total_return_20d": 0.149335,
+    "spy_total_return_20d": 0.054476,
+    "excess_return_20d": 0.094859,
+    "stock_total_return_60d": 0.175342,
+    "spy_total_return_60d": 0.096345,
+    "excess_return_60d": 0.078996,
+    "log_return_corr_60d": 0.6009,
+    "benchmark_notes": [
+      "近60日显著跑赢SPY，注意获利了结与波动放大。"
+    ]
+  },
+  "monte_carlo": {
+    "model": "lognormal_iv",
+    "horizon_days": 10,
+    "iv_input": 0.218800001181204,
+    "prob_always_above": 0.1704,
+    "prob_touch_below": 0.8296,
+    "expected_final_price": 310.8297551502891,
+    "pct5_final_price": 289.117791771537,
+    "pct95_final_price": 333.84298451153524,
+    "prob_by_day": [
+      0.4886,
+      0.4958,
+      0.49,
+      0.493,
+      0.4936,
+      0.4908,
+      0.4918,
+      0.4906,
+      0.4892,
+      0.4846
+    ],
+    "probability_matrix": {
+      "+5%": 0.1316,
+      "-5%": 0.8704,
+      "+10%": 0.0136,
+      "-10%": 0.9922,
+      "+15%": 0.0004,
+      "-15%": 1.0
+    }
+  },
+  "bootstrap": {
+    "method": "historical_log_return_bootstrap",
+    "simulations": 5000,
+    "return_pool_len": 252,
+    "s0": 310.8500061035156,
+    "ma200_level": 261.94649780273437,
+    "horizons": {
+      "10": {
+        "final_median": 316.48208739231535,
+        "final_pct5": 295.4893528588119,
+        "final_pct25": 307.71031900422776,
+        "final_pct75": 326.0149579761878,
+        "final_pct95": 340.5197403122571,
+        "min_price_mae_from_start_pct5": -5.8931975960390215,
+        "min_price_mae_from_start_median": -1.1442564164220594,
+        "max_price_runup_from_start_pct95": 10.027561085131678,
+        "prob_touch_or_below_stop_1x5": 0.257,
+        "prob_touch_or_below_stop_2x": 0.169,
+        "prob_touch_or_below_cost": 0.7458,
+        "prob_final_at_or_above_tp_aggressive": 0.4118,
+        "prob_paths_always_above_cost": 0.2542,
+        "prob_touch_or_below_ma200": 0.0,
+        "probability_matrix_final": {
+          "+5%": 0.2408,
+          "-5%": 0.9516,
+          "+10%": 0.0402,
+          "-10%": 0.9984,
+          "+15%": 0.0028,
+          "-15%": 0.9998
+        }
+      },
+      "20": {
+        "final_median": 322.27734490252465,
+        "final_pct5": 291.97464773375003,
+        "final_pct25": 309.1544990546546,
+        "final_pct75": 336.08516541532583,
+        "final_pct95": 358.24172135347385,
+        "min_price_mae_from_start_pct5": -7.9488797709025745,
+        "min_price_mae_from_start_median": -1.6471243966411708,
+        "max_price_runup_from_start_pct95": 16.059313848862256,
+        "prob_touch_or_below_stop_1x5": 0.3488,
+        "prob_touch_or_below_stop_2x": 0.2556,
+        "prob_touch_or_below_cost": 0.7808,
+        "prob_final_at_or_above_tp_aggressive": 0.5598,
+        "prob_paths_always_above_cost": 0.2192,
+        "prob_touch_or_below_ma200": 0.0004,
+        "probability_matrix_final": {
+          "+5%": 0.4206,
+          "-5%": 0.925,
+          "+10%": 0.1736,
+          "-10%": 0.9896,
+          "+15%": 0.0528,
+          "-15%": 0.9996
+        }
+      },
+      "60": {
+        "final_median": 347.67974634008164,
+        "final_pct5": 293.5101082579587,
+        "final_pct25": 323.3220315110241,
+        "final_pct75": 373.13398532503845,
+        "final_pct95": 414.51811184966374,
+        "min_price_mae_from_start_pct5": -10.657158079144859,
+        "min_price_mae_from_start_median": -2.273345023472678,
+        "max_price_runup_from_start_pct95": 34.98460517555585,
+        "prob_touch_or_below_stop_1x5": 0.446,
+        "prob_touch_or_below_stop_2x": 0.3582,
+        "prob_touch_or_below_cost": 0.823,
+        "prob_final_at_or_above_tp_aggressive": 0.783,
+        "prob_paths_always_above_cost": 0.177,
+        "prob_touch_or_below_ma200": 0.0088,
+        "probability_matrix_final": {
+          "+5%": 0.7226,
+          "-5%": 0.944,
+          "+10%": 0.5596,
+          "-10%": 0.984,
+          "+15%": 0.3932,
+          "-15%": 0.9974
+        }
+      }
+    }
+  },
+  "iv_analysis": {
+    "iv_latest": 0.218800001181204,
+    "iv_percentile": 42.78,
+    "iv_mean_180d": 0.221166,
+    "iv_std_180d": 0.051372,
+    "iv_regime": "neutral",
+    "window_rows": 180
+  },
+  "risk_matrix": {
+    "latest_close": 310.85,
+    "latest_atr": 5.751,
+    "stop_1x5_atr": 302.2234,
+    "stop_2x_atr": 299.3479,
+    "tp_conservative": 313.7255,
+    "tp_moderate": 316.6011,
+    "tp_aggressive": 319.4766,
+    "risk_reward_1x5": 1.0,
+    "risk_reward_2x": 0.75,
+    "rr_score": 4,
+    "rr_note": "risk_measured_as_cost_minus_stop_1x5"
+  },
+  "technicals": {
+    "rsi_14": 79.1,
+    "ma_5": 307.048,
+    "ma_20": 293.2854,
+    "ma_60": 270.2744,
+    "ma_200": 261.9465,
+    "macd_line": 10.3343,
+    "signal_line": 9.4831,
+    "histogram": 0.8513,
+    "momentum": "bullish",
+    "upper_band": 317.6142,
+    "middle_band": 293.2854,
+    "lower_band": 268.9566,
+    "bandwidth": 0.1659,
+    "position": "within_bands",
+    "vix_current": null,
+    "fear_level": "error"
+  },
+  "sentiment": {
+    "total_articles": 50,
+    "net_sentiment_score": 16,
+    "top_bearish_title": "Smartphone Sales Are Tumbling",
+    "top_bullish_title": "After Watching Mega Caps Drive Every Bull Market This Decade These 3 Growth ETFs Keep Rising to the Top of My Research",
+    "keyword_freq": {
+      "ai": 47,
+      "delivery": 0,
+      "earnings": 8,
+      "recall": 0,
+      "fsd": 0,
+      "cybertruck": 0,
+      "margin": 1
+    }
+  },
+  "extra_dimensions": {
+    "pe_percentile": 62.5,
+    "ten_year_treasury_corr": null,
+    "sentiment_price_divergence": 7.76
+  }
+}

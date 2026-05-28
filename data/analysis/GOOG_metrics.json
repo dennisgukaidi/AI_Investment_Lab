@@ -1,0 +1,226 @@
+{
+  "meta": {
+    "ticker": "GOOG",
+    "generated_at": "2026-05-28T01:15:23.384127+00:00",
+    "cost_price": 384.8299865722656,
+    "data_rows": 344,
+    "history_first_date": "2025-01-13",
+    "history_last_date": "2026-05-27",
+    "iv_percentile_window_rows": 180,
+    "bootstrap_horizons": [
+      10,
+      20,
+      60
+    ],
+    "benchmark_ticker": "SPY"
+  },
+  "trend": {
+    "regime": "bull_core",
+    "close_vs_ma200": 87.1798,
+    "ma_spread_20_60": 50.2763,
+    "slope_ma20_5d": 0.02709,
+    "slope_ma60_5d": 0.018694,
+    "ma200_available": true,
+    "positioning_hint": "多头排列+价在 MA200 上方：大趋势偏多；减仓宜分批止盈，加仓宜等回撤至均线带。"
+  },
+  "market_context": {
+    "benchmark_ticker": "SPY",
+    "available": true,
+    "aligned_trading_days": 344,
+    "spy_trend_regime": "bull_core",
+    "spy_trend": {
+      "regime": "bull_core",
+      "close_vs_ma200": 72.9997,
+      "ma_spread_20_60": 39.8269,
+      "slope_ma20_5d": 0.011709,
+      "slope_ma60_5d": 0.00719,
+      "ma200_available": true,
+      "positioning_hint": "多头排列+价在 MA200 上方：大趋势偏多；减仓宜分批止盈，加仓宜等回撤至均线带。"
+    },
+    "spy_ma": {
+      "ma_20": 735.2935,
+      "ma_60": 695.4666,
+      "ma_200": 677.4603
+    },
+    "stock_total_return_20d": 0.107424,
+    "spy_total_return_20d": 0.054476,
+    "excess_return_20d": 0.052948,
+    "stock_total_return_60d": 0.257021,
+    "spy_total_return_60d": 0.096345,
+    "excess_return_60d": 0.160676,
+    "log_return_corr_60d": 0.7063,
+    "benchmark_notes": [
+      "近60日显著跑赢SPY，注意获利了结与波动放大。"
+    ]
+  },
+  "monte_carlo": {
+    "model": "lognormal_iv",
+    "horizon_days": 10,
+    "iv_input": 0.3532295370229348,
+    "prob_always_above": 0.1678,
+    "prob_touch_below": 0.8322,
+    "expected_final_price": 384.7926899437734,
+    "pct5_final_price": 342.0148396153179,
+    "pct95_final_price": 431.41182048968506,
+    "prob_by_day": [
+      0.4864,
+      0.494,
+      0.4882,
+      0.4898,
+      0.49,
+      0.487,
+      0.4874,
+      0.4856,
+      0.4836,
+      0.4808
+    ],
+    "probability_matrix": {
+      "+5%": 0.2336,
+      "-5%": 0.7538,
+      "+10%": 0.0858,
+      "-10%": 0.929,
+      "+15%": 0.0218,
+      "-15%": 0.9892
+    }
+  },
+  "bootstrap": {
+    "method": "historical_log_return_bootstrap",
+    "simulations": 5000,
+    "return_pool_len": 252,
+    "s0": 384.8299865722656,
+    "ma200_level": 297.6501812744141,
+    "horizons": {
+      "10": {
+        "final_median": 396.4240539821619,
+        "final_pct5": 364.04223102861306,
+        "final_pct25": 382.9774266547165,
+        "final_pct75": 411.33659588426883,
+        "final_pct95": 436.51200972007734,
+        "min_price_mae_from_start_pct5": -6.376352175815902,
+        "min_price_mae_from_start_median": -1.1779457898417707,
+        "max_price_runup_from_start_pct95": 14.074150151732182,
+        "prob_touch_or_below_stop_1x5": 0.204,
+        "prob_touch_or_below_stop_2x": 0.1154,
+        "prob_touch_or_below_cost": 0.7212,
+        "prob_final_at_or_above_tp_aggressive": 0.4566,
+        "prob_paths_always_above_cost": 0.2788,
+        "prob_touch_or_below_ma200": 0.0,
+        "probability_matrix_final": {
+          "+5%": 0.3606,
+          "-5%": 0.9392,
+          "+10%": 0.1214,
+          "-10%": 0.9972,
+          "+15%": 0.0334,
+          "-15%": 1.0
+        }
+      },
+      "20": {
+        "final_median": 408.64260119473215,
+        "final_pct5": 361.19354522526316,
+        "final_pct25": 388.40167676994787,
+        "final_pct75": 431.86611914383354,
+        "final_pct95": 470.5482222671419,
+        "min_price_mae_from_start_pct5": -8.171972165453438,
+        "min_price_mae_from_start_median": -1.63565905706943,
+        "max_price_runup_from_start_pct95": 23.189697588590178,
+        "prob_touch_or_below_stop_1x5": 0.2786,
+        "prob_touch_or_below_stop_2x": 0.1894,
+        "prob_touch_or_below_cost": 0.7548,
+        "prob_final_at_or_above_tp_aggressive": 0.6316,
+        "prob_paths_always_above_cost": 0.2452,
+        "prob_touch_or_below_ma200": 0.0,
+        "probability_matrix_final": {
+          "+5%": 0.5618,
+          "-5%": 0.929,
+          "+10%": 0.3334,
+          "-10%": 0.9904,
+          "+15%": 0.167,
+          "-15%": 0.999
+        }
+      },
+      "60": {
+        "final_median": 466.3346421844085,
+        "final_pct5": 376.89491537283396,
+        "final_pct25": 426.31078380771106,
+        "final_pct75": 511.57386643331677,
+        "final_pct95": 587.9448208824343,
+        "min_price_mae_from_start_pct5": -10.400462333479165,
+        "min_price_mae_from_start_median": -1.9884701068332353,
+        "max_price_runup_from_start_pct95": 54.89845598892224,
+        "prob_touch_or_below_stop_1x5": 0.3296,
+        "prob_touch_or_below_stop_2x": 0.242,
+        "prob_touch_or_below_cost": 0.7808,
+        "prob_final_at_or_above_tp_aggressive": 0.8828,
+        "prob_paths_always_above_cost": 0.2192,
+        "prob_touch_or_below_ma200": 0.0004,
+        "probability_matrix_final": {
+          "+5%": 0.8592,
+          "-5%": 0.9716,
+          "+10%": 0.7662,
+          "-10%": 0.9908,
+          "+15%": 0.6486,
+          "-15%": 0.998
+        }
+      }
+    }
+  },
+  "iv_analysis": {
+    "iv_latest": 0.3532295370229348,
+    "iv_percentile": 90.0,
+    "iv_mean_180d": 0.281731,
+    "iv_std_180d": 0.05544,
+    "iv_regime": "expensive",
+    "window_rows": 180
+  },
+  "risk_matrix": {
+    "latest_close": 384.83,
+    "latest_atr": 9.1973,
+    "stop_1x5_atr": 371.0341,
+    "stop_2x_atr": 366.4354,
+    "tp_conservative": 389.4286,
+    "tp_moderate": 394.0273,
+    "tp_aggressive": 398.6259,
+    "risk_reward_1x5": 1.0,
+    "risk_reward_2x": 0.75,
+    "rr_score": 4,
+    "rr_note": "risk_measured_as_cost_minus_stop_1x5"
+  },
+  "technicals": {
+    "rsi_14": 60.71,
+    "ma_5": 383.484,
+    "ma_20": 385.971,
+    "ma_60": 335.6947,
+    "ma_200": 297.6502,
+    "macd_line": 11.351,
+    "signal_line": 14.9141,
+    "histogram": -3.5631,
+    "momentum": "bearish",
+    "upper_band": 408.0538,
+    "middle_band": 385.971,
+    "lower_band": 363.8882,
+    "bandwidth": 0.1144,
+    "position": "within_bands",
+    "vix_current": null,
+    "fear_level": "error"
+  },
+  "sentiment": {
+    "total_articles": 50,
+    "net_sentiment_score": 12,
+    "top_bearish_title": "Prosecutors Charge Google Employee With Insider Trading via Polymarket",
+    "top_bullish_title": "Alphabet, AMD Removed From Value Stock Status as Russell Reconstitutes Indexes",
+    "keyword_freq": {
+      "ai": 73,
+      "delivery": 0,
+      "earnings": 11,
+      "recall": 0,
+      "fsd": 0,
+      "cybertruck": 0,
+      "margin": 0
+    }
+  },
+  "extra_dimensions": {
+    "pe_percentile": 31.25,
+    "ten_year_treasury_corr": null,
+    "sentiment_price_divergence": 14.65
+  }
+}

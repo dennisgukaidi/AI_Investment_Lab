@@ -1,0 +1,226 @@
+{
+  "meta": {
+    "ticker": "INTC",
+    "generated_at": "2026-05-28T01:15:23.673220+00:00",
+    "cost_price": 121.7699966430664,
+    "data_rows": 344,
+    "history_first_date": "2025-01-13",
+    "history_last_date": "2026-05-27",
+    "iv_percentile_window_rows": 180,
+    "bootstrap_horizons": [
+      10,
+      20,
+      60
+    ],
+    "benchmark_ticker": "SPY"
+  },
+  "trend": {
+    "regime": "bull_core",
+    "close_vs_ma200": 73.5686,
+    "ma_spread_20_60": 38.9935,
+    "slope_ma20_5d": 0.107185,
+    "slope_ma60_5d": 0.091919,
+    "ma200_available": true,
+    "positioning_hint": "多头排列+价在 MA200 上方：大趋势偏多；减仓宜分批止盈，加仓宜等回撤至均线带。"
+  },
+  "market_context": {
+    "benchmark_ticker": "SPY",
+    "available": true,
+    "aligned_trading_days": 344,
+    "spy_trend_regime": "bull_core",
+    "spy_trend": {
+      "regime": "bull_core",
+      "close_vs_ma200": 72.9997,
+      "ma_spread_20_60": 39.8269,
+      "slope_ma20_5d": 0.011709,
+      "slope_ma60_5d": 0.00719,
+      "ma200_available": true,
+      "positioning_hint": "多头排列+价在 MA200 上方：大趋势偏多；减仓宜分批止盈，加仓宜等回撤至均线带。"
+    },
+    "spy_ma": {
+      "ma_20": 735.2935,
+      "ma_60": 695.4666,
+      "ma_200": 677.4603
+    },
+    "stock_total_return_20d": 0.440724,
+    "spy_total_return_20d": 0.054476,
+    "excess_return_20d": 0.386248,
+    "stock_total_return_60d": 1.676264,
+    "spy_total_return_60d": 0.096345,
+    "excess_return_60d": 1.579918,
+    "log_return_corr_60d": 0.5362,
+    "benchmark_notes": [
+      "近60日显著跑赢SPY，注意获利了结与波动放大。"
+    ]
+  },
+  "monte_carlo": {
+    "model": "lognormal_iv",
+    "horizon_days": 10,
+    "iv_input": 0.9700244037195618,
+    "prob_always_above": 0.1574,
+    "prob_touch_below": 0.8426,
+    "expected_final_price": 121.75113618542154,
+    "pct5_final_price": 87.03934272500852,
+    "pct95_final_price": 164.6863964716191,
+    "prob_by_day": [
+      0.4784,
+      0.4844,
+      0.4758,
+      0.472,
+      0.4752,
+      0.4684,
+      0.4676,
+      0.4688,
+      0.462,
+      0.4562
+    ],
+    "probability_matrix": {
+      "+5%": 0.3674,
+      "-5%": 0.5642,
+      "+10%": 0.2806,
+      "-10%": 0.6682,
+      "+15%": 0.2066,
+      "-15%": 0.7694
+    }
+  },
+  "bootstrap": {
+    "method": "historical_log_return_bootstrap",
+    "simulations": 5000,
+    "return_pool_len": 252,
+    "s0": 121.7699966430664,
+    "ma200_level": 48.20140000343323,
+    "horizons": {
+      "10": {
+        "final_median": 129.98700873053986,
+        "final_pct5": 104.8326647101345,
+        "final_pct25": 119.16311194440976,
+        "final_pct75": 142.4219980652422,
+        "final_pct95": 166.21176953168666,
+        "min_price_mae_from_start_pct5": -16.496778978646535,
+        "min_price_mae_from_start_median": -3.1423652316431143,
+        "max_price_runup_from_start_pct95": 37.7402064860331,
+        "prob_touch_or_below_stop_1x5": 0.168,
+        "prob_touch_or_below_stop_2x": 0.0932,
+        "prob_touch_or_below_cost": 0.7306,
+        "prob_final_at_or_above_tp_aggressive": 0.413,
+        "prob_paths_always_above_cost": 0.2694,
+        "prob_touch_or_below_ma200": 0.0,
+        "probability_matrix_final": {
+          "+5%": 0.5494,
+          "-5%": 0.818,
+          "+10%": 0.4102,
+          "-10%": 0.907,
+          "+15%": 0.2948,
+          "-15%": 0.96
+        }
+      },
+      "20": {
+        "final_median": 139.5841479079268,
+        "final_pct5": 102.6638322384084,
+        "final_pct25": 122.87215883241223,
+        "final_pct75": 159.00253751426192,
+        "final_pct95": 195.15439383942424,
+        "min_price_mae_from_start_pct5": -20.805020735135315,
+        "min_price_mae_from_start_median": -4.282308017749442,
+        "max_price_runup_from_start_pct95": 63.51091659855388,
+        "prob_touch_or_below_stop_1x5": 0.2478,
+        "prob_touch_or_below_stop_2x": 0.1624,
+        "prob_touch_or_below_cost": 0.7652,
+        "prob_final_at_or_above_tp_aggressive": 0.586,
+        "prob_paths_always_above_cost": 0.2348,
+        "prob_touch_or_below_ma200": 0.0,
+        "probability_matrix_final": {
+          "+5%": 0.6782,
+          "-5%": 0.8436,
+          "+10%": 0.583,
+          "-10%": 0.9012,
+          "+15%": 0.4932,
+          "-15%": 0.9454
+        }
+      },
+      "60": {
+        "final_median": 184.32336220281093,
+        "final_pct5": 109.00048252151407,
+        "final_pct25": 148.8293293710652,
+        "final_pct75": 231.93021004046344,
+        "final_pct95": 327.21100502754547,
+        "min_price_mae_from_start_pct5": -26.67372226727322,
+        "min_price_mae_from_start_median": -5.472590784273905,
+        "max_price_runup_from_start_pct95": 178.9073487148368,
+        "prob_touch_or_below_stop_1x5": 0.3246,
+        "prob_touch_or_below_stop_2x": 0.2386,
+        "prob_touch_or_below_cost": 0.7942,
+        "prob_final_at_or_above_tp_aggressive": 0.8416,
+        "prob_paths_always_above_cost": 0.2058,
+        "prob_touch_or_below_ma200": 0.0,
+        "probability_matrix_final": {
+          "+5%": 0.8708,
+          "-5%": 0.9244,
+          "+10%": 0.8406,
+          "-10%": 0.9466,
+          "+15%": 0.805,
+          "-15%": 0.9652
+        }
+      }
+    }
+  },
+  "iv_analysis": {
+    "iv_latest": 0.9700244037195618,
+    "iv_percentile": 96.11,
+    "iv_mean_180d": 0.706833,
+    "iv_std_180d": 0.162157,
+    "iv_regime": "expensive",
+    "window_rows": 180
+  },
+  "risk_matrix": {
+    "latest_close": 121.77,
+    "latest_atr": 8.033,
+    "stop_1x5_atr": 109.7205,
+    "stop_2x_atr": 105.704,
+    "tp_conservative": 125.7865,
+    "tp_moderate": 129.803,
+    "tp_aggressive": 133.8195,
+    "risk_reward_1x5": 1.0,
+    "risk_reward_2x": 0.75,
+    "rr_score": 4,
+    "rr_note": "risk_measured_as_cost_minus_stop_1x5"
+  },
+  "technicals": {
+    "rsi_14": 67.99,
+    "ma_5": 120.518,
+    "ma_20": 112.8465,
+    "ma_60": 73.853,
+    "ma_200": 48.2014,
+    "macd_line": 11.6481,
+    "signal_line": 12.786,
+    "histogram": -1.1379,
+    "momentum": "bearish",
+    "upper_band": 133.6932,
+    "middle_band": 112.8465,
+    "lower_band": 91.9998,
+    "bandwidth": 0.3695,
+    "position": "within_bands",
+    "vix_current": null,
+    "fear_level": "error"
+  },
+  "sentiment": {
+    "total_articles": 50,
+    "net_sentiment_score": 12,
+    "top_bearish_title": "The Stock Market Is Flashing a Rare Warning Signal. Here's What History Says Happens Next.",
+    "top_bullish_title": "The Furious Chip Rally Was Petering Out. Now Wall Street Turns to Nvidia.",
+    "keyword_freq": {
+      "ai": 48,
+      "delivery": 0,
+      "earnings": 5,
+      "recall": 0,
+      "fsd": 0,
+      "cybertruck": 0,
+      "margin": 0
+    }
+  },
+  "extra_dimensions": {
+    "pe_percentile": null,
+    "ten_year_treasury_corr": null,
+    "sentiment_price_divergence": 0.92
+  }
+}

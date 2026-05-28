@@ -1,0 +1,31 @@
+{
+  "ticker": "AMZN",
+  "collected_at": "2026-05-28T01:14:09.934885+00:00",
+  "current_ratios": {
+    "valuation_ratios": {
+      "pe_ratio": 31.647264,
+      "pb_ratio": 6.6154823,
+      "ps_ratio": 3.9370153
+    },
+    "financial_health": {
+      "debt_to_equity": 53.3,
+      "current_ratio": 1.177,
+      "roe": 0.24285,
+      "roa": 0.06845
+    },
+    "growth_indicators": {
+      "eps_growth": 0.767,
+      "revenue_growth": null
+    },
+    "company_info": {
+      "market_cap": 2924320391168,
+      "industry": "Internet Retail",
+      "sector": "Consumer Cyclical"
+    }
+  },
+  "historical_percentiles": {
+    "pe_percentile": null,
+    "pb_percentile": null,
+    "note": "Historical percentiles require extended market data"
+  }
+}

@@ -1,0 +1,226 @@
+{
+  "meta": {
+    "ticker": "AMD",
+    "generated_at": "2026-05-28T01:15:23.505473+00:00",
+    "cost_price": 495.5400085449219,
+    "data_rows": 344,
+    "history_first_date": "2025-01-13",
+    "history_last_date": "2026-05-27",
+    "iv_percentile_window_rows": 180,
+    "bootstrap_horizons": [
+      10,
+      20,
+      60
+    ],
+    "benchmark_ticker": "SPY"
+  },
+  "trend": {
+    "regime": "bull_core",
+    "close_vs_ma200": 261.3923,
+    "ma_spread_20_60": 127.1047,
+    "slope_ma20_5d": 0.097235,
+    "slope_ma60_5d": 0.081442,
+    "ma200_available": true,
+    "positioning_hint": "多头排列+价在 MA200 上方：大趋势偏多；减仓宜分批止盈，加仓宜等回撤至均线带。"
+  },
+  "market_context": {
+    "benchmark_ticker": "SPY",
+    "available": true,
+    "aligned_trading_days": 344,
+    "spy_trend_regime": "bull_core",
+    "spy_trend": {
+      "regime": "bull_core",
+      "close_vs_ma200": 72.9997,
+      "ma_spread_20_60": 39.8269,
+      "slope_ma20_5d": 0.011709,
+      "slope_ma60_5d": 0.00719,
+      "ma200_available": true,
+      "positioning_hint": "多头排列+价在 MA200 上方：大趋势偏多；减仓宜分批止盈，加仓宜等回撤至均线带。"
+    },
+    "spy_ma": {
+      "ma_20": 735.2935,
+      "ma_60": 695.4666,
+      "ma_200": 677.4603
+    },
+    "stock_total_return_20d": 0.533183,
+    "spy_total_return_20d": 0.054476,
+    "excess_return_20d": 0.478707,
+    "stock_total_return_60d": 1.494915,
+    "spy_total_return_60d": 0.096345,
+    "excess_return_60d": 1.39857,
+    "log_return_corr_60d": 0.609,
+    "benchmark_notes": [
+      "近60日显著跑赢SPY，注意获利了结与波动放大。"
+    ]
+  },
+  "monte_carlo": {
+    "model": "lognormal_iv",
+    "horizon_days": 10,
+    "iv_input": 0.8603693022756093,
+    "prob_always_above": 0.1588,
+    "prob_touch_below": 0.8412,
+    "expected_final_price": 495.4629368902694,
+    "pct5_final_price": 368.59678688959775,
+    "pct95_final_price": 648.9139644050115,
+    "prob_by_day": [
+      0.4792,
+      0.4858,
+      0.4776,
+      0.4758,
+      0.4784,
+      0.4728,
+      0.4724,
+      0.4714,
+      0.4646,
+      0.4608
+    ],
+    "probability_matrix": {
+      "+5%": 0.359,
+      "-5%": 0.5818,
+      "+10%": 0.2624,
+      "-10%": 0.6964,
+      "+15%": 0.1876,
+      "-15%": 0.8
+    }
+  },
+  "bootstrap": {
+    "method": "historical_log_return_bootstrap",
+    "simulations": 5000,
+    "return_pool_len": 252,
+    "s0": 495.5400085449219,
+    "ma200_level": 234.1477000427246,
+    "horizons": {
+      "10": {
+        "final_median": 525.7554744997223,
+        "final_pct5": 431.5262307015564,
+        "final_pct25": 486.6155086922636,
+        "final_pct75": 569.0459028177954,
+        "final_pct95": 650.4398258889239,
+        "min_price_mae_from_start_pct5": -15.465690037966763,
+        "min_price_mae_from_start_median": -2.7779635340469606,
+        "max_price_runup_from_start_pct95": 33.37079238068432,
+        "prob_touch_or_below_stop_1x5": 0.2054,
+        "prob_touch_or_below_stop_2x": 0.1234,
+        "prob_touch_or_below_cost": 0.7336,
+        "prob_final_at_or_above_tp_aggressive": 0.4472,
+        "prob_paths_always_above_cost": 0.2664,
+        "prob_touch_or_below_ma200": 0.0,
+        "probability_matrix_final": {
+          "+5%": 0.5312,
+          "-5%": 0.8358,
+          "+10%": 0.377,
+          "-10%": 0.9192,
+          "+15%": 0.246,
+          "-15%": 0.9682
+        }
+      },
+      "20": {
+        "final_median": 557.5768121159956,
+        "final_pct5": 420.86250839996654,
+        "final_pct25": 496.5434601294455,
+        "final_pct75": 626.1046186917717,
+        "final_pct95": 747.6172309817184,
+        "min_price_mae_from_start_pct5": -20.03829481110704,
+        "min_price_mae_from_start_median": -3.935110199813481,
+        "max_price_runup_from_start_pct95": 54.68850255597999,
+        "prob_touch_or_below_stop_1x5": 0.2984,
+        "prob_touch_or_below_stop_2x": 0.2066,
+        "prob_touch_or_below_cost": 0.7714,
+        "prob_final_at_or_above_tp_aggressive": 0.594,
+        "prob_paths_always_above_cost": 0.2286,
+        "prob_touch_or_below_ma200": 0.0,
+        "probability_matrix_final": {
+          "+5%": 0.6526,
+          "-5%": 0.8388,
+          "+10%": 0.5536,
+          "-10%": 0.9052,
+          "+15%": 0.4506,
+          "-15%": 0.9488
+        }
+      },
+      "60": {
+        "final_median": 705.8849860272799,
+        "final_pct5": 428.0396066475167,
+        "final_pct25": 576.3408967758029,
+        "final_pct75": 868.6269939338016,
+        "final_pct95": 1184.0010131005786,
+        "min_price_mae_from_start_pct5": -26.176826406146045,
+        "min_price_mae_from_start_median": -5.254009728269379,
+        "max_price_runup_from_start_pct95": 147.21285967629245,
+        "prob_touch_or_below_stop_1x5": 0.384,
+        "prob_touch_or_below_stop_2x": 0.2934,
+        "prob_touch_or_below_cost": 0.8072,
+        "prob_final_at_or_above_tp_aggressive": 0.8186,
+        "prob_paths_always_above_cost": 0.1928,
+        "prob_touch_or_below_ma200": 0.001,
+        "probability_matrix_final": {
+          "+5%": 0.843,
+          "-5%": 0.9084,
+          "+10%": 0.8014,
+          "-10%": 0.9368,
+          "+15%": 0.7586,
+          "-15%": 0.9546
+        }
+      }
+    }
+  },
+  "iv_analysis": {
+    "iv_latest": 0.8603693022756093,
+    "iv_percentile": 96.11,
+    "iv_mean_180d": 0.63414,
+    "iv_std_180d": 0.162171,
+    "iv_regime": "expensive",
+    "window_rows": 180
+  },
+  "risk_matrix": {
+    "latest_close": 495.54,
+    "latest_atr": 26.0638,
+    "stop_1x5_atr": 456.4443,
+    "stop_2x_atr": 443.4123,
+    "tp_conservative": 508.5719,
+    "tp_moderate": 521.6038,
+    "tp_aggressive": 534.6358,
+    "risk_reward_1x5": 1.0,
+    "risk_reward_2x": 0.75,
+    "rr_score": 4,
+    "rr_note": "risk_measured_as_cost_minus_stop_1x5"
+  },
+  "technicals": {
+    "rsi_14": 74.08,
+    "ma_5": 472.822,
+    "ma_20": 422.9755,
+    "ma_60": 295.8708,
+    "ma_200": 234.1477,
+    "macd_line": 47.0074,
+    "signal_line": 45.469,
+    "histogram": 1.5384,
+    "momentum": "bullish",
+    "upper_band": 522.2032,
+    "middle_band": 422.9755,
+    "lower_band": 323.7478,
+    "bandwidth": 0.4692,
+    "position": "within_bands",
+    "vix_current": null,
+    "fear_level": "error"
+  },
+  "sentiment": {
+    "total_articles": 50,
+    "net_sentiment_score": 42,
+    "top_bearish_title": "Nvidia has a $200 Billion Warning for AMD and Intel Stock Investors",
+    "top_bullish_title": "The ‘Insatiable’ Logic Behind Micron’s ‘Extreme’ Gains",
+    "keyword_freq": {
+      "ai": 85,
+      "delivery": 0,
+      "earnings": 10,
+      "recall": 0,
+      "fsd": 0,
+      "cybertruck": 0,
+      "margin": 0
+    }
+  },
+  "extra_dimensions": {
+    "pe_percentile": 93.75,
+    "ten_year_treasury_corr": null,
+    "sentiment_price_divergence": 20.68
+  }
+}

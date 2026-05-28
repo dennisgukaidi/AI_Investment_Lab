@@ -1,0 +1,24 @@
+{
+  "ticker": "AVGO",
+  "collected_at": "2026-05-28T01:14:28.912623+00:00",
+  "google_trends": {
+    "error": "HTTPSConnectionPool(host='trends.google.com', port=443): Read timed out. (read timeout=2)"
+  },
+  "social_media_reddit": {
+    "sentiment_score": 0.0,
+    "mention_count": 0,
+    "top_posts": [],
+    "note": "Reddit sentiment analysis requires API configuration",
+    "last_updated": "2026-05-28T01:14:28.902513+00:00"
+  },
+  "news_sentiment_aggregate": {
+    "average_sentiment": 0.093,
+    "sentiment_category": "neutral",
+    "news_count": 50,
+    "sentiment_distribution": {
+      "positive": 22,
+      "negative": 6,
+      "neutral": 22
+    }
+  }
+}

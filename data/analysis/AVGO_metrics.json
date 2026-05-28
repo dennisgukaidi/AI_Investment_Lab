@@ -1,0 +1,226 @@
+{
+  "meta": {
+    "ticker": "AVGO",
+    "generated_at": "2026-05-28T01:15:23.592488+00:00",
+    "cost_price": 421.8599853515625,
+    "data_rows": 344,
+    "history_first_date": "2025-01-13",
+    "history_last_date": "2026-05-27",
+    "iv_percentile_window_rows": 180,
+    "bootstrap_horizons": [
+      10,
+      20,
+      60
+    ],
+    "benchmark_ticker": "SPY"
+  },
+  "trend": {
+    "regime": "bull_core",
+    "close_vs_ma200": 71.7729,
+    "ma_spread_20_60": 47.935,
+    "slope_ma20_5d": 0.000829,
+    "slope_ma60_5d": 0.021757,
+    "ma200_available": true,
+    "positioning_hint": "多头排列+价在 MA200 上方：大趋势偏多；减仓宜分批止盈，加仓宜等回撤至均线带。"
+  },
+  "market_context": {
+    "benchmark_ticker": "SPY",
+    "available": true,
+    "aligned_trading_days": 344,
+    "spy_trend_regime": "bull_core",
+    "spy_trend": {
+      "regime": "bull_core",
+      "close_vs_ma200": 72.9997,
+      "ma_spread_20_60": 39.8269,
+      "slope_ma20_5d": 0.011709,
+      "slope_ma60_5d": 0.00719,
+      "ma200_available": true,
+      "positioning_hint": "多头排列+价在 MA200 上方：大趋势偏多；减仓宜分批止盈，加仓宜等回撤至均线带。"
+    },
+    "spy_ma": {
+      "ma_20": 735.2935,
+      "ma_60": 695.4666,
+      "ma_200": 677.4603
+    },
+    "stock_total_return_20d": 0.055098,
+    "spy_total_return_20d": 0.054476,
+    "excess_return_20d": 0.000622,
+    "stock_total_return_60d": 0.325967,
+    "spy_total_return_60d": 0.096345,
+    "excess_return_60d": 0.229622,
+    "log_return_corr_60d": 0.6661,
+    "benchmark_notes": [
+      "近60日显著跑赢SPY，注意获利了结与波动放大。"
+    ]
+  },
+  "monte_carlo": {
+    "model": "lognormal_iv",
+    "horizon_days": 10,
+    "iv_input": 0.3870346298587487,
+    "prob_always_above": 0.1672,
+    "prob_touch_below": 0.8328,
+    "expected_final_price": 421.8161645287181,
+    "pct5_final_price": 370.6204288801831,
+    "pct95_final_price": 477.9998982763551,
+    "prob_by_day": [
+      0.4858,
+      0.4936,
+      0.4872,
+      0.4884,
+      0.4892,
+      0.4866,
+      0.4868,
+      0.4846,
+      0.483,
+      0.4796
+    ],
+    "probability_matrix": {
+      "+5%": 0.252,
+      "-5%": 0.7336,
+      "+10%": 0.108,
+      "-10%": 0.9094,
+      "+15%": 0.0316,
+      "-15%": 0.9814
+    }
+  },
+  "bootstrap": {
+    "method": "historical_log_return_bootstrap",
+    "simulations": 5000,
+    "return_pool_len": 252,
+    "s0": 421.8599853515625,
+    "ma200_level": 350.08709701538083,
+    "horizons": {
+      "10": {
+        "final_median": 432.0096243408888,
+        "final_pct5": 376.820075115498,
+        "final_pct25": 408.1437780725199,
+        "final_pct75": 455.750526423397,
+        "final_pct95": 496.9457023819253,
+        "min_price_mae_from_start_pct5": -12.481816229546677,
+        "min_price_mae_from_start_median": -2.9170791669766176,
+        "max_price_runup_from_start_pct95": 18.93838815950404,
+        "prob_touch_or_below_stop_1x5": 0.2938,
+        "prob_touch_or_below_stop_2x": 0.191,
+        "prob_touch_or_below_cost": 0.7702,
+        "prob_final_at_or_above_tp_aggressive": 0.3572,
+        "prob_paths_always_above_cost": 0.2298,
+        "prob_touch_or_below_ma200": 0.0118,
+        "probability_matrix_final": {
+          "+5%": 0.3754,
+          "-5%": 0.8162,
+          "+10%": 0.1834,
+          "-10%": 0.9396,
+          "+15%": 0.0784,
+          "-15%": 0.9834
+        }
+      },
+      "20": {
+        "final_median": 441.5666950748372,
+        "final_pct5": 364.093761347187,
+        "final_pct25": 409.13313575621555,
+        "final_pct75": 477.91146703186973,
+        "final_pct95": 537.5625750013023,
+        "min_price_mae_from_start_pct5": -16.4504117405226,
+        "min_price_mae_from_start_median": -4.017672866134646,
+        "max_price_runup_from_start_pct95": 29.92607610321933,
+        "prob_touch_or_below_stop_1x5": 0.4004,
+        "prob_touch_or_below_stop_2x": 0.305,
+        "prob_touch_or_below_cost": 0.8112,
+        "prob_final_at_or_above_tp_aggressive": 0.4754,
+        "prob_paths_always_above_cost": 0.1888,
+        "prob_touch_or_below_ma200": 0.0442,
+        "probability_matrix_final": {
+          "+5%": 0.4908,
+          "-5%": 0.7996,
+          "+10%": 0.3388,
+          "-10%": 0.9022,
+          "+15%": 0.2152,
+          "-15%": 0.962
+        }
+      },
+      "60": {
+        "final_median": 486.0452780991325,
+        "final_pct5": 347.5997583244446,
+        "final_pct25": 424.7401011048631,
+        "final_pct75": 556.6229437365582,
+        "final_pct95": 688.200059449691,
+        "min_price_mae_from_start_pct5": -24.213897525697412,
+        "min_price_mae_from_start_median": -5.988733735572854,
+        "max_price_runup_from_start_pct95": 67.96732311313357,
+        "prob_touch_or_below_stop_1x5": 0.5296,
+        "prob_touch_or_below_stop_2x": 0.4498,
+        "prob_touch_or_below_cost": 0.8586,
+        "prob_final_at_or_above_tp_aggressive": 0.6782,
+        "prob_paths_always_above_cost": 0.1414,
+        "prob_touch_or_below_ma200": 0.1386,
+        "probability_matrix_final": {
+          "+5%": 0.6838,
+          "-5%": 0.8284,
+          "+10%": 0.5946,
+          "-10%": 0.8896,
+          "+15%": 0.5034,
+          "-15%": 0.9326
+        }
+      }
+    }
+  },
+  "iv_analysis": {
+    "iv_latest": 0.3870346298587487,
+    "iv_percentile": 12.78,
+    "iv_mean_180d": 0.453927,
+    "iv_std_180d": 0.066181,
+    "iv_regime": "cheap",
+    "window_rows": 180
+  },
+  "risk_matrix": {
+    "latest_close": 421.86,
+    "latest_atr": 15.2393,
+    "stop_1x5_atr": 399.001,
+    "stop_2x_atr": 391.3813,
+    "tp_conservative": 429.4796,
+    "tp_moderate": 437.0993,
+    "tp_aggressive": 444.719,
+    "risk_reward_1x5": 1.0,
+    "risk_reward_2x": 0.75,
+    "rr_score": 4,
+    "rr_note": "risk_measured_as_cost_minus_stop_1x5"
+  },
+  "technicals": {
+    "rsi_14": 56.38,
+    "ma_5": 418.068,
+    "ma_20": 420.382,
+    "ma_60": 372.447,
+    "ma_200": 350.0871,
+    "macd_line": 8.5096,
+    "signal_line": 11.7457,
+    "histogram": -3.2361,
+    "momentum": "bearish",
+    "upper_band": 435.7746,
+    "middle_band": 420.382,
+    "lower_band": 404.9894,
+    "bandwidth": 0.0732,
+    "position": "within_bands",
+    "vix_current": null,
+    "fear_level": "error"
+  },
+  "sentiment": {
+    "total_articles": 50,
+    "net_sentiment_score": 29,
+    "top_bearish_title": "Inflation Fears Weighed on Broadcom (AVGO) in Q1",
+    "top_bullish_title": "Marvell Price Target Vaults to $195 at Wells Fargo on AWS Trainium and Custom Silicon Momentum",
+    "keyword_freq": {
+      "ai": 86,
+      "delivery": 0,
+      "earnings": 17,
+      "recall": 0,
+      "fsd": 0,
+      "cybertruck": 0,
+      "margin": 1
+    }
+  },
+  "extra_dimensions": {
+    "pe_percentile": 87.5,
+    "ten_year_treasury_corr": null,
+    "sentiment_price_divergence": 26.75
+  }
+}

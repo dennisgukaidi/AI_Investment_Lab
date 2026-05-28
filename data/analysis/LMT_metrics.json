@@ -1,0 +1,227 @@
+{
+  "meta": {
+    "ticker": "LMT",
+    "generated_at": "2026-05-28T01:15:23.754582+00:00",
+    "cost_price": 531.1400146484375,
+    "data_rows": 344,
+    "history_first_date": "2025-01-13",
+    "history_last_date": "2026-05-27",
+    "iv_percentile_window_rows": 180,
+    "bootstrap_horizons": [
+      10,
+      20,
+      60
+    ],
+    "benchmark_ticker": "SPY"
+  },
+  "trend": {
+    "regime": "neutral",
+    "close_vs_ma200": 2.7208,
+    "ma_spread_20_60": -63.7318,
+    "slope_ma20_5d": 0.00177,
+    "slope_ma60_5d": -0.017743,
+    "ma200_available": true,
+    "positioning_hint": "趋势不明或震荡；宜控制仓位，以结构止损与情景概率为主。"
+  },
+  "market_context": {
+    "benchmark_ticker": "SPY",
+    "available": true,
+    "aligned_trading_days": 344,
+    "spy_trend_regime": "bull_core",
+    "spy_trend": {
+      "regime": "bull_core",
+      "close_vs_ma200": 72.9997,
+      "ma_spread_20_60": 39.8269,
+      "slope_ma20_5d": 0.011709,
+      "slope_ma60_5d": 0.00719,
+      "ma200_available": true,
+      "positioning_hint": "多头排列+价在 MA200 上方：大趋势偏多；减仓宜分批止盈，加仓宜等回撤至均线带。"
+    },
+    "spy_ma": {
+      "ma_20": 735.2935,
+      "ma_60": 695.4666,
+      "ma_200": 677.4603
+    },
+    "stock_total_return_20d": 0.036796,
+    "spy_total_return_20d": 0.054476,
+    "excess_return_20d": -0.01768,
+    "stock_total_return_60d": -0.215103,
+    "spy_total_return_60d": 0.096345,
+    "excess_return_60d": -0.311448,
+    "log_return_corr_60d": 0.0667,
+    "benchmark_notes": [
+      "大盘偏强而标的偏弱：回撤可能更多来自个股/板块而非系统性恐慌。",
+      "近60日显著跑输SPY，结合成本与止损概率审视仓位。"
+    ]
+  },
+  "monte_carlo": {
+    "model": "lognormal_iv",
+    "horizon_days": 10,
+    "iv_input": 0.2517328426606296,
+    "prob_always_above": 0.1696,
+    "prob_touch_below": 0.8304,
+    "expected_final_price": 531.1009609296119,
+    "pct5_final_price": 488.56671920850465,
+    "pct95_final_price": 576.492481289718,
+    "prob_by_day": [
+      0.4882,
+      0.4956,
+      0.4894,
+      0.4918,
+      0.4924,
+      0.4896,
+      0.4916,
+      0.4888,
+      0.4878,
+      0.4838
+    ],
+    "probability_matrix": {
+      "+5%": 0.162,
+      "-5%": 0.8354,
+      "+10%": 0.026,
+      "-10%": 0.9818,
+      "+15%": 0.002,
+      "-15%": 0.9994
+    }
+  },
+  "bootstrap": {
+    "method": "historical_log_return_bootstrap",
+    "simulations": 5000,
+    "return_pool_len": 252,
+    "s0": 531.1400146484375,
+    "ma200_level": 528.4191706848145,
+    "horizons": {
+      "10": {
+        "final_median": 535.389798658327,
+        "final_pct5": 487.00000160577287,
+        "final_pct25": 517.0194393096936,
+        "final_pct75": 552.7464386338166,
+        "final_pct95": 579.4751043213544,
+        "min_price_mae_from_start_pct5": -9.443233468480736,
+        "min_price_mae_from_start_median": -1.9023444042807036,
+        "max_price_runup_from_start_pct95": 9.722603711191116,
+        "prob_touch_or_below_stop_1x5": 0.3266,
+        "prob_touch_or_below_stop_2x": 0.2324,
+        "prob_touch_or_below_cost": 0.784,
+        "prob_final_at_or_above_tp_aggressive": 0.3014,
+        "prob_paths_always_above_cost": 0.216,
+        "prob_touch_or_below_ma200": 0.7026,
+        "probability_matrix_final": {
+          "+5%": 0.193,
+          "-5%": 0.8638,
+          "+10%": 0.0358,
+          "-10%": 0.9702,
+          "+15%": 0.0032,
+          "-15%": 0.996
+        }
+      },
+      "20": {
+        "final_median": 537.4297081479516,
+        "final_pct5": 470.9995739583181,
+        "final_pct25": 510.78107711756115,
+        "final_pct75": 564.9009804337902,
+        "final_pct95": 602.8229895221958,
+        "min_price_mae_from_start_pct5": -13.030521155525886,
+        "min_price_mae_from_start_median": -3.1680240598672755,
+        "max_price_runup_from_start_pct95": 14.867835646254182,
+        "prob_touch_or_below_stop_1x5": 0.4786,
+        "prob_touch_or_below_stop_2x": 0.377,
+        "prob_touch_or_below_cost": 0.8384,
+        "prob_final_at_or_above_tp_aggressive": 0.3868,
+        "prob_paths_always_above_cost": 0.1616,
+        "prob_touch_or_below_ma200": 0.7794,
+        "probability_matrix_final": {
+          "+5%": 0.3114,
+          "-5%": 0.8036,
+          "+10%": 0.1206,
+          "-10%": 0.9332,
+          "+15%": 0.0332,
+          "-15%": 0.985
+        }
+      },
+      "60": {
+        "final_median": 551.5683305943942,
+        "final_pct5": 442.77445050081246,
+        "final_pct25": 505.50708636664876,
+        "final_pct75": 599.6520524803263,
+        "final_pct95": 672.8742085948999,
+        "min_price_mae_from_start_pct5": -20.04369672767559,
+        "min_price_mae_from_start_median": -5.613197864606203,
+        "max_price_runup_from_start_pct95": 29.717984619098292,
+        "prob_touch_or_below_stop_1x5": 0.6448,
+        "prob_touch_or_below_stop_2x": 0.5652,
+        "prob_touch_or_below_cost": 0.8896,
+        "prob_final_at_or_above_tp_aggressive": 0.5142,
+        "prob_paths_always_above_cost": 0.1104,
+        "prob_touch_or_below_ma200": 0.8484,
+        "probability_matrix_final": {
+          "+5%": 0.464,
+          "-5%": 0.7554,
+          "+10%": 0.3264,
+          "-10%": 0.8556,
+          "+15%": 0.2022,
+          "-15%": 0.933
+        }
+      }
+    }
+  },
+  "iv_analysis": {
+    "iv_latest": 0.2517328426606296,
+    "iv_percentile": 53.89,
+    "iv_mean_180d": 0.23415,
+    "iv_std_180d": 0.061378,
+    "iv_regime": "neutral",
+    "window_rows": 180
+  },
+  "risk_matrix": {
+    "latest_close": 531.14,
+    "latest_atr": 11.9761,
+    "stop_1x5_atr": 513.1758,
+    "stop_2x_atr": 507.1877,
+    "tp_conservative": 537.1281,
+    "tp_moderate": 543.1162,
+    "tp_aggressive": 549.1042,
+    "risk_reward_1x5": 1.0,
+    "risk_reward_2x": 0.75,
+    "rr_score": 4,
+    "rr_note": "risk_measured_as_cost_minus_stop_1x5"
+  },
+  "technicals": {
+    "rsi_14": 46.02,
+    "ma_5": 528.532,
+    "ma_20": 519.401,
+    "ma_60": 583.1328,
+    "ma_200": 528.4192,
+    "macd_line": -9.4254,
+    "signal_line": -14.995,
+    "histogram": 5.5696,
+    "momentum": "bullish",
+    "upper_band": 535.4406,
+    "middle_band": 519.401,
+    "lower_band": 503.3614,
+    "bandwidth": 0.0618,
+    "position": "within_bands",
+    "vix_current": null,
+    "fear_level": "error"
+  },
+  "sentiment": {
+    "total_articles": 50,
+    "net_sentiment_score": 5,
+    "top_bearish_title": "The future of warfare: Lockheed Martin exec. talks missile defense",
+    "top_bullish_title": "Lockheed Martin Price Target Slashed to $571 by Citi: Is the Defense Trade Stuck in Neutral?",
+    "keyword_freq": {
+      "ai": 46,
+      "delivery": 0,
+      "earnings": 1,
+      "recall": 0,
+      "fsd": 0,
+      "cybertruck": 0,
+      "margin": 1
+    }
+  },
+  "extra_dimensions": {
+    "pe_percentile": 12.5,
+    "ten_year_treasury_corr": null,
+    "sentiment_price_divergence": 1.34
+  }
+}

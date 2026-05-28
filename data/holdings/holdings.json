@@ -1,0 +1,13 @@
+{
+  "meta": {
+    "generated_at": "2026-05-19T07:23:18.215747Z",
+    "source": "tws"
+  },
+  "holdings": {
+    "IBKR": {
+      "position": 6.144,
+      "averageCost": 65.10416665,
+      "marketPrice": 86.16999815
+    }
+  }
+}

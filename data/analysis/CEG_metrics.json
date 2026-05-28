@@ -1,0 +1,227 @@
+{
+  "meta": {
+    "ticker": "CEG",
+    "generated_at": "2026-05-28T01:15:23.834615+00:00",
+    "cost_price": 288.67999267578125,
+    "data_rows": 344,
+    "history_first_date": "2025-01-13",
+    "history_last_date": "2026-05-27",
+    "iv_percentile_window_rows": 180,
+    "bootstrap_horizons": [
+      10,
+      20,
+      60
+    ],
+    "benchmark_ticker": "SPY"
+  },
+  "trend": {
+    "regime": "bear_core",
+    "close_vs_ma200": -34.0727,
+    "ma_spread_20_60": -2.851,
+    "slope_ma20_5d": -0.010205,
+    "slope_ma60_5d": -0.009074,
+    "ma200_available": true,
+    "positioning_hint": "价在 MA200 下方且短中期均线空头：大趋势偏空；加仓需谨慎，止损纪律优先。"
+  },
+  "market_context": {
+    "benchmark_ticker": "SPY",
+    "available": true,
+    "aligned_trading_days": 344,
+    "spy_trend_regime": "bull_core",
+    "spy_trend": {
+      "regime": "bull_core",
+      "close_vs_ma200": 72.9997,
+      "ma_spread_20_60": 39.8269,
+      "slope_ma20_5d": 0.011709,
+      "slope_ma60_5d": 0.00719,
+      "ma200_available": true,
+      "positioning_hint": "多头排列+价在 MA200 上方：大趋势偏多；减仓宜分批止盈，加仓宜等回撤至均线带。"
+    },
+    "spy_ma": {
+      "ma_20": 735.2935,
+      "ma_60": 695.4666,
+      "ma_200": 677.4603
+    },
+    "stock_total_return_20d": -0.054239,
+    "spy_total_return_20d": 0.054476,
+    "excess_return_20d": -0.108715,
+    "stock_total_return_60d": -0.115063,
+    "spy_total_return_60d": 0.096345,
+    "excess_return_60d": -0.211408,
+    "log_return_corr_60d": 0.2592,
+    "benchmark_notes": [
+      "大盘偏强而标的偏弱：回撤可能更多来自个股/板块而非系统性恐慌。",
+      "近60日显著跑输SPY，结合成本与止损概率审视仓位。"
+    ]
+  },
+  "monte_carlo": {
+    "model": "lognormal_iv",
+    "horizon_days": 10,
+    "iv_input": 0.5333629947528103,
+    "prob_always_above": 0.1642,
+    "prob_touch_below": 0.8358,
+    "expected_final_price": 288.6427299687277,
+    "pct5_final_price": 241.12519896028638,
+    "pct95_final_price": 342.3874367882661,
+    "prob_by_day": [
+      0.4844,
+      0.491,
+      0.4844,
+      0.4842,
+      0.4846,
+      0.4826,
+      0.4822,
+      0.4792,
+      0.4772,
+      0.4748
+    ],
+    "probability_matrix": {
+      "+5%": 0.3088,
+      "-5%": 0.6608,
+      "+10%": 0.1756,
+      "-10%": 0.82,
+      "+15%": 0.0902,
+      "-15%": 0.9316
+    }
+  },
+  "bootstrap": {
+    "method": "historical_log_return_bootstrap",
+    "simulations": 5000,
+    "return_pool_len": 252,
+    "s0": 288.67999267578125,
+    "ma200_level": 322.75267486572267,
+    "horizons": {
+      "10": {
+        "final_median": 288.67529628666693,
+        "final_pct5": 248.09008614886142,
+        "final_pct25": 271.87486800161355,
+        "final_pct75": 307.5479210264419,
+        "final_pct95": 335.5887543508788,
+        "min_price_mae_from_start_pct5": -15.392160552236978,
+        "min_price_mae_from_start_median": -4.20919691912373,
+        "max_price_runup_from_start_pct95": 17.57791456854451,
+        "prob_touch_or_below_stop_1x5": 0.3312,
+        "prob_touch_or_below_stop_2x": 0.2186,
+        "prob_touch_or_below_cost": 0.8262,
+        "prob_final_at_or_above_tp_aggressive": 0.2378,
+        "prob_paths_always_above_cost": 0.1738,
+        "prob_touch_or_below_ma200": 1.0,
+        "probability_matrix_final": {
+          "+5%": 0.2984,
+          "-5%": 0.7194,
+          "+10%": 0.1508,
+          "-10%": 0.878,
+          "+15%": 0.0616,
+          "-15%": 0.9616
+        }
+      },
+      "20": {
+        "final_median": 288.99870418677995,
+        "final_pct5": 231.6264779902205,
+        "final_pct25": 264.79991377559145,
+        "final_pct75": 314.97218853650645,
+        "final_pct95": 356.2622774852328,
+        "min_price_mae_from_start_pct5": -21.164965915757193,
+        "min_price_mae_from_start_median": -6.686360607815039,
+        "max_price_runup_from_start_pct95": 26.569730431681563,
+        "prob_touch_or_below_stop_1x5": 0.4874,
+        "prob_touch_or_below_stop_2x": 0.3806,
+        "prob_touch_or_below_cost": 0.872,
+        "prob_final_at_or_above_tp_aggressive": 0.3052,
+        "prob_paths_always_above_cost": 0.128,
+        "prob_touch_or_below_ma200": 1.0,
+        "probability_matrix_final": {
+          "+5%": 0.3564,
+          "-5%": 0.6622,
+          "+10%": 0.2296,
+          "-10%": 0.7944,
+          "+15%": 0.1426,
+          "-15%": 0.892
+        }
+      },
+      "60": {
+        "final_median": 287.6486784262115,
+        "final_pct5": 197.81946595516473,
+        "final_pct25": 246.20911188896991,
+        "final_pct75": 333.88859851279864,
+        "final_pct95": 410.63345638509713,
+        "min_price_mae_from_start_pct5": -35.14127869342781,
+        "min_price_mae_from_start_median": -12.6970744997774,
+        "max_price_runup_from_start_pct95": 50.689577070448756,
+        "prob_touch_or_below_stop_1x5": 0.6896,
+        "prob_touch_or_below_stop_2x": 0.6116,
+        "prob_touch_or_below_cost": 0.9268,
+        "prob_final_at_or_above_tp_aggressive": 0.3782,
+        "prob_paths_always_above_cost": 0.0732,
+        "prob_touch_or_below_ma200": 1.0,
+        "probability_matrix_final": {
+          "+5%": 0.41,
+          "-5%": 0.5882,
+          "+10%": 0.3298,
+          "-10%": 0.6732,
+          "+15%": 0.2582,
+          "-15%": 0.7546
+        }
+      }
+    }
+  },
+  "iv_analysis": {
+    "iv_latest": 0.5333629947528103,
+    "iv_percentile": 76.67,
+    "iv_mean_180d": 0.486404,
+    "iv_std_180d": 0.067316,
+    "iv_regime": "expensive",
+    "window_rows": 180
+  },
+  "risk_matrix": {
+    "latest_close": 288.68,
+    "latest_atr": 13.3636,
+    "stop_1x5_atr": 268.6345,
+    "stop_2x_atr": 261.9527,
+    "tp_conservative": 295.3618,
+    "tp_moderate": 302.0436,
+    "tp_aggressive": 308.7254,
+    "risk_reward_1x5": 1.0,
+    "risk_reward_2x": 0.75,
+    "rr_score": 4,
+    "rr_note": "risk_measured_as_cost_minus_stop_1x5"
+  },
+  "technicals": {
+    "rsi_14": 48.9,
+    "ma_5": 290.282,
+    "ma_20": 293.8021,
+    "ma_60": 296.6532,
+    "ma_200": 322.7527,
+    "macd_line": -3.1456,
+    "signal_line": -3.7812,
+    "histogram": 0.6356,
+    "momentum": "bullish",
+    "upper_band": 332.2286,
+    "middle_band": 293.8021,
+    "lower_band": 255.3756,
+    "bandwidth": 0.2616,
+    "position": "within_bands",
+    "vix_current": null,
+    "fear_level": "error"
+  },
+  "sentiment": {
+    "total_articles": 26,
+    "net_sentiment_score": 3,
+    "top_bearish_title": "Constellation Energy Balances DOE Reliability Order With New Gas And Solar Capacity",
+    "top_bullish_title": "A Look At Constellation Energy (CEG) Valuation After Stock Volatility And Analyst Target Cut",
+    "keyword_freq": {
+      "ai": 21,
+      "delivery": 0,
+      "earnings": 5,
+      "recall": 0,
+      "fsd": 0,
+      "cybertruck": 0,
+      "margin": 0
+    }
+  },
+  "extra_dimensions": {
+    "pe_percentile": 18.75,
+    "ten_year_treasury_corr": null,
+    "sentiment_price_divergence": 10.12
+  }
+}

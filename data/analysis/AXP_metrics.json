@@ -1,0 +1,226 @@
+{
+  "meta": {
+    "ticker": "AXP",
+    "generated_at": "2026-05-28T01:15:23.714630+00:00",
+    "cost_price": 312.5400085449219,
+    "data_rows": 344,
+    "history_first_date": "2025-01-13",
+    "history_last_date": "2026-05-27",
+    "iv_percentile_window_rows": 180,
+    "bootstrap_horizons": [
+      10,
+      20,
+      60
+    ],
+    "benchmark_ticker": "SPY"
+  },
+  "trend": {
+    "regime": "bull_partial",
+    "close_vs_ma200": -22.9328,
+    "ma_spread_20_60": 3.6083,
+    "slope_ma20_5d": -0.007216,
+    "slope_ma60_5d": -0.00212,
+    "ma200_available": true,
+    "positioning_hint": "中期仍强但未确认年线多头；可等待突破/回踩 MA200 再加大仓位。"
+  },
+  "market_context": {
+    "benchmark_ticker": "SPY",
+    "available": true,
+    "aligned_trading_days": 344,
+    "spy_trend_regime": "bull_core",
+    "spy_trend": {
+      "regime": "bull_core",
+      "close_vs_ma200": 72.9997,
+      "ma_spread_20_60": 39.8269,
+      "slope_ma20_5d": 0.011709,
+      "slope_ma60_5d": 0.00719,
+      "ma200_available": true,
+      "positioning_hint": "多头排列+价在 MA200 上方：大趋势偏多；减仓宜分批止盈，加仓宜等回撤至均线带。"
+    },
+    "spy_ma": {
+      "ma_20": 735.2935,
+      "ma_60": 695.4666,
+      "ma_200": 677.4603
+    },
+    "stock_total_return_20d": -0.010636,
+    "spy_total_return_20d": 0.054476,
+    "excess_return_20d": -0.065112,
+    "stock_total_return_60d": 0.019836,
+    "spy_total_return_60d": 0.096345,
+    "excess_return_60d": -0.07651,
+    "log_return_corr_60d": 0.5563,
+    "benchmark_notes": [
+      "近60日显著跑输SPY，结合成本与止损概率审视仓位。"
+    ]
+  },
+  "monte_carlo": {
+    "model": "lognormal_iv",
+    "horizon_days": 10,
+    "iv_input": 0.2075828964663647,
+    "prob_always_above": 0.1708,
+    "prob_touch_below": 0.8292,
+    "expected_final_price": 312.52056694722654,
+    "pct5_final_price": 291.7852195045114,
+    "pct95_final_price": 334.4477199982312,
+    "prob_by_day": [
+      0.4886,
+      0.496,
+      0.49,
+      0.4932,
+      0.494,
+      0.4912,
+      0.492,
+      0.4908,
+      0.49,
+      0.4852
+    ],
+    "probability_matrix": {
+      "+5%": 0.1186,
+      "-5%": 0.885,
+      "+10%": 0.0086,
+      "-10%": 0.9952,
+      "+15%": 0.0002,
+      "-15%": 1.0
+    }
+  },
+  "bootstrap": {
+    "method": "historical_log_return_bootstrap",
+    "simulations": 5000,
+    "return_pool_len": 252,
+    "s0": 312.5400085449219,
+    "ma200_level": 335.4728175354004,
+    "horizons": {
+      "10": {
+        "final_median": 314.2044020649521,
+        "final_pct5": 288.24241780223355,
+        "final_pct25": 304.0742580387662,
+        "final_pct75": 324.570958578977,
+        "final_pct95": 339.6344517019574,
+        "min_price_mae_from_start_pct5": -8.815046424668065,
+        "min_price_mae_from_start_median": -1.9564661319014958,
+        "max_price_runup_from_start_pct95": 9.420373098066563,
+        "prob_touch_or_below_stop_1x5": 0.3626,
+        "prob_touch_or_below_stop_2x": 0.2686,
+        "prob_touch_or_below_cost": 0.7952,
+        "prob_final_at_or_above_tp_aggressive": 0.304,
+        "prob_paths_always_above_cost": 0.2048,
+        "prob_touch_or_below_ma200": 1.0,
+        "probability_matrix_final": {
+          "+5%": 0.1856,
+          "-5%": 0.865,
+          "+10%": 0.0266,
+          "-10%": 0.9768,
+          "+15%": 0.0036,
+          "-15%": 0.9976
+        }
+      },
+      "20": {
+        "final_median": 315.23653367529613,
+        "final_pct5": 278.72401891806743,
+        "final_pct25": 300.35853585002747,
+        "final_pct75": 330.68260709945486,
+        "final_pct95": 353.4853953385543,
+        "min_price_mae_from_start_pct5": -12.148610747607247,
+        "min_price_mae_from_start_median": -3.1419406730788273,
+        "max_price_runup_from_start_pct95": 14.617234697644601,
+        "prob_touch_or_below_stop_1x5": 0.507,
+        "prob_touch_or_below_stop_2x": 0.417,
+        "prob_touch_or_below_cost": 0.8494,
+        "prob_final_at_or_above_tp_aggressive": 0.3834,
+        "prob_paths_always_above_cost": 0.1506,
+        "prob_touch_or_below_ma200": 1.0,
+        "probability_matrix_final": {
+          "+5%": 0.2832,
+          "-5%": 0.7978,
+          "+10%": 0.1064,
+          "-10%": 0.9358,
+          "+15%": 0.0314,
+          "-15%": 0.986
+        }
+      },
+      "60": {
+        "final_median": 319.5282413387883,
+        "final_pct5": 261.079098389823,
+        "final_pct25": 293.841350355586,
+        "final_pct75": 349.600204360756,
+        "final_pct95": 394.89879505567103,
+        "min_price_mae_from_start_pct5": -19.77440416783151,
+        "min_price_mae_from_start_median": -5.771137737949533,
+        "max_price_runup_from_start_pct95": 29.776668215244968,
+        "prob_touch_or_below_stop_1x5": 0.6816,
+        "prob_touch_or_below_stop_2x": 0.6064,
+        "prob_touch_or_below_cost": 0.908,
+        "prob_final_at_or_above_tp_aggressive": 0.478,
+        "prob_paths_always_above_cost": 0.092,
+        "prob_touch_or_below_ma200": 1.0,
+        "probability_matrix_final": {
+          "+5%": 0.4252,
+          "-5%": 0.7246,
+          "+10%": 0.2888,
+          "-10%": 0.8464,
+          "+15%": 0.182,
+          "-15%": 0.9366
+        }
+      }
+    }
+  },
+  "iv_analysis": {
+    "iv_latest": 0.2075828964663647,
+    "iv_percentile": 14.44,
+    "iv_mean_180d": 0.270993,
+    "iv_std_180d": 0.058532,
+    "iv_regime": "cheap",
+    "window_rows": 180
+  },
+  "risk_matrix": {
+    "latest_close": 312.54,
+    "latest_atr": 6.4113,
+    "stop_1x5_atr": 302.9231,
+    "stop_2x_atr": 299.7174,
+    "tp_conservative": 315.7457,
+    "tp_moderate": 318.9513,
+    "tp_aggressive": 322.1569,
+    "risk_reward_1x5": 1.0,
+    "risk_reward_2x": 0.75,
+    "rr_score": 4,
+    "rr_note": "risk_measured_as_cost_minus_stop_1x5"
+  },
+  "technicals": {
+    "rsi_14": 47.69,
+    "ma_5": 310.912,
+    "ma_20": 314.438,
+    "ma_60": 310.8297,
+    "ma_200": 335.4728,
+    "macd_line": -1.6868,
+    "signal_line": -1.3073,
+    "histogram": -0.3795,
+    "momentum": "bearish",
+    "upper_band": 322.8407,
+    "middle_band": 314.438,
+    "lower_band": 306.0353,
+    "bandwidth": 0.0534,
+    "position": "within_bands",
+    "vix_current": null,
+    "fear_level": "error"
+  },
+  "sentiment": {
+    "total_articles": 43,
+    "net_sentiment_score": 26,
+    "top_bearish_title": "Warren Buffett's Successor, Greg Abel, Just Sold UnitedHealth Group Stock. Is He Missing a Huge Opportunity?",
+    "top_bullish_title": "American Express (AXP) Gets Price Target Hike from Freedom Broker despite Unchanged Outlook",
+    "keyword_freq": {
+      "ai": 35,
+      "delivery": 0,
+      "earnings": 3,
+      "recall": 0,
+      "fsd": 0,
+      "cybertruck": 0,
+      "margin": 1
+    }
+  },
+  "extra_dimensions": {
+    "pe_percentile": 6.25,
+    "ten_year_treasury_corr": null,
+    "sentiment_price_divergence": 27.93
+  }
+}

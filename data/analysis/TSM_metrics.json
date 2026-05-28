@@ -1,0 +1,226 @@
+{
+  "meta": {
+    "ticker": "TSM",
+    "generated_at": "2026-05-28T01:15:23.633476+00:00",
+    "cost_price": 422.7300109863281,
+    "data_rows": 344,
+    "history_first_date": "2025-01-13",
+    "history_last_date": "2026-05-27",
+    "iv_percentile_window_rows": 180,
+    "bootstrap_horizons": [
+      10,
+      20,
+      60
+    ],
+    "benchmark_ticker": "SPY"
+  },
+  "trend": {
+    "regime": "bull_core",
+    "close_vs_ma200": 104.1808,
+    "ma_spread_20_60": 33.2881,
+    "slope_ma20_5d": 0.009794,
+    "slope_ma60_5d": 0.007222,
+    "ma200_available": true,
+    "positioning_hint": "多头排列+价在 MA200 上方：大趋势偏多；减仓宜分批止盈，加仓宜等回撤至均线带。"
+  },
+  "market_context": {
+    "benchmark_ticker": "SPY",
+    "available": true,
+    "aligned_trading_days": 344,
+    "spy_trend_regime": "bull_core",
+    "spy_trend": {
+      "regime": "bull_core",
+      "close_vs_ma200": 72.9997,
+      "ma_spread_20_60": 39.8269,
+      "slope_ma20_5d": 0.011709,
+      "slope_ma60_5d": 0.00719,
+      "ma200_available": true,
+      "positioning_hint": "多头排列+价在 MA200 上方：大趋势偏多；减仓宜分批止盈，加仓宜等回撤至均线带。"
+    },
+    "spy_ma": {
+      "ma_20": 735.2935,
+      "ma_60": 695.4666,
+      "ma_200": 677.4603
+    },
+    "stock_total_return_20d": 0.077458,
+    "spy_total_return_20d": 0.054476,
+    "excess_return_20d": 0.022982,
+    "stock_total_return_60d": 0.148496,
+    "spy_total_return_60d": 0.096345,
+    "excess_return_60d": 0.05215,
+    "log_return_corr_60d": 0.7511,
+    "benchmark_notes": [
+      "近60日显著跑赢SPY，注意获利了结与波动放大。"
+    ]
+  },
+  "monte_carlo": {
+    "model": "lognormal_iv",
+    "horizon_days": 10,
+    "iv_input": 0.3965009515031861,
+    "prob_always_above": 0.1672,
+    "prob_touch_below": 0.8328,
+    "expected_final_price": 422.6853080383612,
+    "pct5_final_price": 370.1827973042297,
+    "pct95_final_price": 480.4158409468022,
+    "prob_by_day": [
+      0.4858,
+      0.4936,
+      0.487,
+      0.4882,
+      0.4892,
+      0.4864,
+      0.4866,
+      0.4846,
+      0.4824,
+      0.4794
+    ],
+    "probability_matrix": {
+      "+5%": 0.2564,
+      "-5%": 0.7278,
+      "+10%": 0.1116,
+      "-10%": 0.9014,
+      "+15%": 0.0356,
+      "-15%": 0.9786
+    }
+  },
+  "bootstrap": {
+    "method": "historical_log_return_bootstrap",
+    "simulations": 5000,
+    "return_pool_len": 252,
+    "s0": 422.7300109863281,
+    "ma200_level": 318.54924880981446,
+    "horizons": {
+      "10": {
+        "final_median": 436.1525093086496,
+        "final_pct5": 389.52317212472207,
+        "final_pct25": 416.15999226441545,
+        "final_pct75": 457.49795066048864,
+        "final_pct95": 488.88991721529675,
+        "min_price_mae_from_start_pct5": -9.51394315083972,
+        "min_price_mae_from_start_median": -1.926827316528826,
+        "max_price_runup_from_start_pct95": 16.74028371803637,
+        "prob_touch_or_below_stop_1x5": 0.22,
+        "prob_touch_or_below_stop_2x": 0.1308,
+        "prob_touch_or_below_cost": 0.7408,
+        "prob_final_at_or_above_tp_aggressive": 0.4024,
+        "prob_paths_always_above_cost": 0.2592,
+        "prob_touch_or_below_ma200": 0.0,
+        "probability_matrix_final": {
+          "+5%": 0.405,
+          "-5%": 0.8894,
+          "+10%": 0.1806,
+          "-10%": 0.9748,
+          "+15%": 0.0596,
+          "-15%": 0.9976
+        }
+      },
+      "20": {
+        "final_median": 450.3306347060992,
+        "final_pct5": 383.03096449235676,
+        "final_pct25": 420.4008581691839,
+        "final_pct75": 481.4631724496108,
+        "final_pct95": 530.346814181705,
+        "min_price_mae_from_start_pct5": -12.30069570940458,
+        "min_price_mae_from_start_median": -2.6874760974228784,
+        "max_price_runup_from_start_pct95": 27.02078990631146,
+        "prob_touch_or_below_stop_1x5": 0.3138,
+        "prob_touch_or_below_stop_2x": 0.2216,
+        "prob_touch_or_below_cost": 0.7818,
+        "prob_final_at_or_above_tp_aggressive": 0.5436,
+        "prob_paths_always_above_cost": 0.2182,
+        "prob_touch_or_below_ma200": 0.0006,
+        "probability_matrix_final": {
+          "+5%": 0.5452,
+          "-5%": 0.8722,
+          "+10%": 0.3688,
+          "-10%": 0.9588,
+          "+15%": 0.2188,
+          "-15%": 0.9884
+        }
+      },
+      "60": {
+        "final_median": 510.9679811339761,
+        "final_pct5": 385.95881899105876,
+        "final_pct25": 455.63940568181226,
+        "final_pct75": 572.6490044944799,
+        "final_pct95": 674.387647320007,
+        "min_price_mae_from_start_pct5": -16.52782126249925,
+        "min_price_mae_from_start_median": -3.6323609385905264,
+        "max_price_runup_from_start_pct95": 63.00581008488955,
+        "prob_touch_or_below_stop_1x5": 0.4068,
+        "prob_touch_or_below_stop_2x": 0.3094,
+        "prob_touch_or_below_cost": 0.8118,
+        "prob_final_at_or_above_tp_aggressive": 0.7944,
+        "prob_paths_always_above_cost": 0.1882,
+        "prob_touch_or_below_ma200": 0.009,
+        "probability_matrix_final": {
+          "+5%": 0.795,
+          "-5%": 0.923,
+          "+10%": 0.712,
+          "-10%": 0.9576,
+          "+15%": 0.6194,
+          "-15%": 0.98
+        }
+      }
+    }
+  },
+  "iv_analysis": {
+    "iv_latest": 0.3965009515031861,
+    "iv_percentile": 60.56,
+    "iv_mean_180d": 0.367003,
+    "iv_std_180d": 0.062652,
+    "iv_regime": "expensive",
+    "window_rows": 180
+  },
+  "risk_matrix": {
+    "latest_close": 422.73,
+    "latest_atr": 14.2805,
+    "stop_1x5_atr": 401.3092,
+    "stop_2x_atr": 394.169,
+    "tp_conservative": 429.8703,
+    "tp_moderate": 437.0105,
+    "tp_aggressive": 444.1508,
+    "risk_reward_1x5": 1.0,
+    "risk_reward_2x": 0.75,
+    "rr_score": 4,
+    "rr_note": "risk_measured_as_cost_minus_stop_1x5"
+  },
+  "technicals": {
+    "rsi_14": 62.79,
+    "ma_5": 409.668,
+    "ma_20": 404.475,
+    "ma_60": 371.1869,
+    "ma_200": 318.5492,
+    "macd_line": 8.7305,
+    "signal_line": 9.0862,
+    "histogram": -0.3557,
+    "momentum": "bearish",
+    "upper_band": 422.7354,
+    "middle_band": 404.475,
+    "lower_band": 386.2146,
+    "bandwidth": 0.0903,
+    "position": "within_bands",
+    "vix_current": null,
+    "fear_level": "error"
+  },
+  "sentiment": {
+    "total_articles": 50,
+    "net_sentiment_score": 12,
+    "top_bearish_title": "IDVO’s International Dividend Strategy Carries an Unhedged Currency Risk That Can Wipe Out a Year of Yield",
+    "top_bullish_title": "Buy These ETFs as NVIDIA Posts Record Q1 Revenues, Beats on Earnings",
+    "keyword_freq": {
+      "ai": 110,
+      "delivery": 0,
+      "earnings": 7,
+      "recall": 0,
+      "fsd": 0,
+      "cybertruck": 0,
+      "margin": 0
+    }
+  },
+  "extra_dimensions": {
+    "pe_percentile": 56.25,
+    "ten_year_treasury_corr": null,
+    "sentiment_price_divergence": 9.93
+  }
+}
