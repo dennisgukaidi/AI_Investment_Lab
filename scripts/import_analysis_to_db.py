@@ -1,20 +1,19 @@
-"""import_analysis_to_db.py — 将 data/analysis 中的 *_metrics.json 导入 SQLite
+﻿from __future__ import annotations
 
-此脚本在项目根目录下运行，读取 ``data/analysis`` 目录下的所有量化指标 JSON，
-并写入 ``investment_lab.db`` 的 ``quantitative`` 表。若记录已存在则使用 ``INSERT OR REPLACE``
-进行更新。脚本可多次运行，重复导入时不会产生冲突。
-"""
-
-from __future__ import annotations
-
+import argparse
 import json
 import pathlib
 import sqlite3
 from datetime import datetime
+from typing import Iterable
 
 BASE_DIR = pathlib.Path(__file__).resolve().parents[1]
 DB_PATH = BASE_DIR / "investment_lab.db"
 ANALYSIS_DIR = BASE_DIR / "data" / "analysis"
+FUNDAMENTALS_DIR = BASE_DIR / "data" / "fundamentals"
+NEWS_DIR = BASE_DIR / "data" / "news"
+MACRO_FILE = BASE_DIR / "data" / "macroeconomic" / "macro_data.json"
+WATCHLIST_FILE = BASE_DIR / "data" / "watchlist.csv"
 
 
 def _connect() -> sqlite3.Connection:
@@ -23,16 +22,34 @@ def _connect() -> sqlite3.Connection:
     return conn
 
 
-def import_analysis() -> None:
-    conn = _connect()
-    cur = conn.cursor()
-    # 为了确保使用新的历史记录表结构，若表已经存在则直接使用。
-    # 这里不再删除表，以免丢失已有的历史记录。表结构在第一次运行时会自动创建。
-    # 创建表时使用自增主键，以便同一 ticker 在不同日期或同一天多次分析时都能保留历史记录。
-    # 原来的主键 (ticker, date) 会在同一天多次运行时导致记录被 REPLACE，
-    # 这正是用户希望保留历史的痛点。这里改为使用 `id` 作为唯一主键，
-    # 并保留 ticker、date、metrics 字段供查询使用。
-    # 使用 IF NOT EXISTS 防止重复创建导致错误
+def _read_watchlist() -> set[str]:
+    if not WATCHLIST_FILE.is_file():
+        return set()
+    raw = WATCHLIST_FILE.read_text(encoding="utf-8").strip()
+    return {s.strip().upper() for s in raw.split(",") if s.strip()}
+
+
+def _safe_date(v: str | None) -> str:
+    if not v:
+        return datetime.now().date().isoformat()
+    try:
+        return datetime.fromisoformat(v.replace("Z", "+00:00")).date().isoformat()
+    except Exception:
+        return datetime.now().date().isoformat()
+
+
+def _avg_sentiment(items: Iterable[dict]) -> float:
+    vals: list[float] = []
+    for x in items:
+        try:
+            if x.get("sentiment_polarity") is not None:
+                vals.append(float(x["sentiment_polarity"]))
+        except Exception:
+            continue
+    return float(sum(vals) / len(vals)) if vals else 0.0
+
+
+def _ensure_tables(cur: sqlite3.Cursor) -> None:
     cur.execute(
         """
         CREATE TABLE IF NOT EXISTS quantitative (
@@ -43,35 +60,127 @@ def import_analysis() -> None:
         )
         """
     )
+    cur.execute(
+        """
+        CREATE TABLE IF NOT EXISTS fundamentals (
+            ticker TEXT NOT NULL,
+            date   TEXT NOT NULL,
+            data   TEXT NOT NULL,
+            PRIMARY KEY (ticker, date)
+        )
+        """
+    )
+    cur.execute(
+        """
+        CREATE TABLE IF NOT EXISTS sentiment (
+            ticker TEXT NOT NULL,
+            date   TEXT NOT NULL,
+            score  REAL NOT NULL,
+            PRIMARY KEY (ticker, date)
+        )
+        """
+    )
+    cur.execute(
+        """
+        CREATE TABLE IF NOT EXISTS macro (
+            date TEXT PRIMARY KEY,
+            data TEXT NOT NULL
+        )
+        """
+    )
 
+
+def import_all() -> None:
+    conn = _connect()
+    cur = conn.cursor()
+    _ensure_tables(cur)
+    watchlist = _read_watchlist()
+
+    imported_quant = 0
     for json_file in ANALYSIS_DIR.glob("*_metrics.json"):
         try:
             data = json.loads(json_file.read_text(encoding="utf-8"))
             meta = data.get("meta", {})
-            ticker = meta.get("ticker")
+            ticker = str(meta.get("ticker", "")).upper()
             date = meta.get("history_last_date")
             if not ticker or not date:
                 continue
+            if watchlist and ticker not in watchlist:
+                continue
             cur.execute(
-            # 直接 INSERT，允许同一 ticker、同一 date 的多条记录保留（历史版本）。
-            "INSERT INTO quantitative (ticker, date, metrics) VALUES (?, ?, ?)",
-            (ticker, date, json.dumps(data, ensure_ascii=False)),
+                "INSERT INTO quantitative (ticker, date, metrics) VALUES (?, ?, ?)",
+                (ticker, date, json.dumps(data, ensure_ascii=False)),
             )
-        except Exception as exc:  # pragma: no cover
-            print(f"[WARN] 导入 {json_file.name} 失败: {exc}")
+            imported_quant += 1
+        except Exception as exc:
+            print(f"[WARN] quantitative {json_file.name} failed: {exc}")
+
+    imported_fund = 0
+    for json_file in FUNDAMENTALS_DIR.glob("*_fundamentals.json"):
+        try:
+            data = json.loads(json_file.read_text(encoding="utf-8"))
+            ticker = str(data.get("ticker", "")).upper() or json_file.stem.replace("_fundamentals", "").upper()
+            if watchlist and ticker not in watchlist:
+                continue
+            date = _safe_date(data.get("collected_at"))
+            cur.execute(
+                "INSERT OR REPLACE INTO fundamentals (ticker, date, data) VALUES (?, ?, ?)",
+                (ticker, date, json.dumps(data, ensure_ascii=False)),
+            )
+            imported_fund += 1
+        except Exception as exc:
+            print(f"[WARN] fundamentals {json_file.name} failed: {exc}")
+
+    imported_sent = 0
+    for json_file in NEWS_DIR.glob("*_news.json"):
+        try:
+            ticker = json_file.stem.replace("_news", "").upper()
+            if watchlist and ticker not in watchlist:
+                continue
+            items = json.loads(json_file.read_text(encoding="utf-8"))
+            if not isinstance(items, list):
+                continue
+            score = _avg_sentiment(items)
+            # Use file modification date as collection date so sentiment reflects latest run date.
+            date = datetime.fromtimestamp(json_file.stat().st_mtime).date().isoformat()
+            cur.execute(
+                "INSERT OR REPLACE INTO sentiment (ticker, date, score) VALUES (?, ?, ?)",
+                (ticker, date, score),
+            )
+            imported_sent += 1
+        except Exception as exc:
+            print(f"[WARN] sentiment {json_file.name} failed: {exc}")
+
+    imported_macro = 0
+    if MACRO_FILE.is_file():
+        try:
+            data = json.loads(MACRO_FILE.read_text(encoding="utf-8"))
+            date = _safe_date(data.get("collected_at"))
+            cur.execute(
+                "INSERT OR REPLACE INTO macro (date, data) VALUES (?, ?)",
+                (date, json.dumps(data, ensure_ascii=False)),
+            )
+            imported_macro = 1
+        except Exception as exc:
+            print(f"[WARN] macro import failed: {exc}")
+
     conn.commit()
     conn.close()
-    print(f"已导入 {len(list(ANALYSIS_DIR.glob('*_metrics.json')))} 条量化指标记录")
+    print(
+        f"Imported quantitative={imported_quant}, fundamentals={imported_fund}, "
+        f"sentiment={imported_sent}, macro={imported_macro}"
+    )
 
 
 if __name__ == "__main__":
-    import argparse
-
-    parser = argparse.ArgumentParser(description="导入 data/analysis/*.json 到 SQLite")
-    parser.add_argument("--dry-run", action="store_true", help="仅打印将要导入的记录数量，不写入数据库")
+    parser = argparse.ArgumentParser(description="Import analysis/fundamentals/sentiment/macro into SQLite")
+    parser.add_argument("--dry-run", action="store_true", help="Only show counts, no DB write")
     args = parser.parse_args()
+
     if args.dry_run:
-        count = len(list(ANALYSIS_DIR.glob("*_metrics.json")))
-        print(f"[DRY RUN] 将导入 {count} 条记录")
+        print(f"analysis files: {len(list(ANALYSIS_DIR.glob('*_metrics.json')))}")
+        print(f"fundamentals files: {len(list(FUNDAMENTALS_DIR.glob('*_fundamentals.json')))}")
+        print(f"news files: {len(list(NEWS_DIR.glob('*_news.json')))}")
+        print(f"macro file exists: {MACRO_FILE.is_file()}")
     else:
-        import_analysis()
+        import_all()

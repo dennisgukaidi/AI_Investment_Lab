@@ -64,6 +64,16 @@ def extract_tickers(rules_path: Path) -> Set[str]:
     """
     tickers: Set[str] = set()
 
+    # If caller requests forcing watchlist usage, honor the environment flag.
+    force_watchlist = os.environ.get("FORCE_USE_WATCHLIST") == "1"
+    watchlist_path = BASE_DIR / "data" / "watchlist.csv"
+    if force_watchlist:
+        if watchlist_path.is_file():
+            line = watchlist_path.read_text(encoding="utf-8").strip()
+            csv_tickers = [t.strip().upper() for t in line.split(",") if t.strip()]
+            tickers.update(csv_tickers)
+        return tickers
+
     # 1) 优先从 holdings.json 提取（若存在）
     try:
         if HOLDINGS_FILE.is_file():
@@ -80,11 +90,9 @@ def extract_tickers(rules_path: Path) -> Set[str]:
             content = rules_path.read_text(encoding="utf-8")
             tickers.update({m.group(1) for m in ticker_pattern.finditer(content)})
 
-    # --- Extract from watchlist.csv (comma‑separated) ---
-    watchlist_path = BASE_DIR / "data" / "watchlist.csv"
+    # 3) 最终回退到 watchlist.csv（保证 watchlist 中的 ticker 一定被包含）
     if watchlist_path.is_file():
         line = watchlist_path.read_text(encoding="utf-8").strip()
-        # Split on commas and strip whitespace; ignore empty entries.
         csv_tickers = [t.strip().upper() for t in line.split(",") if t.strip()]
         tickers.update(csv_tickers)
 

@@ -45,6 +45,11 @@ python scripts/strategy_advisor.py
 # 输出: reports/strategy_{TICKER}_{YYYYMMDD}.md
 #       reports/holdings_summary_{YYYYMMDD}.md
 
+# 步骤 8 — 更新表格
+python scripts/export_to_csv.py
+# 数据报告整合归档
+
+
 注意：为防止分析/入库/生成报告使用不完整数据，**步骤 5-7 必须在步骤 1-4（行情、新闻、基本面、宏观/替代）全部成功并生成相应数据文件后执行**。
 推荐使用仓库中新添加的调度脚本 `scripts/run_full_pipeline.py` 来自动化此检查与执行：
 ```bash
@@ -52,6 +57,7 @@ python scripts/strategy_advisor.py
 python scripts/run_full_pipeline.py
 ```
 ```
+python scripts/organize_reports.py  整理reports文件夹按ticker归类
 
 # 检查依赖
 python -c "import ib_insync; print('ib_insync ok')"

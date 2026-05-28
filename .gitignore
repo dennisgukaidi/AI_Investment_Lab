@@ -85,3 +85,8 @@ htmlcov/
 .mypy_cache/
 .dmypy.json
 .dmypy.server
+
+# Local workspace ignores (sensitive / IDE / generated)
+.codex/
+credentials.json
+token.json

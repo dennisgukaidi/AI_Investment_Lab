@@ -17,6 +17,7 @@ import json
 import sqlite3
 import math
 import pathlib
+import re
 from datetime import datetime, timezone, timedelta
 from typing import Any, Optional
 from dataclasses import dataclass
@@ -519,7 +520,11 @@ class EnhancedStrategyAdvisor:
             parent = output_path.parent
             stem = output_path.stem
             suffix = output_path.suffix or ".md"
-            new_name = f"{stem}_{date_tag}{suffix}"
+            # If caller already supplied a date suffix, keep a single date tag.
+            if re.search(r"(?:_|-)\d{8}$", stem):
+                new_name = f"{stem}{suffix}"
+            else:
+                new_name = f"{stem}_{date_tag}{suffix}"
             parent.mkdir(parents=True, exist_ok=True)
             output_path = parent / new_name
 

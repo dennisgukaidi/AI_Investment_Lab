@@ -12,11 +12,13 @@ from __future__ import annotations
 
 import subprocess
 import sys
+import os
 from pathlib import Path
 from typing import List
 
 ROOT = Path(__file__).resolve().parents[1]
 PY = sys.executable
+DRY_RUN = "--dry-run" in sys.argv
 
 
 def read_watchlist() -> List[str]:
@@ -29,7 +31,18 @@ def read_watchlist() -> List[str]:
 
 def run_cmd(args: List[str]) -> int:
     print(f">>> Running: {' '.join(args)}")
-    r = subprocess.run(args, cwd=ROOT)
+    env = os.environ.copy()
+    env["PYTHONIOENCODING"] = "utf-8"
+    # If running news_collector, force it to use watchlist (avoid relying on holdings.json)
+    try:
+        if any('news_collector.py' in a for a in args):
+            env["FORCE_USE_WATCHLIST"] = "1"
+    except Exception:
+        pass
+    if DRY_RUN:
+        print(f"(dry-run) would run in {ROOT}: {' '.join(args)}")
+        return 0
+    r = subprocess.run(args, cwd=ROOT, env=env)
     print(f"<<< Exit {r.returncode}\n")
     return r.returncode
 
@@ -92,11 +105,17 @@ def main() -> int:
     if run_cmd([PY, "scripts/import_analysis_to_db.py"]) != 0:
         print("[ERR] import_analysis_to_db.py 运行失败")
         return 5
-    if run_cmd([PY, "scripts/run_pipeline_and_reports.py", "--skip-pipeline", "--skip-news", "--summary"]) != 0:
-        print("[ERR] run_pipeline_and_reports.py 运行失败")
-        return 6
+    for t in tickers:
+        out_dir = ROOT / "reports"
+        out_dir.mkdir(parents=True, exist_ok=True)
+        if run_cmd([PY, "scripts/strategy_advisor.py", "--ticker", t, "--output", str(out_dir)]) != 0:
+            print(f"[ERR] strategy_advisor.py 对 {t} 运行失败")
+            return 6
+    # 8) 更新表格导出（export_to_csv.py）
+    if run_cmd([PY, "scripts/export_to_csv.py"]) != 0:
+        print("[WARN] export_to_csv.py 运行失败（表格可能未更新）")
 
-    print("[OK] 全流程完成（含分析/入库/生成报告）")
+    print("[OK] 全流程完成（含分析/入库/生成报告/表格导出）")
     return 0
 
 

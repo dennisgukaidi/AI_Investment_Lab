@@ -103,7 +103,7 @@ AI_Investment_Lab/
 │   ├── _db_ingest_helper.py           # ⭐核心 数据库入库助手
 │   ├── import_analysis_to_db.py       # ⭐核心 批量导入 metrics 到 SQLite
 │   ├── strategy_advisor.py            # ⭐核心 策略顾问报告生成
-│   ├── run_full_pipeline.py    # 辅助 一键流数据收集
+│   ├── run_full_pipeline.py           # 辅助 一键流数据收集
 │   ├── init_db.py                     # 辅助 数据库初始化/清理
 │   └── alternative_data_collector.py  # ⭐核心 Google Trends
 │

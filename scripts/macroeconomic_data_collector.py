@@ -129,7 +129,7 @@ def save_macroeconomic_data(data: Dict[str, Any]) -> Path:
 def main(api_key: str = FRED_API_KEY) -> None:
     """主函数"""
     if api_key == "your_fred_api_key_here":
-        print("❌ 请设置FRED API密钥")
+        print("[ERR] 请设置FRED API密钥")
         print("   1. 访问 https://fred.stlouisfed.org/docs/api/api_key.html 获取API密钥")
         print("   2. 修改脚本中的 FRED_API_KEY 变量")
         return
@@ -139,11 +139,11 @@ def main(api_key: str = FRED_API_KEY) -> None:
     data = collect_macroeconomic_data(api_key)
     output_path = save_macroeconomic_data(data)
     
-    print(f"✅ Macroeconomic data saved to {output_path}")
+    print(f"[OK] Macroeconomic data saved to {output_path}")
     
     # 显示最新数据摘要
     indicators = data.get("indicators", {})
-    print("\n📊 最新宏观经济数据摘要:")
+    print("\n[INFO] 最新宏观经济数据摘要:")
     for name, info in indicators.items():
         if "error" not in info:
             value = info.get("latest_value")
