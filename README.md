@@ -34,13 +34,16 @@ flowchart LR
     C -->|data/fundamentals/*.json| D[macroeconomic_data_collector]
     D -->|data/macroeconomic/*.json| E[analyze_report]
     E -->|data/analysis/*_metrics.json| F[import_analysis_to_db]
-    F -->|investment_lab.db| G[strategy_advisor / run_pipeline]
-    G -->|reports/*.md| H[🟢 策略报告]
+    F -->|ticker_metrics 36列| G[strategy_advisor 精算UPDATE]
+    G -->|ticker_metrics 精算完成| H[export_to_csv]
+    H -->|data/ticker_data.csv| I[🟢 CSV表格]
 ```
 
-### 完整更新流程（7 步）
+### 完整更新流程（8 步，两阶段架构）
 
 ```bash
+# === 阶段 A：基础数据收集 + 入库 ===
+
 # 1. 行情下载（TWS → yfinance fallback）
 python scripts/portfolio_pipeline.py
 
@@ -49,31 +52,50 @@ python scripts/news_collector.py
 
 # 3. 基本面数据收集（P/E, P/B, P/S, 财务健康等）
 python scripts/fundamental_data_collector.py <TICKER>
-# 循环执行：for %t in (AAPL GOOG AMZN TSLA) do python scripts/fundamental_data_collector.py %t
 
-# 4. 宏观经济数据更新（内置 FRED API key，直接运行）
+# 4. 宏观经济 + 替代数据
 python scripts/macroeconomic_data_collector.py
+python scripts/alternative_data_collector.py
 
 # 5. 量化分析计算
 python scripts/analyze_report.py --all
 
-# 6. 批量导入数据库（quantitative + fundamentals + sentiment + macro）
+# 6. 批量导入数据库 + 同步写入 ticker_metrics（36 列）
 python scripts/import_analysis_to_db.py
 
-# 7. 生成策略报告
-python scripts/run_pipeline_and_reports.py --skip-pipeline --skip-news --summary
+# === 阶段 B：精算回填 + 导出 ===
+
+# 7. 精算回填（UPDATE 四个精算字段到 ticker_metrics）
+python scripts/strategy_advisor.py
+
+# 8. 导出 CSV（直接从 ticker_metrics 表读取）
+python scripts/export_to_csv.py
 ```
 
-### 一键流程（简化版，不生成新 metrics）
+### 一键流程
 
 ```bash
-python scripts/run_pipeline_and_reports.py --summary
+# 完整流水线（数据收集 → 入库 → 精算 → 导出）
+python scripts/run_full_pipeline.py
 ```
 
 ### 单只股票分析（含自动入库）
 
 ```bash
 python scripts/analyze_report.py <TICKER>
+```
+
+### 历史数据全量回填（schema 变更后）
+
+```bash
+# 从 data/analysis/*_metrics.json 重新导入全部历史 → ticker_metrics
+python scripts/import_analysis_to_db.py
+
+# 遍历 quantitative 全部记录，精算 UPDATE
+python scripts/strategy_advisor.py
+
+# CSV 导出
+python scripts/export_to_csv.py
 ```
 
 ## 目录结构
@@ -101,11 +123,11 @@ AI_Investment_Lab/
 │   ├── macroeconomic_data_collector.py# ⭐核心 宏观经济数据（内置 FRED key）
 │   ├── analyze_report.py              # ⭐核心 量化分析引擎（MC/Bootstrap/技术面）
 │   ├── _db_ingest_helper.py           # ⭐核心 数据库入库助手
-│   ├── import_analysis_to_db.py       # ⭐核心 批量导入 metrics 到 SQLite
-│   ├── strategy_advisor.py            # ⭐核心 策略顾问报告生成
-│   ├── run_full_pipeline.py           # 辅助 一键流数据收集
-│   ├── init_db.py                     # 辅助 数据库初始化/清理
-│   └── alternative_data_collector.py  # ⭐核心 Google Trends
+│   ├── import_analysis_to_db.py       # ⭐核心 批量导入 + 同步写入 ticker_metrics
+│   ├── strategy_advisor.py            # ⭐核心 精算回填（UPDATE ticker_metrics）
+│   ├── export_to_csv.py               # ⭐核心 从 ticker_metrics 表直接导出 CSV（36列）
+│   ├── run_full_pipeline.py           # 一键流数据收集
+│   └── init_db.py                     # 数据库初始化/清理
 │
 ├── reports/                     # 生成的策略报告/日志
 │   └── strategy_{TICKER}_{YYYYMMDD}.md
@@ -117,6 +139,8 @@ AI_Investment_Lab/
 
 ## 数据库（investment_lab.db）
 
+### 基础表（JSON 存储）
+
 | 表名 | 主键 | 存储内容 |
 |------|------|---------|
 | `quantitative` | `id` (自增) | 量化分析指标 JSON（Monte Carlo、Bootstrap、IV 分位、风险矩阵等） |
@@ -124,9 +148,39 @@ AI_Investment_Lab/
 | `sentiment` | `(ticker, date)` | 舆情得分（新闻平均极性，-1 ~ 1） |
 | `macro` | `date` | 宏观数据 JSON（利率、CPI、非农就业等） |
 
+### 核心分析表（结构化 36 列）
+
+| 表名 | 主键 | 存储内容 |
+|------|------|---------|
+| `ticker_metrics` | `(Date, Ticker)` | 每日每标的的完整量化分析指标（36 列） |
+
+`ticker_metrics` 表字段（36 列）：
+
+| 分类 | 字段 | 说明 |
+|------|------|------|
+| 基础 | Date, Ticker, Status, Entry_Ref | 日期/标的/持仓状态/参考成本 |
+| 动能 | Close_Price, Trend_State, RSI, ATR_14 | 价格/趋势/RSI/波动率 |
+| 估值 | IV_Rank, IV_Status, PE_Percentile, Crowding_Index, Crowding_Label | IV分位/PE分位/拥挤度 |
+| 精算 | Kelly_Pct, Max_Corr_R2, Breakeven_Days | 凯利仓位/最大相关性/回本天数 |
+| 概率 | Win/Risk/Target_Prob × 10d/20d/60d | Bootstrap 三时区概率分布 |
+| 风控 | Hard_Stop_Loss, Target_Aggressive, RR_Ratio, RR_Score | 止损位/目标价/RR评分 |
+| 宏观 | SPY_State, Alpha_vs_SPY, Corr_vs_SPY | 大盘趋势/超额收益/相关性 |
+| 建议 | Action | 综合操作建议 |
+
+### 数据流（两阶段）
+
+```
+阶段 A — import_analysis_to_db.py:
+  metrics.json → quantitative 表 + ticker_metrics 表 (INSERT OR REPLACE, 36列)
+
+阶段 B — strategy_advisor.py:
+  quantitative 表 → 精算计算 → ticker_metrics 表 (UPDATE 4 精算列)
+```
+
 ### 重要说明
 - `analyze_report.py --all` 模式**不会自动触发入库**，需手动运行 `import_analysis_to_db.py`
-- `analyze_report.py <TICKER>`（单只模式）会自动触发 `_db_ingest_helper.ingest_all()` 完成全表入库
+- `import_analysis_to_db.py` 在执行基础表导入的同时，会自动同步写入 `ticker_metrics`
+- `strategy_advisor.py` 默认静默模式（仅 UPDATE DB），加 `--verbose` 查看完整报告
 - DB 文件 `.gitignore` 已忽略，不会提交到仓库
 
 ## 策略报告内容
@@ -182,4 +236,11 @@ pytrends         # 替代数据收集器（Google Trends，无需 API key）
 ```
 
 ## 最后更新
-2026-05-20
+2026-06-05
+
+### v2.1 重构要点
+- 新建 `ticker_metrics` 结构化表（36 列），复合主键 `(Date, Ticker)`
+- 流水线改为两阶段：阶段 A 入库 → 阶段 B 精算 UPDATE
+- `import_analysis_to_db.py` 同步写入 `ticker_metrics`
+- `strategy_advisor.py` 静默执行 SQL UPDATE，`--verbose` 查看报告
+- `export_to_csv.py` 直接从 `ticker_metrics` 表读取，不再解析 Markdown

@@ -502,6 +502,146 @@ class EnhancedStrategyAdvisor:
 
         return "\n\n".join(filter(None, sections))
 
+    def build_metrics_row(self) -> dict[str, Any]:
+        """从当前 snapshot 计算出 ticker_metrics 的 33 个字段并返回 dict，供 DB 写入使用。"""
+        snap = self.snapshot
+        bp = snap.bootstrap_probs
+        risk = snap.risk_positioning
+        val = snap.valuation
+        tech = snap.technicals
+        macro = snap.macro_context or {}
+
+        # --- 持仓状态与成本 ---
+        holdings_path = pathlib.Path(__file__).resolve().parents[1] / "data" / "holdings" / "holdings.json"
+        status = "未持有"
+        entry_ref = risk.latest_price
+        try:
+            if holdings_path.is_file():
+                obj = json.loads(holdings_path.read_text(encoding="utf-8"))
+                h = obj.get("holdings", {})
+                if snap.ticker in h:
+                    hd = h[snap.ticker]
+                    status = f"持有 {hd.get('position', 0)} 股"
+                    entry_ref = hd.get("averageCost", risk.latest_price)
+        except Exception:
+            pass
+
+        # --- RR 比率 ---
+        diff = risk.tp_aggressive - risk.latest_price
+        risk_amt = risk.latest_price - risk.stop_1x5_atr
+        if risk_amt > 0:
+            rr = diff / risk_amt
+        else:
+            rr = 0.0
+        rr_ratio = f"1:{rr:.2f}" if rr > 0 else "N/A"
+
+        # --- Kelly ---
+        prob_win = bp[60].prob_always_above_cost if 60 in bp else 0.5
+        prob_loss = bp[60].prob_touch_stop if 60 in bp else 0.5
+        if prob_loss <= 0:
+            prob_loss = 0.001
+        kelly = StopLossAndKellyCalculator.calculate_kelly_position(
+            prob_win=prob_win,
+            prob_loss=prob_loss,
+            win_size=diff if diff > 0 else 1.0,
+            loss_size=risk_amt if risk_amt > 0 else 1.0,
+        )
+        kelly_pct = round(kelly * 100, 1)
+
+        # --- 拥挤度 ---
+        crowd_idx, _ = CrowdingAnalyzer.calculate_crowding_index(
+            tech.rsi_14, val.iv_percentile
+        )
+
+        # --- Bootstrap 多时区 ---
+        def _bp_field(horizon: int, attr: str, default=0.0):
+            if horizon in bp:
+                return getattr(bp[horizon], attr, default)
+            return default
+
+        # --- SPY 上下文 ---
+        spy_state = macro.get("spy_regime", "")
+        alpha_spy = macro.get("excess_return", 0.0)
+        corr_spy = macro.get("correlation", 0.0)
+
+        return {
+            "Date": snap.date,
+            "Ticker": snap.ticker,
+            "Status": status,
+            "Entry_Ref": entry_ref,
+            "RR_Ratio": rr_ratio,
+            "Kelly_Pct": kelly_pct,
+            "Close_Price": risk.latest_price,
+            "Trend_State": tech.regime,
+            "RSI": tech.rsi_14,
+            "IV_Rank": val.iv_percentile,
+            "Crowding_Index": round(crowd_idx, 1),
+            "Crowding_Label": CrowdingAnalyzer._interpret_crowding(
+                round(crowd_idx, 1), tech.rsi_14 or 0, val.iv_percentile or 0
+            ),
+            "Max_Corr_R2": self._calc_max_correlation(),
+            "Breakeven_Days": self._calc_breakeven_days(),
+            # 10d
+            "Win_Prob_10d": _bp_field(10, "prob_always_above_cost"),
+            "Risk_Loss_10d": _bp_field(10, "prob_touch_stop"),
+            "Target_Prob_10d": _bp_field(10, "prob_reach_tp"),
+            "Target_Median_10d": _bp_field(10, "final_median"),
+            # 20d
+            "Win_Prob_20d": _bp_field(20, "prob_always_above_cost"),
+            "Risk_Loss_20d": _bp_field(20, "prob_touch_stop"),
+            "Target_Prob_20d": _bp_field(20, "prob_reach_tp"),
+            "Target_Median_20d": _bp_field(20, "final_median"),
+            # 60d
+            "Win_Prob_60d": _bp_field(60, "prob_always_above_cost"),
+            "Risk_Loss_60d": _bp_field(60, "prob_touch_stop"),
+            "Target_Prob_60d": _bp_field(60, "prob_reach_tp"),
+            "Target_Median_60d": _bp_field(60, "final_median"),
+            # 风控 & 估值
+            "ATR_14": risk.latest_atr,
+            "Hard_Stop_Loss": risk.stop_1x5_atr,
+            "Target_Aggressive": risk.tp_aggressive,
+            "RR_Score": risk.rr_score,
+            "PE_Percentile": val.pe_percentile,
+            "IV_Status": val.iv_regime,
+            # 宏观
+            "SPY_State": spy_state,
+            "Alpha_vs_SPY": alpha_spy,
+            "Corr_vs_SPY": corr_spy,
+            # 建议
+            "Action": self._generate_recommendation(),
+        }
+
+    def save_metrics_to_db(self, db_path: pathlib.Path) -> None:
+        """将当前 snapshot 的精算字段 UPDATE 到 ticker_metrics 表已有行中。
+        
+        只更新 4 个精算字段：Crowding_Label, Kelly_Pct, Max_Corr_R2, Breakeven_Days。
+        前提：该行已在 import_analysis_to_db 阶段通过 INSERT OR REPLACE 创建。
+        """
+        row = self.build_metrics_row()
+        date_str = row["Date"]
+        ticker_str = row["Ticker"]
+        with sqlite3.connect(db_path) as conn:
+            conn.execute(
+                """
+                UPDATE ticker_metrics SET
+                    Crowding_Label = :Crowding_Label,
+                    Kelly_Pct       = :Kelly_Pct,
+                    Max_Corr_R2     = :Max_Corr_R2,
+                    Breakeven_Days  = :Breakeven_Days
+                WHERE Date = :Date AND Ticker = :Ticker
+                """,
+                {
+                    "Crowding_Label": row["Crowding_Label"],
+                    "Kelly_Pct": row["Kelly_Pct"],
+                    "Max_Corr_R2": row["Max_Corr_R2"],
+                    "Breakeven_Days": row["Breakeven_Days"],
+                    "Date": date_str,
+                    "Ticker": ticker_str,
+                },
+            )
+            conn.commit()
+        print(f"[DB] ticker_metrics 精算更新: {date_str} {ticker_str}")
+
     def save_report(self, report: str, output_path: pathlib.Path, ticker: str, snap_today: SnapshotData) -> None:
         if output_path is None:
             return
@@ -1186,6 +1326,41 @@ class EnhancedStrategyAdvisor:
                 logic.append(f"估值面：PE 分位 {snap.valuation.pe_percentile:.0f}%，估值压力较大")
         return logic
 
+    # ========== 精算指标提取方法（供 build_metrics_row 内部使用） ==========
+    def _calc_max_correlation(self) -> Optional[float]:
+        """计算与已有持仓的最大 Pearson R²，若无持仓数据则返回 None。"""
+        if not self.repo or not self.holdings:
+            return None
+        snap = self.snapshot
+        try:
+            target_df = self.repo.get_historical_data(snap.ticker, limit=60)
+            if target_df.empty or len(target_df) < 20:
+                return None
+            target_df["log_return"] = np.log(target_df["close"] / target_df["close"].shift(1))
+            target_returns = target_df.set_index("date")["log_return"].dropna()
+            holdings_returns = {}
+            for ht in self.holdings:
+                hdf = self.repo.get_historical_data(ht, limit=60)
+                if not hdf.empty and len(hdf) > 20:
+                    hdf["log_return"] = np.log(hdf["close"] / hdf["close"].shift(1))
+                    holdings_returns[ht] = hdf.set_index("date")["log_return"].dropna()
+            if not holdings_returns:
+                return None
+            corrs = CorrelationChecker.calculate_correlations(snap.ticker, target_returns, holdings_returns)
+            valid = [c for c in corrs.values() if c is not None]
+            return float(max(abs(c) for c in valid)) if valid else None
+        except Exception:
+            return None
+
+    def _calc_breakeven_days(self) -> Optional[float]:
+        """计算回本中位数天数。"""
+        snap = self.snapshot
+        bp = snap.bootstrap_probs
+        if not bp:
+            return None
+        result = BreakevenTimeCalculator.estimate_breakeven_days(bp)
+        return result.get("median_days")
+
     def _identify_key_risks(self) -> list[str]:
         risks = []
         snap = self.snapshot
@@ -1203,30 +1378,25 @@ class EnhancedStrategyAdvisor:
 # 主程序
 # ============================================================================
 
-def main():
-    """CLI 入口"""
-    parser = argparse.ArgumentParser(
-        description="增强版策略顾问 - 拥挤度/相关性/回本时间/止损"
-    )
-    parser.add_argument("--db", type=str, default="investment_lab.db",
-                        help="SQLite 数据库路径")
-    parser.add_argument("--ticker", type=str, default="AMD",
-                        help="目标股票代码")
-    parser.add_argument("--holdings", type=str, default="",
-                        help="已有持仓股票代码（逗号分隔），用于相关性计算")
-    parser.add_argument("--cost", type=float, default=None,
-                        help="持仓成本价（可选）")
-    parser.add_argument("--output", type=str, default=None,
-                        help="输出文件路径")
-    
-    args = parser.parse_args()
-    
-    # 初始化数据库
-    repo = EnhancedDataRepository(args.db)
-    
-    # 获取目标股票数据
-    target_ticker = args.ticker.upper()
+def _read_watchlist_symbols() -> list[str]:
+    """从 data/watchlist.csv 读取所有 ticker。"""
+    p = pathlib.Path(__file__).resolve().parents[1] / "data" / "watchlist.csv"
+    if not p.is_file():
+        return []
+    line = p.read_text(encoding="utf-8").strip()
+    return [s.strip().upper() for s in line.split(",") if s.strip()]
 
+
+def _process_ticker(
+    ticker: str,
+    repo: EnhancedDataRepository,
+    holdings_tickers: list[str],
+    cost_override: Optional[float] = None,
+    output_dir: Optional[pathlib.Path] = None,
+    db_path: Optional[pathlib.Path] = None,
+    verbose: bool = False,
+) -> bool:
+    """处理单个 ticker：生成报告 + 写入 ticker_metrics 表。返回是否成功。"""
     # 优先从 data/holdings/holdings.json 中读取持仓成本
     holdings_path = pathlib.Path(__file__).resolve().parents[1] / "data" / "holdings" / "holdings.json"
     cost_from_holdings = None
@@ -1234,39 +1404,117 @@ def main():
         if holdings_path.is_file():
             obj = json.loads(holdings_path.read_text(encoding="utf-8"))
             h = obj.get("holdings", {})
-            if target_ticker in h:
-                val = h[target_ticker].get("averageCost")
+            if ticker in h:
+                val = h[ticker].get("averageCost")
                 if val is not None:
                     cost_from_holdings = float(val)
     except Exception:
         cost_from_holdings = None
 
-    # 如果命令行提供成本价优先，否则使用 holdings 中的成本价
-    cost_price_arg = args.cost if args.cost is not None else cost_from_holdings
-    snapshot = repo.get_latest_snapshot(target_ticker, cost_price=cost_price_arg)
-    
+    cost_price = cost_override if cost_override is not None else cost_from_holdings
+    snapshot = repo.get_latest_snapshot(ticker, cost_price=cost_price)
     if not snapshot:
-        print(f"[ERR] No data found for {target_ticker}")
-        return
-    
+        print(f"[WARN] {ticker}: 无数据，跳过")
+        return False
+
     # 获取已有持仓数据
     holdings = {}
-    if args.holdings:
-        holding_tickers = [t.strip().upper() for t in args.holdings.split(",")]
-        for holding_ticker in holding_tickers:
-            snap = repo.get_latest_snapshot(holding_ticker)
-            if snap:
-                holdings[holding_ticker] = snap
-    
-    # 生成报告
+    for ht in holdings_tickers:
+        snap = repo.get_latest_snapshot(ht)
+        if snap:
+            holdings[ht] = snap
+
     advisor = EnhancedStrategyAdvisor(snapshot, holdings=holdings, repo=repo)
-    report = advisor.generate_enhanced_report()
-    
-    # 输出
-    if args.output:
-        advisor.save_report(report, pathlib.Path(args.output), target_ticker, snapshot)
-    else:
+
+    # 精算更新：先计算指标并 UPDATE 到 ticker_metrics
+    metrics = advisor.build_metrics_row()
+
+    # 输出报告（仅在 --verbose 时打印）
+    if verbose:
+        report = advisor.generate_enhanced_report()
         print(report)
+    elif output_dir:
+        report = advisor.generate_enhanced_report()
+        advisor.save_report(report, output_dir, ticker, snapshot)
+        print(f"[OK] {ticker} 报告已保存")
+    else:
+        print(f"[OK] {ticker}: {metrics.get('Ticker')} {metrics.get('Date')} "
+              f"Kelly={metrics.get('Kelly_Pct')}% "
+              f"Crowding={metrics.get('Crowding_Index')} "
+              f"BE_Days={metrics.get('Breakeven_Days')} "
+              f"MaxCorr={metrics.get('Max_Corr_R2')}")
+
+    # 写入 ticker_metrics 表
+    if db_path:
+        try:
+            advisor.save_metrics_to_db(db_path)
+        except Exception as e:
+            print(f"[WARN] {ticker}: 写入 ticker_metrics 失败: {e}")
+
+    return True
+
+
+def main():
+    """CLI 入口"""
+    parser = argparse.ArgumentParser(
+        description="增强版策略顾问 - 拥挤度/相关性/回本时间/止损"
+    )
+    parser.add_argument("--db", type=str, default="investment_lab.db",
+                        help="SQLite 数据库路径")
+    parser.add_argument("--ticker", type=str, default=None,
+                        help="目标股票代码（单只模式）")
+    parser.add_argument("--all", action="store_true",
+                        help="遍历 watchlist.csv 所有 ticker 生成报告并写入 DB")
+    parser.add_argument("--holdings", type=str, default="",
+                        help="已有持仓股票代码（逗号分隔），用于相关性计算")
+    parser.add_argument("--cost", type=float, default=None,
+                        help="持仓成本价（可选）")
+    parser.add_argument("--output", type=str, default=None,
+                        help="输出文件路径或目录")
+    parser.add_argument("--no-db-write", action="store_true",
+                        help="跳过 ticker_metrics 表写入")
+    parser.add_argument("--verbose", action="store_true",
+                        help="在控制台打印完整报告文本（默认静默，仅写 DB）")
+
+    args = parser.parse_args()
+
+    db_path = pathlib.Path(args.db).resolve()
+    repo = EnhancedDataRepository(db_path)
+
+    # 确定 tickers 列表
+    if args.all:
+        tickers = _read_watchlist_symbols()
+        if not tickers:
+            print("[ERR] watchlist.csv 为空或不存在，无法使用 --all")
+            return
+    elif args.ticker:
+        tickers = [args.ticker.upper()]
+    else:
+        # 默认行为：尝试 watchlist 全部（与 rules.md 步骤7 行为一致）
+        tickers = _read_watchlist_symbols()
+        if not tickers:
+            print("[ERR] 未指定 --ticker 且 watchlist.csv 为空。请使用 --ticker <TICKER> 或 --all")
+            return
+
+    holdings_tickers = [t.strip().upper() for t in args.holdings.split(",") if t.strip()]
+
+    output_base = pathlib.Path(args.output) if args.output else None
+
+    success = 0
+    for ticker in tickers:
+        ok = _process_ticker(
+            ticker=ticker,
+            repo=repo,
+            holdings_tickers=holdings_tickers,
+            cost_override=args.cost,
+            output_dir=output_base,
+            db_path=None if args.no_db_write else db_path,
+            verbose=args.verbose,
+        )
+        if ok:
+            success += 1
+
+    print(f"\n[完成] 处理 {len(tickers)} 个 ticker，成功 {success}，失败 {len(tickers) - success}")
 
 
 if __name__ == "__main__":

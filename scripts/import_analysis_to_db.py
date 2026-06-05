@@ -4,6 +4,7 @@ import argparse
 import json
 import pathlib
 import sqlite3
+import sys
 from datetime import datetime
 from typing import Iterable
 
@@ -14,6 +15,17 @@ FUNDAMENTALS_DIR = BASE_DIR / "data" / "fundamentals"
 NEWS_DIR = BASE_DIR / "data" / "news"
 MACRO_FILE = BASE_DIR / "data" / "macroeconomic" / "macro_data.json"
 WATCHLIST_FILE = BASE_DIR / "data" / "watchlist.csv"
+
+# 引入 strategy_advisor 中的核心类用于 ticker_metrics 写入
+sys.path.insert(0, str(BASE_DIR / "scripts"))
+try:
+    from strategy_advisor import (
+        EnhancedDataRepository,
+        EnhancedStrategyAdvisor,
+    )
+    _HAS_ADVISOR = True
+except Exception:
+    _HAS_ADVISOR = False
 
 
 def _connect() -> sqlite3.Connection:
@@ -88,6 +100,112 @@ def _ensure_tables(cur: sqlite3.Cursor) -> None:
         )
         """
     )
+    cur.execute(
+        """
+        CREATE TABLE IF NOT EXISTS ticker_metrics (
+            Date                TEXT NOT NULL,
+            Ticker              TEXT NOT NULL,
+            Status              TEXT,
+            Entry_Ref           REAL,
+            RR_Ratio            TEXT,
+            Kelly_Pct           REAL,
+            Close_Price         REAL,
+            Trend_State         TEXT,
+            RSI                 REAL,
+            IV_Rank             REAL,
+            Crowding_Index      REAL,
+            Crowding_Label      TEXT,
+            Max_Corr_R2         REAL,
+            Breakeven_Days      REAL,
+            Win_Prob_10d        REAL,
+            Risk_Loss_10d       REAL,
+            Target_Prob_10d     REAL,
+            Target_Median_10d   REAL,
+            Win_Prob_20d        REAL,
+            Risk_Loss_20d       REAL,
+            Target_Prob_20d     REAL,
+            Target_Median_20d   REAL,
+            Win_Prob_60d        REAL,
+            Risk_Loss_60d       REAL,
+            Target_Prob_60d     REAL,
+            Target_Median_60d   REAL,
+            ATR_14              REAL,
+            Hard_Stop_Loss      REAL,
+            Target_Aggressive   REAL,
+            RR_Score            REAL,
+            PE_Percentile       REAL,
+            IV_Status           TEXT,
+            SPY_State           TEXT,
+            Alpha_vs_SPY        REAL,
+            Corr_vs_SPY         REAL,
+            Action              TEXT,
+            PRIMARY KEY (Date, Ticker)
+        )
+        """
+    )
+
+
+def _sync_ticker_metrics(conn: sqlite3.Connection) -> int:
+    """从 quantitative 表读取最新 metrics，二次计算后写入 ticker_metrics 表。返回写入条数。"""
+    if not _HAS_ADVISOR:
+        print("[SKIP] ticker_metrics: strategy_advisor 导入失败，跳过同步")
+        return 0
+
+    cur = conn.cursor()
+    cur.execute(
+        "SELECT ticker, date, metrics FROM quantitative ORDER BY date DESC"
+    )
+    rows = cur.fetchall()
+
+    repo = EnhancedDataRepository(DB_PATH)
+    written = 0
+
+    for row in rows:
+        ticker = row["ticker"]
+        date = row["date"]
+        try:
+            data = json.loads(row["metrics"])
+            snapshot = repo._parse_metrics_to_snapshot(ticker, date, data)
+        except Exception as exc:
+            print(f"[WARN] ticker_metrics parse failed for {ticker} {date}: {exc}")
+            continue
+
+        try:
+            advisor = EnhancedStrategyAdvisor(snapshot, repo=repo)
+            metrics_row = advisor.build_metrics_row()
+
+            cur.execute(
+                """
+                INSERT OR REPLACE INTO ticker_metrics (
+                    Date, Ticker, Status, Entry_Ref, RR_Ratio, Kelly_Pct,
+                    Close_Price, Trend_State, RSI, IV_Rank, Crowding_Index,
+                    Crowding_Label, Max_Corr_R2, Breakeven_Days,
+                    Win_Prob_10d, Risk_Loss_10d, Target_Prob_10d, Target_Median_10d,
+                    Win_Prob_20d, Risk_Loss_20d, Target_Prob_20d, Target_Median_20d,
+                    Win_Prob_60d, Risk_Loss_60d, Target_Prob_60d, Target_Median_60d,
+                    ATR_14, Hard_Stop_Loss, Target_Aggressive, RR_Score,
+                    PE_Percentile, IV_Status, SPY_State, Alpha_vs_SPY, Corr_vs_SPY,
+                    Action
+                ) VALUES (
+                    :Date, :Ticker, :Status, :Entry_Ref, :RR_Ratio, :Kelly_Pct,
+                    :Close_Price, :Trend_State, :RSI, :IV_Rank, :Crowding_Index,
+                    :Crowding_Label, :Max_Corr_R2, :Breakeven_Days,
+                    :Win_Prob_10d, :Risk_Loss_10d, :Target_Prob_10d, :Target_Median_10d,
+                    :Win_Prob_20d, :Risk_Loss_20d, :Target_Prob_20d, :Target_Median_20d,
+                    :Win_Prob_60d, :Risk_Loss_60d, :Target_Prob_60d, :Target_Median_60d,
+                    :ATR_14, :Hard_Stop_Loss, :Target_Aggressive, :RR_Score,
+                    :PE_Percentile, :IV_Status, :SPY_State, :Alpha_vs_SPY, :Corr_vs_SPY,
+                    :Action
+                )
+                """,
+                metrics_row,
+            )
+            written += 1
+        except Exception as exc:
+            print(f"[WARN] ticker_metrics write failed for {ticker} {date}: {exc}")
+
+    conn.commit()
+    return written
 
 
 def import_all() -> None:
@@ -165,10 +283,15 @@ def import_all() -> None:
             print(f"[WARN] macro import failed: {exc}")
 
     conn.commit()
+
+    # 同步写入 ticker_metrics 表（需要先 commit quantitative 数据使其可见）
+    imported_tm = _sync_ticker_metrics(conn)
+
     conn.close()
     print(
         f"Imported quantitative={imported_quant}, fundamentals={imported_fund}, "
-        f"sentiment={imported_sent}, macro={imported_macro}"
+        f"sentiment={imported_sent}, macro={imported_macro}, "
+        f"ticker_metrics={imported_tm}"
     )
 
 

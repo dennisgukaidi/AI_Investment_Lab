@@ -105,13 +105,11 @@ def main() -> int:
     if run_cmd([PY, "scripts/import_analysis_to_db.py"]) != 0:
         print("[ERR] import_analysis_to_db.py 运行失败")
         return 5
-    for t in tickers:
-        out_dir = ROOT / "reports"
-        out_dir.mkdir(parents=True, exist_ok=True)
-        if run_cmd([PY, "scripts/strategy_advisor.py", "--ticker", t, "--output", str(out_dir)]) != 0:
-            print(f"[ERR] strategy_advisor.py 对 {t} 运行失败")
-            return 6
-    # 8) 更新表格导出（export_to_csv.py）
+    # 7) 精算回填（默认遍历全部 ticker，静默 UPDATE DB）
+    if run_cmd([PY, "scripts/strategy_advisor.py"]) != 0:
+        print("[ERR] strategy_advisor.py 运行失败")
+        return 6
+    # 8) CSV 导出（直接从 ticker_metrics 表读取）
     if run_cmd([PY, "scripts/export_to_csv.py"]) != 0:
         print("[WARN] export_to_csv.py 运行失败（表格可能未更新）")
 

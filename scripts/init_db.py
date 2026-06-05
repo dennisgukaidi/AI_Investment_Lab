@@ -80,6 +80,51 @@ def init_db() -> None:
         """
     )
 
+    # ticker_metrics 表 — 每日每标的的量化分析结构化数据（与 ticker_data.csv 字段对齐）
+    cur.execute(
+        """
+        CREATE TABLE IF NOT EXISTS ticker_metrics (
+            Date                TEXT NOT NULL,
+            Ticker              TEXT NOT NULL,
+            Status              TEXT,
+            Entry_Ref           REAL,
+            RR_Ratio            TEXT,
+            Kelly_Pct           REAL,
+            Close_Price         REAL,
+            Trend_State         TEXT,
+            RSI                 REAL,
+            IV_Rank             REAL,
+            Crowding_Index      REAL,
+            Crowding_Label      TEXT,
+            Max_Corr_R2         REAL,
+            Breakeven_Days      REAL,
+            Win_Prob_10d        REAL,
+            Risk_Loss_10d       REAL,
+            Target_Prob_10d     REAL,
+            Target_Median_10d   REAL,
+            Win_Prob_20d        REAL,
+            Risk_Loss_20d       REAL,
+            Target_Prob_20d     REAL,
+            Target_Median_20d   REAL,
+            Win_Prob_60d        REAL,
+            Risk_Loss_60d       REAL,
+            Target_Prob_60d     REAL,
+            Target_Median_60d   REAL,
+            ATR_14              REAL,
+            Hard_Stop_Loss      REAL,
+            Target_Aggressive   REAL,
+            RR_Score            REAL,
+            PE_Percentile       REAL,
+            IV_Status           TEXT,
+            SPY_State           TEXT,
+            Alpha_vs_SPY        REAL,
+            Corr_vs_SPY         REAL,
+            Action              TEXT,
+            PRIMARY KEY (Date, Ticker)
+        )
+        """
+    )
+
     conn.commit()
     conn.close()
 

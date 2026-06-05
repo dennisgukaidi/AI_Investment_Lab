@@ -6,8 +6,12 @@
 - 运行前激活虚拟环境：Windows: `.venv\Scripts\activate`
 - Python 版本应为 3.8+
 - 禁止直接手动编辑持仓数据（由 `scripts/portfolio_pipeline.py` 自动维护 `data/holdings/holdings.json`）
+- 数据库核心表：`ticker_metrics`（36 列，复合主键 Date+Ticker），由流水线自动维护
 
-## 核心数据流水线
+## 核心数据流水线（两阶段架构）
+
+### 阶段 A — 基础数据收集 + 入库（步骤 1-6）
+### 阶段 B — 精算回填 + 表格导出（步骤 7-8）
 
 ### 触发词 1: "更新数据"
 默认根据 `data/watchlist.csv` 清单中的 TICKER 执行完整更新：
@@ -29,7 +33,7 @@ python scripts/fundamental_data_collector.py <TICKER>
 # 步骤 4 — 更新宏观经济数据（内置 FRED API key，直接运行即可）
 python scripts/macroeconomic_data_collector.py
 # 输出: data/macroeconomic/macro_data.json
-python alternative_data_collector.py  
+python scripts/alternative_data_collector.py  
 # 输出: Google Trends data/alternative/{TICKER}_alternative.json
 
 # 步骤 5 — 量化分析计算
@@ -37,18 +41,39 @@ python scripts/analyze_report.py --all
 # 输出: data/analysis/{TICKER}_metrics.json
 # 说明: --all 模式下不自动入库，需执行步骤 6
 
-# 步骤 6 — 批量导入数据库（将 metrics + fundamentals + sentiment + macro 写入 DB）
+# 步骤 6 — 批量导入数据库 + 同步写入 ticker_metrics 表（36 列）
+python scripts/import_analysis_to_db.py
+# 写入: quantitative, fundamentals, sentiment, macro 四张基础表
+#       ticker_metrics 表（从 quantitative 二次计算，INSERT OR REPLACE）
+
+# 步骤 7 — 精算回填（UPDATE ticker_metrics 表的精算字段）
+python scripts/strategy_advisor.py
+# 默认遍历 watchlist 全部 ticker，静默写入 DB（不打印报告）
+# 精算字段: Crowding_Label, Kelly_Pct, Max_Corr_R2, Breakeven_Days
+# 可选参数: --ticker <TICKER> 单只模式
+#          --verbose 打印完整报告文本
+#          --output reports 同时保存 Markdown 报告
+#          --no-db-write 跳过 DB 写入
+
+# 步骤 8 — 导出 CSV 表格（直接从 ticker_metrics 表读取）
+python scripts/export_to_csv.py
+# 输出: data/ticker_data.csv（36 列，排序: Ticker ASC → Date DESC）
+```
+
+### 回填历史数据
+
+当需要全量刷新数据库时（例如 schema 变更后），直接重跑步骤 6-8：
+
+```bash
+# 从 data/analysis/*_metrics.json 重新导入全部历史
 python scripts/import_analysis_to_db.py
 
-# 步骤 7 — 生成策略报告
-python scripts/strategy_advisor.py 
-# 输出: reports/strategy_{TICKER}_{YYYYMMDD}.md
-#       reports/holdings_summary_{YYYYMMDD}.md
+# 遍历 quantitative 表全部记录，精算 UPDATE
+python scripts/strategy_advisor.py
 
-# 步骤 8 — 更新表格
+# 导出 CSV
 python scripts/export_to_csv.py
-# 数据报告整合归档
-
+```
 
 注意：为防止分析/入库/生成报告使用不完整数据，**步骤 5-7 必须在步骤 1-4（行情、新闻、基本面、宏观/替代）全部成功并生成相应数据文件后执行**。
 推荐使用仓库中新添加的调度脚本 `scripts/run_full_pipeline.py` 来自动化此检查与执行：
@@ -56,29 +81,4 @@ python scripts/export_to_csv.py
 # 在项目根目录运行（会按 `data/watchlist.csv` 遍历并校验各类数据文件）：
 python scripts/run_full_pipeline.py
 ```
-```
-python scripts/organize_reports.py  整理reports文件夹按ticker归类
 
-# 检查依赖
-python -c "import ib_insync; print('ib_insync ok')"
-python -c "import yfinance; print('yfinance ok')"
-python -c "import pandas; print('pandas ok')"
-python -c "import numpy; print('numpy ok')"
-python -c "import sqlite3; print('sqlite3 ok')"
-
-# 检查数据库完整性
-python -c "import sqlite3; conn = sqlite3.connect('investment_lab.db'); cur = conn.cursor()
-for t in ['quantitative','fundamentals','sentiment','macro']:
-    try:
-        cur.execute(f'SELECT COUNT(*) FROM {t}'); print(f'{t}: {cur.fetchone()[0]} 条记录')
-    except: print(f'{t}: 不存在')
-conn.close()"
-
-# 检查关键数据文件最近修改时间
-python -c "
-import pathlib; from datetime import datetime
-for p in sorted(pathlib.Path('data/raw').glob('*_180d.csv')):
-    mtime = datetime.fromtimestamp(p.stat().st_mtime)
-    if (datetime.now() - mtime).days < 1: print(f'[OK] {p.name}: {mtime}')
-"
-```
