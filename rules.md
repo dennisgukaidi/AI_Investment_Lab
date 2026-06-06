@@ -25,10 +25,10 @@ python scripts/portfolio_pipeline.py
 python scripts/news_collector.py
 # 输出: data/news/{TICKER}_news.json（含 sentiment_polarity）
 
-# 步骤 3 — 更新基本面数据
-python scripts/fundamental_data_collector.py <TICKER>
+# 步骤 3 — 更新基本面数据（含 forwardPE，供 PEG 通道使用）
+python -c "import sys; sys.path.insert(0,'scripts'); from fundamental_data_collector import collect_fundamental_data, save_fundamental_data; from strategy_radar import _read_watchlist_symbols; [save_fundamental_data(collect_fundamental_data(t), t) for t in _read_watchlist_symbols()]"
 # 输出: data/fundamentals/{TICKER}_fundamentals.json
-# 注意: 可手动循环执行 watchlist 内所有 TICKER，或逐个执行
+# 说明: 一行批量更新 watchlist 中全部标的
 
 # 步骤 4 — 更新宏观经济数据（内置 FRED API key，直接运行即可）
 python scripts/macroeconomic_data_collector.py
@@ -74,6 +74,29 @@ python scripts/strategy_advisor.py
 # 导出 CSV
 python scripts/export_to_csv.py
 ```
+
+### 触发词 2: "策略回测 YYYY-MM-DD"
+
+```bash
+# 历史回测（强制牛市模式，绕过宏观熔断）
+python scripts/strategy_radar.py --as-of YYYY-MM-DD --force-bull
+
+# 选项
+#   --tickers TSLA,AAPL    指定标的（默认 watchlist.csv 全量）
+#   --force-bull           绕过宏观熔断器（仅限回测）
+#   --print                控制台打印完整报告
+#   --verbose              打印模块处理日志
+#   报告输出到 output/strategy_radar_asof_YYYYMMDD_bull.md
+```
+
+### 触发词 3: "策略扫描"（实时）
+
+```bash
+# 实时四模块策略扫描
+python scripts/strategy_radar.py --verbose
+```
+
+---
 
 注意：为防止分析/入库/生成报告使用不完整数据，**步骤 5-7 必须在步骤 1-4（行情、新闻、基本面、宏观/替代）全部成功并生成相应数据文件后执行**。
 推荐使用仓库中新添加的调度脚本 `scripts/run_full_pipeline.py` 来自动化此检查与执行：

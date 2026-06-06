@@ -249,9 +249,14 @@ class CrowdingAnalyzer:
         
         # 标准化 RSI (70-100 映射到 0-50)
         rsi_score = max(0, min(100, (rsi - 70) * 5)) if rsi > 70 else 0
-        
+
         # IV percentile 直接使用（80-100 映射到 50-100）
-        iv_score = max(0, min(100, (iv_percentile - 80) * 5)) if iv_percentile > 80 else 0
+        # 【修复】当 RSI ≤ 40（超卖区）时，高 IV 是恐慌抛售的结果，
+        #  是左侧建仓黄金信号而非拥挤风险——此时不惩罚 IV
+        if rsi is not None and rsi <= 40:
+            iv_score = 0.0
+        else:
+            iv_score = max(0, min(100, (iv_percentile - 80) * 5)) if iv_percentile > 80 else 0
         
         # 加权组合
         crowding_index = rsi_score * 0.4 + iv_score * 0.6

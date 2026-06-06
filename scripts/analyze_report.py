@@ -868,17 +868,27 @@ def analyze(ticker: str = "TSLA") -> dict[str, Any]:
     sentiment = news_sentiment(news_items)
 
     # ---------------------------------------------------------------------
-    # 7. 额外维度计算：PE 百分位、10Y 国债相关性、情绪‑价格背离度
+    # 7. 额外维度计算：PE 百分位、PEG、10Y 国债相关性、情绪‑价格背离度
     # ---------------------------------------------------------------------
-    # 7.1 PE 百分位（相对于所有已收集的基本面数据）
+    # 7.1 PE 百分位（基于 OHLCV 收盘价，滚动 90 交易日窗口的中短期波段分位）
+    #     低分位 = 过去 3 个月内价格接近低点（相对黄金坑）
+    PE_WINDOW_DAYS = 90
+    close_prices = price_df["close"].astype(float).tail(PE_WINDOW_DAYS)
+    current_close = float(close_prices.iloc[-1])
+    pe_percentile = 100.0 * float((close_prices <= current_close).mean())
+    pe_percentile = round(pe_percentile, 2)
+
+    # 7.1b PEG 比率（用于高成长标的估值通道）
     fundamentals = load_fundamentals(ticker)
     current_pe = fundamentals.get("current_ratios", {}).get("valuation_ratios", {}).get("pe_ratio")
-    pe_percentile: float | None = None
-    if isinstance(current_pe, (int, float)) and not math.isnan(current_pe):
-        all_pe = load_all_fundamentals_pe()
-        if all_pe:
-            # 计算当前 PE 在所有 PE 中的百分位（<= 当前值的比例）
-            pe_percentile = 100.0 * sum(1 for p in all_pe if p <= current_pe) / len(all_pe)
+    forward_pe = fundamentals.get("current_ratios", {}).get("valuation_ratios", {}).get("forward_pe")
+    eps_growth = fundamentals.get("current_ratios", {}).get("growth_indicators", {}).get("eps_growth")
+    peg_ratio: float | None = None
+    if eps_growth and isinstance(eps_growth, (int, float)) and eps_growth > 0:
+        pe_for_peg = forward_pe if forward_pe else current_pe
+        if pe_for_peg and isinstance(pe_for_peg, (int, float)) and pe_for_peg > 0:
+            peg_ratio = pe_for_peg / (eps_growth * 100)
+            peg_ratio = round(peg_ratio, 4)
 
     # 7.2 与 10 年期国债收益率的相关性（使用对数收益率）
     treasury_corr: float | None = None
@@ -912,6 +922,7 @@ def analyze(ticker: str = "TSLA") -> dict[str, Any]:
 
     extra_dimensions = {
         "pe_percentile": round(pe_percentile, 2) if pe_percentile is not None else None,
+        "peg_ratio": peg_ratio,
         "ten_year_treasury_corr": round(treasury_corr, 4) if treasury_corr is not None else None,
         "sentiment_price_divergence": round(sentiment_divergence, 2) if sentiment_divergence is not None else None,
     }

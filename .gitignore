@@ -61,6 +61,20 @@ reports/private_*.md
 reports/**
 !reports/.gitkeep
 
+# Output (generated reports)
+output/
+
+# User-managed local files (do not commit to repo)
+data/holdings.csv
+data/ticker_data.csv
+data/ticker_data_new.csv
+data/watchlist.csv
+data/*.xlsx
+data/*.parquet
+
+# Sync script
+sync.py
+
 # Environment variables
 .env
 .env.local

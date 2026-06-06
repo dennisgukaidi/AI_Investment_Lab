@@ -25,65 +25,63 @@ pip install pytrends      # 替代数据（Google Trends）
 python scripts/init_db.py --init
 ```
 
-## 核心工作流
-
-```mermaid
-flowchart LR
-    A[portfolio_pipeline] -->|data/raw/*.csv| B[news_collector]
-    B -->|data/news/*.json| C[fundamental_data_collector]
-    C -->|data/fundamentals/*.json| D[macroeconomic_data_collector]
-    D -->|data/macroeconomic/*.json| E[analyze_report]
-    E -->|data/analysis/*_metrics.json| F[import_analysis_to_db]
-    F -->|ticker_metrics 36列| G[strategy_advisor 精算UPDATE]
-    G -->|ticker_metrics 精算完成| H[export_to_csv]
-    H -->|data/ticker_data.csv| I[🟢 CSV表格]
-```
-
-### 完整更新流程（8 步，两阶段架构）
+## 🚀 每日一键流程（推荐）
 
 ```bash
-# === 阶段 A：基础数据收集 + 入库 ===
-
-# 1. 行情下载（TWS → yfinance fallback）
-python scripts/portfolio_pipeline.py
-
-# 2. 新闻更新 + 情绪打分
-python scripts/news_collector.py
-
-# 3. 基本面数据收集（P/E, P/B, P/S, 财务健康等）
-python scripts/fundamental_data_collector.py <TICKER>
-
-# 4. 宏观经济 + 替代数据
-python scripts/macroeconomic_data_collector.py
-python scripts/alternative_data_collector.py
-
-# 5. 量化分析计算
-python scripts/analyze_report.py --all
-
-# 6. 批量导入数据库 + 同步写入 ticker_metrics（36 列）
-python scripts/import_analysis_to_db.py
-
-# === 阶段 B：精算回填 + 导出 ===
-
-# 7. 精算回填（UPDATE 四个精算字段到 ticker_metrics）
-python scripts/strategy_advisor.py
-
-# 8. 导出 CSV（直接从 ticker_metrics 表读取）
-python scripts/export_to_csv.py
-```
-
-### 一键流程
-
-```bash
-# 完整流水线（数据收集 → 入库 → 精算 → 导出）
+# 完整流水线：行情 → 新闻 → 基本面 → 宏观 → 分析 → 入库 → 精算 → CSV导出
+# 所有 ticker 自动从 data/watchlist.csv 读取，无需逐个指定
 python scripts/run_full_pipeline.py
 ```
 
-### 单只股票分析（含自动入库）
+| 步骤 | 脚本 | 做什么 |
+|------|------|--------|
+| 行情 | `portfolio_pipeline.py` | 下载 watchlist 全部标的历史 OHLCV |
+| 新闻 | `news_collector.py` | 抓取新闻 + TextBlob 情绪打分 |
+| 基本面 | `fundamental_data_collector.py` (批量) | P/E、P/B、P/S、EPS增速、**forwardPE** |
+| 宏观 | `macroeconomic_data_collector.py` | 利率、CPI、非农等 FRED 数据 |
+| 分析 | `analyze_report.py --all` | 全部标的量化分析（MC/Bootstrap/趋势） |
+| 入库 | `import_analysis_to_db.py` | → `ticker_metrics` 表（36 列） |
+| 精算 | `strategy_advisor.py` | 回填拥挤度/凯利/相关性 |
+| 导出 | `export_to_csv.py` | → `data/ticker_data.csv` |
+
+---
+
+### 单独更新基本面数据（PEG 通道专用）
 
 ```bash
-python scripts/analyze_report.py <TICKER>
+# 只更新全部标的基本面（forwardPE + EPS增速），不跑完整流水线
+python scripts/fundamental_data_collector.py TSLA && python scripts/fundamental_data_collector.py AAPL && ...
+# 或用下面的批量方式：
+python -c "import sys; sys.path.insert(0,'scripts'); from fundamental_data_collector import collect_fundamental_data, save_fundamental_data; from strategy_radar import _read_watchlist_symbols; [save_fundamental_data(collect_fundamental_data(t), t) for t in _read_watchlist_symbols()]"
 ```
+> 收集完后需运行 `python scripts/import_analysis_to_db.py` 入库。
+
+---
+
+### 策略雷达回测
+
+```bash
+# 实时扫描
+python scripts/strategy_radar.py
+
+# 历史回测（指定截止日期，强制牛市模式）
+python scripts/strategy_radar.py --as-of 2026-03-30 --force-bull
+
+# 指定 ticker + 打印报告
+python scripts/strategy_radar.py --tickers TSLA,AAPL --as-of 2026-04-08 --force-bull --print
+```
+
+| 参数 | 说明 |
+|------|------|
+| `--as-of YYYY-MM-DD` | 回测日期节点，仅使用 ≤ 该日期的数据 |
+| `--force-bull` | 绕过宏观熔断器（仅限回测） |
+| `--tickers A,B,C` | 手动指定标的（默认从 watchlist.csv 读取） |
+| `--print` | 控制台打印完整报告 |
+| `--verbose` | 打印模块处理日志 |
+
+报告输出到 `output/strategy_radar_asof_YYYYMMDD[_bull].md`
+
+---
 
 ### 历史数据全量回填（schema 变更后）
 

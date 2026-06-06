@@ -44,6 +44,7 @@ def calculate_valuation_ratios(ticker: str) -> Dict[str, Any]:
         
         # 当前估值比率
         pe_ratio = info.get('trailingPE')
+        forward_pe = info.get('forwardPE')
         pb_ratio = info.get('priceToBook')
         ps_ratio = info.get('priceToSalesTrailing12Months')
         
@@ -65,6 +66,7 @@ def calculate_valuation_ratios(ticker: str) -> Dict[str, Any]:
         return {
             "valuation_ratios": {
                 "pe_ratio": pe_ratio,
+                "forward_pe": forward_pe,
                 "pb_ratio": pb_ratio,
                 "ps_ratio": ps_ratio,
             },
