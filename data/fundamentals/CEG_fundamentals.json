@@ -1,11 +1,12 @@
 {
   "ticker": "CEG",
-  "collected_at": "2026-05-28T01:15:05.615033+00:00",
+  "collected_at": "2026-06-17T01:12:31.645339+00:00",
   "current_ratios": {
     "valuation_ratios": {
-      "pe_ratio": 26.172258,
-      "pb_ratio": 3.124141,
-      "ps_ratio": 3.4910886
+      "pe_ratio": 23.263887,
+      "forward_pe": 19.71867,
+      "pb_ratio": 2.9003386,
+      "ps_ratio": 3.2043173
     },
     "financial_health": {
       "debt_to_equity": 66.428,
@@ -18,7 +19,7 @@
       "revenue_growth": null
     },
     "company_info": {
-      "market_cap": 104268341248,
+      "market_cap": 95703343104,
       "industry": "Utilities - Independent Power Producers",
       "sector": "Utilities"
     }

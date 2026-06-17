@@ -1384,12 +1384,14 @@ class EnhancedStrategyAdvisor:
 # ============================================================================
 
 def _read_watchlist_symbols() -> list[str]:
-    """从 data/watchlist.csv 读取所有 ticker。"""
+    """从 data/watchlist.csv 读取所有 ticker（逗号/换行分隔）。"""
     p = pathlib.Path(__file__).resolve().parents[1] / "data" / "watchlist.csv"
     if not p.is_file():
         return []
-    line = p.read_text(encoding="utf-8").strip()
-    return [s.strip().upper() for s in line.split(",") if s.strip()]
+    text = p.read_text(encoding="utf-8").strip()
+    # Normalise newlines to commas so multi‑line CSVs work transparently
+    text = text.replace("\r\n", ",").replace("\n", ",").replace("\r", ",")
+    return [s.strip().upper() for s in text.split(",") if s.strip()]
 
 
 def _process_ticker(

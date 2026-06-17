@@ -38,6 +38,8 @@ def _read_watchlist() -> set[str]:
     if not WATCHLIST_FILE.is_file():
         return set()
     raw = WATCHLIST_FILE.read_text(encoding="utf-8").strip()
+    # Normalise newlines to commas so multi‑line CSVs work transparently
+    raw = raw.replace("\r\n", ",").replace("\n", ",").replace("\r", ",")
     return {s.strip().upper() for s in raw.split(",") if s.strip()}
 
 

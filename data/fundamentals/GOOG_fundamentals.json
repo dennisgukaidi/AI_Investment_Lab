@@ -1,11 +1,12 @@
 {
   "ticker": "GOOG",
-  "collected_at": "2026-05-28T01:14:04.320664+00:00",
+  "collected_at": "2026-06-17T01:11:35.826761+00:00",
   "current_ratios": {
     "valuation_ratios": {
-      "pe_ratio": 29.331554,
-      "pb_ratio": 9.739079,
-      "ps_ratio": 11.035286
+      "pe_ratio": 28.007547,
+      "forward_pe": 25.627375,
+      "pb_ratio": 9.391608,
+      "ps_ratio": 10.718098
     },
     "financial_health": {
       "debt_to_equity": 20.026,
@@ -18,7 +19,7 @@
       "revenue_growth": null
     },
     "company_info": {
-      "market_cap": 4662386229248,
+      "market_cap": 4528375070720,
       "industry": "Internet Content & Information",
       "sector": "Communication Services"
     }

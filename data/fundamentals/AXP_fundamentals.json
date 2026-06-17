@@ -1,11 +1,12 @@
 {
   "ticker": "AXP",
-  "collected_at": "2026-05-28T01:14:48.240471+00:00",
+  "collected_at": "2026-06-17T01:12:11.288134+00:00",
   "current_ratios": {
     "valuation_ratios": {
-      "pe_ratio": 19.497192,
-      "pb_ratio": 6.270112,
-      "ps_ratio": 3.0990863
+      "pe_ratio": 20.917126,
+      "forward_pe": 16.910257,
+      "pb_ratio": 6.835854,
+      "ps_ratio": 3.3787117
     },
     "financial_health": {
       "debt_to_equity": 177.847,
@@ -18,7 +19,7 @@
       "revenue_growth": null
     },
     "company_info": {
-      "market_cap": 213254324224,
+      "market_cap": 232495906816,
       "industry": "Credit Services",
       "sector": "Financial Services"
     }

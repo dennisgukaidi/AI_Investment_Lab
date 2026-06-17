@@ -104,16 +104,18 @@ def _ensure_ib_connection():
 def _read_watchlist(path: str | None = None) -> list:
     """Return a list of ticker symbols from the watchlist CSV.
 
-    The file is a single line of comma‑separated symbols.
+    The file may span multiple lines (e.g. one ticker per line or multi‑line
+    comma‑separated).  All newlines are replaced with commas before splitting.
     Paths are resolved relative to the project root so scripts work from any cwd.
     """
     p = Path(path) if path else ROOT / "data" / "watchlist.csv"
     if not p.is_absolute():
         p = ROOT / p
     try:
-        with open(p, 'r', encoding='utf-8') as f:
-            line = f.read().strip()
-        return [sym.strip() for sym in line.split(',') if sym.strip()]
+        text = p.read_text(encoding='utf-8').strip()
+        # Normalise newlines to commas so multi‑line CSVs work transparently
+        text = text.replace('\r\n', ',').replace('\n', ',').replace('\r', ',')
+        return [sym.strip().upper() for sym in text.split(',') if sym.strip()]
     except Exception as e:
         print(f"[ERR] 读取 watchlist 失败: {e}")
         return []

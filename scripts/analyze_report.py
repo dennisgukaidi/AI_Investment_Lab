@@ -967,12 +967,14 @@ def analyze(ticker: str = "TSLA") -> dict[str, Any]:
 
 
 def _read_watchlist_symbols() -> list[str]:
-    """读取 ``data/watchlist.csv``（单行逗号分隔）。"""
+    """读取 ``data/watchlist.csv``（逗号/换行分隔）。"""
     path = DATA_DIR / "watchlist.csv"
     if not path.is_file():
         return []
-    line = path.read_text(encoding="utf-8").strip()
-    return [s.strip().upper() for s in line.split(",") if s.strip()]
+    text = path.read_text(encoding="utf-8").strip()
+    # Normalise newlines to commas so multi‑line CSVs work transparently
+    text = text.replace("\r\n", ",").replace("\n", ",").replace("\r", ",")
+    return [s.strip().upper() for s in text.split(",") if s.strip()]
 
 
 def _sanitize_for_json(obj: Any) -> Any:
@@ -1059,10 +1061,18 @@ def main(ticker: str = "TSLA") -> None:
         print(f"[WARN] 入库失败: {exc}")
 
 
+def _has_required_data(ticker: str) -> bool:
+    """检查标的是否有基础行情数据文件（_180d.csv）。"""
+    raw_path = DATA_DIR / "raw" / f"{ticker}_180d.csv"
+    return raw_path.is_file() and raw_path.stat().st_size > 0
+
+
 def _cli_main() -> None:
     parser = argparse.ArgumentParser(description="美股投研量化分析 → data/analysis/{TICKER}_metrics.json")
     parser.add_argument("tickers", nargs="*", help="股票代码（可多个），省略时默认为 TSLA")
     parser.add_argument("--all", action="store_true", help="分析 data/watchlist.csv 中的全部标的")
+    parser.add_argument("--skip-incomplete", action="store_true",
+                        help="跳过缺少基础行情数据（_180d.csv）的标的，不报错")
     args = parser.parse_args()
 
     if args.all:
@@ -1077,6 +1087,10 @@ def _cli_main() -> None:
 
     had_error = False
     for sym in symbols:
+        # --skip-incomplete 模式下跳过缺失行情文件的新股
+        if args.skip_incomplete and not _has_required_data(sym):
+            print(f"[SKIP] {sym} 缺少行情数据文件（data/raw/{sym}_180d.csv），跳过分析")
+            continue
         try:
             metrics = analyze(sym)
             out_path = save_metrics(metrics, sym)
@@ -1086,7 +1100,8 @@ def _cli_main() -> None:
             had_error = True
             print(f"[ERR] [{sym}] {exc}")
 
-    if had_error:
+    # --all 或 --skip-incomplete 模式下，允许部分失败而不 exit(1)
+    if had_error and not args.skip_incomplete and not args.all:
         raise SystemExit(1)
 
 

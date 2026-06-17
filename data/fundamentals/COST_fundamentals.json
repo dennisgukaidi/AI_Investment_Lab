@@ -1,24 +1,25 @@
 {
   "ticker": "COST",
-  "collected_at": "2026-05-28T01:15:17.342640+00:00",
+  "collected_at": "2026-06-17T01:12:41.213475+00:00",
   "current_ratios": {
     "valuation_ratios": {
-      "pe_ratio": 52.085625,
-      "pb_ratio": 26.92446,
-      "ps_ratio": 1.5555154
+      "pe_ratio": 49.26011,
+      "forward_pe": 43.608875,
+      "pb_ratio": 26.468159,
+      "ps_ratio": 1.4904327
     },
     "financial_health": {
       "debt_to_equity": 60.257,
-      "current_ratio": 1.058,
-      "roe": 0.29650998,
-      "roa": 0.08718
+      "current_ratio": 1.072,
+      "roe": 0.29152,
+      "roa": 0.086660005
     },
     "growth_indicators": {
       "eps_growth": 0.456,
       "revenue_growth": null
     },
     "company_info": {
-      "market_cap": 445289627648,
+      "market_cap": 437571682304,
       "industry": "Discount Stores",
       "sector": "Consumer Defensive"
     }

@@ -11,7 +11,7 @@
 ## 核心数据流水线（两阶段架构）
 
 ### 阶段 A — 基础数据收集 + 入库（步骤 1-6）
-### 阶段 B — 精算回填 + 表格导出（步骤 7-8）
+### 阶段 B — 精算回填 + 表格导出 + 策略报告（步骤 7-9）
 
 ### 触发词 1: "更新数据"
 默认根据 `data/watchlist.csv` 清单中的 TICKER 执行完整更新：
@@ -58,11 +58,17 @@ python scripts/strategy_advisor.py
 # 步骤 8 — 导出 CSV 表格（直接从 ticker_metrics 表读取）
 python scripts/export_to_csv.py
 # 输出: data/ticker_data.csv（36 列，排序: Ticker ASC → Date DESC）
+
+# 步骤 9 — 策略扫描雷达（五模块量化监控，生成 Markdown 报告）
+python scripts/strategy_radar.py --verbose
+# 输出: output/strategy_radar_YYYYMMDD_HHMM.md
+# 说明: 依赖 ticker_metrics 表数据，须在前 8 步全部成功后执行
+# 模块: 大盘状态 / 左侧信号 / 基本面筛选 / 持仓追踪 / 出场信号
 ```
 
 ### 回填历史数据
 
-当需要全量刷新数据库时（例如 schema 变更后），直接重跑步骤 6-8：
+当需要全量刷新数据库时（例如 schema 变更后），直接重跑步骤 6-9：
 
 ```bash
 # 从 data/analysis/*_metrics.json 重新导入全部历史
@@ -73,6 +79,9 @@ python scripts/strategy_advisor.py
 
 # 导出 CSV
 python scripts/export_to_csv.py
+
+# 策略扫描
+python scripts/strategy_radar.py --verbose
 ```
 
 ### 触发词 2: "策略回测 YYYY-MM-DD"

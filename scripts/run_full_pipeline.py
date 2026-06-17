@@ -25,8 +25,10 @@ def read_watchlist() -> List[str]:
     p = ROOT / "data" / "watchlist.csv"
     if not p.is_file():
         return []
-    line = p.read_text(encoding="utf-8").strip()
-    return [s.strip().upper() for s in line.split(",") if s.strip()]
+    text = p.read_text(encoding="utf-8").strip()
+    # Normalise newlines to commas so multi‑line CSVs work transparently
+    text = text.replace("\r\n", ",").replace("\n", ",").replace("\r", ",")
+    return [s.strip().upper() for s in text.split(",") if s.strip()]
 
 
 def run_cmd(args: List[str]) -> int:
@@ -76,44 +78,59 @@ def main() -> int:
         if run_cmd([PY, "scripts/fundamental_data_collector.py", t]) != 0:
             print(f"[WARN] fundamental_data_collector 对 {t} 失败")
 
-    # 5) Verify data presence for all tickers
-    missing = []
+    # 5) Verify data presence & build the subset of tickers with complete data
+    complete_tickers = []
+    incomplete_tickers = []
     for t in tickers:
         raw = ROOT / "data" / "raw" / f"{t}_180d.csv"
         news = ROOT / "data" / "news" / f"{t}_news.json"
         fund = ROOT / "data" / "fundamentals" / f"{t}_fundamentals.json"
         alt = ROOT / "data" / "alternative" / f"{t}_alternative.json"
-        if not file_ok(raw):
-            missing.append((t, str(raw)))
-        if not file_ok(news):
-            missing.append((t, str(news)))
-        if not file_ok(fund):
-            missing.append((t, str(fund)))
-        if not file_ok(alt):
-            missing.append((t, str(alt)))
+        if file_ok(raw) and file_ok(news) and file_ok(fund) and file_ok(alt):
+            complete_tickers.append(t)
+        else:
+            missing_items = []
+            if not file_ok(raw):
+                missing_items.append("raw")
+            if not file_ok(news):
+                missing_items.append("news")
+            if not file_ok(fund):
+                missing_items.append("fundamentals")
+            if not file_ok(alt):
+                missing_items.append("alternative")
+            incomplete_tickers.append((t, missing_items))
 
-    if missing:
-        print("[ERR] 检测到缺失数据文件，分析/入库/报告将被跳过：")
-        for t, p in missing:
-            print(f" - {t}: missing {p}")
+    if incomplete_tickers:
+        print("[WARN] 以下标的缺少数据文件，将被跳过（不影响其他标的）：")
+        for t, items in incomplete_tickers:
+            print(f" - {t}: 缺少 {', '.join(items)} 数据文件")
+
+    if not complete_tickers:
+        print("[ERR] 没有任何标的有完整数据，终止流水线")
         return 3
 
-    # 6) All data present → run analyze, import, reports
-    if run_cmd([PY, "scripts/analyze_report.py", "--all"]) != 0:
-        print("[ERR] analyze_report.py 运行失败")
-        return 4
+    print(f"[INFO] 数据完整的标的 ({len(complete_tickers)} 个): {', '.join(complete_tickers)}")
+
+    # 6) Only run analyze on complete tickers
+    if run_cmd([PY, "scripts/analyze_report.py", "--all", "--skip-incomplete"]) != 0:
+        print("[WARN] analyze_report.py 运行失败（不中止）")
+
     if run_cmd([PY, "scripts/import_analysis_to_db.py"]) != 0:
-        print("[ERR] import_analysis_to_db.py 运行失败")
-        return 5
+        print("[WARN] import_analysis_to_db.py 运行失败（不中止）")
+
     # 7) 精算回填（默认遍历全部 ticker，静默 UPDATE DB）
     if run_cmd([PY, "scripts/strategy_advisor.py"]) != 0:
-        print("[ERR] strategy_advisor.py 运行失败")
-        return 6
+        print("[WARN] strategy_advisor.py 运行失败（不中止）")
+
     # 8) CSV 导出（直接从 ticker_metrics 表读取）
     if run_cmd([PY, "scripts/export_to_csv.py"]) != 0:
         print("[WARN] export_to_csv.py 运行失败（表格可能未更新）")
 
-    print("[OK] 全流程完成（含分析/入库/生成报告/表格导出）")
+    # 9) 策略扫描雷达（五模块量化监控，生成 Markdown 报告）
+    if run_cmd([PY, "scripts/strategy_radar.py", "--verbose"]) != 0:
+        print("[WARN] strategy_radar.py 运行失败")
+
+    print("[OK] 全流程完成（含分析/入库/精算回填/表格导出/策略报告）")
     return 0
 
 

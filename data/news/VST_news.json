@@ -1,5 +1,392 @@
 [
   {
+    "title": "Vistra Outperforms Industry in the Past Month: Buy or Hold the Stock?",
+    "published": "2026-06-16T15:17:00Z",
+    "publisher": "Zacks",
+    "summary": "VST's rally is backed by AI-driven demand, hedged generation, the Cogentrix deal and capital returns, but risks remain.",
+    "link": "https://finance.yahoo.com/markets/stocks/articles/vistra-outperforms-industry-past-month-151700116.html",
+    "sentiment_polarity": -0.25,
+    "sentiment_subjectivity": 0.25
+  },
+  {
+    "title": "Is It Worth Investing in Vistra (VST) Based on Wall Street's Bullish Views?",
+    "published": "2026-06-16T13:30:04Z",
+    "publisher": "Zacks",
+    "summary": "According to the average brokerage recommendation (ABR), one should invest in Vistra (VST). It is debatable whether this highly sought-after metric is effective because Wall Street analysts' recommendations tend to be overly optimistic. Would it be worth investing in the stock?",
+    "link": "https://finance.yahoo.com/markets/stocks/articles/worth-investing-vistra-vst-based-133004169.html",
+    "sentiment_polarity": 0.242,
+    "sentiment_subjectivity": 0.388
+  },
+  {
+    "title": "KKR Targets AI Infrastructure And Advisory Growth With Helix And Crowe",
+    "published": "2026-06-15T15:12:21Z",
+    "publisher": "Simply Wall St.",
+    "summary": "KKR (NYSE:KKR) has launched Helix Digital Infrastructure, a US$10 billion venture focused on AI-oriented data centers with partners including Nvidia, Kuwait Investment Authority, and Vistra. Helix will be led by former AWS CEO Adam Selipsky and is positioned to develop and operate large-scale digital infrastructure for AI workloads. KKR has also agreed to a major equity investment in Crowe Advisory LLC, becoming the firm’s first institutional capital partner. Crowe Advisory is one of the...",
+    "link": "https://finance.yahoo.com/sectors/technology/articles/kkr-targets-ai-infrastructure-advisory-151221956.html",
+    "sentiment_polarity": 0.08,
+    "sentiment_subjectivity": 0.298
+  },
+  {
+    "title": "Can GE Vernova's Services Business Drive More Stable Growth?",
+    "published": "2026-06-15T14:31:00Z",
+    "publisher": "Zacks",
+    "summary": "GEV's expanding services franchise and $163.3B backlog provide recurring revenue visibility as utilities extend asset life and power demand rises.",
+    "link": "https://finance.yahoo.com/sectors/energy/articles/ge-vernovas-services-business-drive-143100374.html",
+    "sentiment_polarity": 0.5,
+    "sentiment_subjectivity": 0.5
+  },
+  {
+    "title": "Should communities be 'excited' about AI data center projects?",
+    "published": "2026-06-14T18:00:00Z",
+    "publisher": "Yahoo Finance Video",
+    "summary": "Former Amazon Web Services (AMZN) CEO Adam Selipsky is leading the charge as the chief executive of Helix Digital Infrastructure, a new AI venture backed by $10 billion from a group led by investment firm KKR (KKR). Selipsky sits down with Julie Hyman to address the community responses to AI data centers and the many critiques, including water consumption, of these facilities.",
+    "link": "https://finance.yahoo.com/video/communities-excited-ai-data-center-180000132.html",
+    "sentiment_polarity": 0.069,
+    "sentiment_subjectivity": 0.312
+  },
+  {
+    "title": "Is Vistra (VST) Still The Best Data Center Energy Stock?",
+    "published": "2026-06-13T12:42:42Z",
+    "publisher": "Insider Monkey",
+    "summary": "We just covered the Top 10 Stock Picks of 10 Famous Billionaires. Vistra (NYSE:VST) ranks #5 (see Top 5 Stock Picks of 5 Famous Billionaires). Number of Hedge Funds: 106 Top Pick Of: Stephen Mandel — Lone Pine Capital Vistra (NYSE:VST) is another AI stock billionaires can not get enough of. As demand for AI data […]",
+    "link": "https://finance.yahoo.com/sectors/energy/articles/vistra-vst-still-best-data-124242532.html",
+    "sentiment_polarity": 0.425,
+    "sentiment_subjectivity": 0.55
+  },
+  {
+    "title": "Vistra Corp. (VST) Outpaces Stock Market Gains: What You Should Know",
+    "published": "2026-06-12T21:45:04Z",
+    "publisher": "Zacks",
+    "summary": "Vistra Corp. (VST) closed at $148.02 in the latest trading session, marking a +1.12% move from the prior day.",
+    "link": "https://finance.yahoo.com/markets/stocks/articles/vistra-corp-vst-outpaces-stock-214504646.html",
+    "sentiment_polarity": 0.133,
+    "sentiment_subjectivity": 0.333
+  },
+  {
+    "title": "What Vistra (VST)'s New Role Powering KKR–Nvidia Helix AI Data Centers Means For Shareholders",
+    "published": "2026-06-12T19:12:01Z",
+    "publisher": "Simply Wall St.",
+    "summary": "In recent days, KKR announced the launch of Helix Digital Infrastructure, a more than US$10.00 billion AI-focused venture backed by Nvidia and the Kuwait Investment Authority, with Vistra named as Helix’s preferred power provider under the leadership of former AWS CEO Adam Selipsky. This partnership positions Vistra at the center of efforts to solve the power bottleneck for hyperscale AI data centers by tightly integrating electricity supply with future data center build-outs. We’ll now...",
+    "link": "https://finance.yahoo.com/sectors/energy/articles/vistra-vst-role-powering-kkr-191201485.html",
+    "sentiment_polarity": 0.029,
+    "sentiment_subjectivity": 0.202
+  },
+  {
+    "title": "Why the future of data centers may be in space",
+    "published": "2026-06-12T16:03:08Z",
+    "publisher": "Yahoo Finance Video",
+    "summary": "Melius Research Managing Director and Head of Energy and Power Research James West joins Julie Hyman to discuss the growing case for data centers in space following the SpaceX (SPCX) IPO and the company's unveiling of its first orbital data center.",
+    "link": "https://finance.yahoo.com/video/why-the-future-of-data-centers-may-be-in-space-160308068.html",
+    "sentiment_polarity": 0.037,
+    "sentiment_subjectivity": 0.165
+  },
+  {
+    "title": "Can KKR Outmaneuver One of the Biggest AI Infrastructure Bottlenecks?",
+    "published": "2026-06-12T04:01:00Z",
+    "publisher": "The Daily Upside",
+    "summary": "The big money firm is teaming up with Nvidia, Kuwait's sovereign wealth fund, and Texas energy producer Vistra to build data centers.",
+    "link": "https://www.thedailyupside.com/technology/artificial-intelligence/can-kkr-outmaneuver-one-of-the-biggest-ai-infrastructure-bottlenecks/",
+    "sentiment_polarity": -0.1,
+    "sentiment_subjectivity": 0.25
+  },
+  {
+    "title": "Expect 'robust capability' from this KKR-backed AI venture: CEO",
+    "published": "2026-06-11T21:17:42Z",
+    "publisher": "Yahoo Finance Video",
+    "summary": "A group led by investment firm KKR (KKR) is devoting $10 billion into a new AI data center venture, Helix Digital Infrastructure, headed by former Amazon Web Services (AMZN) CEO Adam Selipsky. Selipsky sits down with Julie Hyman to talk more about this investment into AI infrastructure.    in the latest bid by an alternative asset manager to solve an energy supply crunch slowing big tech's AI ambitions.\"",
+    "link": "https://finance.yahoo.com/video/expect-robust-capability-from-this-kkr-backed-ai-venture-ceo-211742674.html",
+    "sentiment_polarity": 0.076,
+    "sentiment_subjectivity": 0.305
+  },
+  {
+    "title": "AI Hyperscalers, KKR Is Ready For You with $10 Billion",
+    "published": "2026-06-11T21:15:22Z",
+    "publisher": "Moby",
+    "summary": "The private equity firm, alongwith Nvidia and Vistra is opening a one-stop shop for AI data center hyperscalers.",
+    "link": "https://app.moby.co/home/news/news-ai-hyperscalers-kkr-is-ready-for-you-with-10-billion?utm_source=yahoo_finance&utm_medium=rss",
+    "sentiment_polarity": -0.025,
+    "sentiment_subjectivity": 0.344
+  },
+  {
+    "title": "Vistra’s Helix Partnership Links AI Power Demand To Future Earnings Mix",
+    "published": "2026-06-11T20:12:57Z",
+    "publisher": "Simply Wall St.",
+    "summary": "Vistra (NYSE:VST) is partnering with KKR, NVIDIA, and Kuwait Investment Authority to launch Helix Digital Infrastructure. Helix is being set up to serve next generation AI data center infrastructure with more than $10 billion in long term capital commitments. The partnership positions Vistra as a preferred power provider for large scale AI data center clients. For readers tracking Vistra at a share price of $138.54, this move adds a fresh layer to the story beyond recent stock performance...",
+    "link": "https://finance.yahoo.com/markets/stocks/articles/vistra-helix-partnership-links-ai-201257106.html",
+    "sentiment_polarity": 0.076,
+    "sentiment_subjectivity": 0.24
+  },
+  {
+    "title": "KKR launches Helix Digital Infrastructure with more than $10 billion for AI buildouts",
+    "published": "2026-06-11T18:14:42Z",
+    "publisher": "Blockspace",
+    "summary": "Backed by KKR, Kuwait's sovereign fund, NVIDIA and Vistra, a new private-capital platform aims to be a one-stop builder for hyperscaler AI infrastructure, signaling that dedicated third-party delivery vehicles are…",
+    "link": "https://blockspace.media/insight/kkr-launches-helix-digital-infrastructure-ai-2026/",
+    "sentiment_polarity": 0.212,
+    "sentiment_subjectivity": 0.318
+  },
+  {
+    "title": "KKR Bets $10 Billion on AI Infrastructure With Nvidia and Vistra",
+    "published": "2026-06-11T16:28:28Z",
+    "publisher": "GuruFocus.com",
+    "summary": "Helix Digital Infrastructure is led by former AWS CEO Adam Selipsky",
+    "link": "https://finance.yahoo.com/sectors/technology/articles/kkr-bets-10-billion-ai-162828277.html",
+    "sentiment_polarity": 0.0,
+    "sentiment_subjectivity": 0.0
+  },
+  {
+    "title": "KKR, Nvidia, Kuwait Fund Launch $10 Billion AI Venture. Private Capital Pours Into Data Centers.",
+    "published": "2026-06-11T16:26:00Z",
+    "publisher": "Barrons.com",
+    "summary": "KKR, Nvidia, Vistra, and the Kuwait Investment Authority are committing more than $10 billion to Helix Digital Infrastructure, underscoring growing investor demand for AI data-center projects.",
+    "link": "https://www.barrons.com/articles/kkr-nvidia-kuwait-ai-infrastructure-helix-data-centers-36b89c3d?siteid=yhoof2&yptr=yahoo",
+    "sentiment_polarity": 0.167,
+    "sentiment_subjectivity": 0.292
+  },
+  {
+    "title": "Is Vistra (VST) One Of The Top 10 Lowest Forward P/E Stocks In The S&P 500?",
+    "published": "2026-06-11T13:03:29Z",
+    "publisher": "Insider Monkey",
+    "summary": "With a forward P/E of 16.84x and upside potential of 50.20%, Vistra Corp. (NYSE:VST) ranks among the top 10 lowest forward P/E stocks in the S&P 500. Surging power demand, a swing to profitability, and bullish analyst coverage have brought the independent power producer into focus for value-oriented investors. Nearly all covering analysts hold bullish […]",
+    "link": "https://finance.yahoo.com/markets/stocks/articles/vistra-vst-one-top-10-130329259.html",
+    "sentiment_polarity": 0.22,
+    "sentiment_subjectivity": 0.505
+  },
+  {
+    "title": "KKR launches $10 billion AI infrastructure company with Nvidia, Vistra",
+    "published": "2026-06-11T12:30:33Z",
+    "publisher": "Reuters",
+    "summary": "A KKR-led group on Thursday launched a new company with more than $10 billion in committed ‌capital to finance the build-out of AI infrastructure, ‌the latest effort by an alternative asset manager to capitalize on growing demand ​for AI services.  The Kuwait Investment Authority, AI chip giant Nvidia and utility firm Vistra are anchor investors in the company, called Helix Digital Infrastructure, which is led by former Amazon Web ‌Services CEO Adam Selipsky.  Nvidia will help Helix with its expertise in designing AI data-centers, while Vistra will be the preferred power provider.",
+    "link": "https://finance.yahoo.com/sectors/technology/articles/kkr-launches-10-billion-ai-123033501.html",
+    "sentiment_polarity": 0.134,
+    "sentiment_subjectivity": 0.465
+  },
+  {
+    "title": "KKR launches Helix Digital Infrastructure AI company",
+    "published": "2026-06-11T12:02:36Z",
+    "publisher": "Quartz",
+    "summary": "Former Amazon Web Services CEO Adam Selipsky will lead the new company, which aims to serve as a single provider for hyperscaler data center, power, and connectivity needs",
+    "link": "https://qz.com/kkr-helix-digital-infrastructure-ai-nvidia-kuwait-061126",
+    "sentiment_polarity": -0.007,
+    "sentiment_subjectivity": 0.154
+  },
+  {
+    "title": "Vistra Uses TXU Beat The Heat Program To Build Texas Ties",
+    "published": "2026-06-10T19:13:39Z",
+    "publisher": "Simply Wall St.",
+    "summary": "TXU Energy, a subsidiary of Vistra (NYSE:VST), has launched its summer \"Beat the Heat\" program in Texas. The initiative supports residents during heat waves by donating cooling equipment, funding community cooling centers, and offering bill-payment assistance to vulnerable customers. Vistra operates as an integrated power company, and TXU Energy is one of its key retail electricity providers in Texas. The \"Beat the Heat\" program highlights how the group is engaging with customers in a state...",
+    "link": "https://finance.yahoo.com/sectors/energy/articles/vistra-uses-txu-beat-heat-191339083.html",
+    "sentiment_polarity": -0.033,
+    "sentiment_subjectivity": 0.733
+  },
+  {
+    "title": "Is Vistra Corp. (VST) A Good Stock To Buy Now?",
+    "published": "2026-06-10T16:48:43Z",
+    "publisher": "Insider Monkey",
+    "summary": "Is VST a good stock to buy? We came across a bullish thesis on Vistra Corp. on Darius Dark Investing’s Substack. In this article, we will summarize the bulls’ thesis on VST. Vistra Corp.’s share was trading at $146.22 as of June 9th. VST’s trailing and forward P/E were 24.45 and 16.03 respectively according to Yahoo Finance. […]",
+    "link": "https://finance.yahoo.com/markets/stocks/articles/vistra-corp-vst-good-stock-164843782.html",
+    "sentiment_polarity": 0.312,
+    "sentiment_subjectivity": 0.425
+  },
+  {
+    "title": "Investors Heavily Search Vistra Corp. (VST): Here is What You Need to Know",
+    "published": "2026-06-10T13:00:07Z",
+    "publisher": "Zacks",
+    "summary": "Zacks.com users have recently been watching Vistra (VST) quite a bit. Thus, it is worth knowing the facts that could determine the stock's prospects.",
+    "link": "https://finance.yahoo.com/markets/stocks/articles/investors-heavily-search-vistra-corp-130007148.html",
+    "sentiment_polarity": 0.033,
+    "sentiment_subjectivity": 0.283
+  },
+  {
+    "title": "Is Vistra Stock Underperforming the S&P 500?",
+    "published": "2026-06-10T12:40:38Z",
+    "publisher": "Barchart",
+    "summary": "Vistra has underperformed the S&P 500 over the past year, but analysts are highly optimistic about the stock’s prospects.",
+    "link": "https://www.barchart.com/story/news/2399515/is-vistra-stock-underperforming-the-s-p-500",
+    "sentiment_polarity": -0.045,
+    "sentiment_subjectivity": 0.395
+  },
+  {
+    "title": "Is Constellation Energy An Undervalued Stock Or A Value Trap?",
+    "published": "2026-06-10T00:03:02Z",
+    "publisher": "Trefis",
+    "summary": "Constellation Energy (CEG) stock is at an interesting point right now. If you bet on it, you are betting on a company that's growing reasonably, is sustaining good cash flow and margin, has a low-debt capital structure, and is relatively cheaply valued. But is that enough.",
+    "link": "https://www.trefis.com/articles/602048/is-constellation-energy-an-undervalued-stock-or-a-value-trap/2026-06-09",
+    "sentiment_polarity": 0.348,
+    "sentiment_subjectivity": 0.573
+  },
+  {
+    "title": "At US$149, Is Vistra Corp. (NYSE:VST) Worth Looking At Closely?",
+    "published": "2026-06-08T14:00:16Z",
+    "publisher": "Simply Wall St.",
+    "summary": "Today we're going to take a look at the well-established Vistra Corp. ( NYSE:VST ). The company's stock saw a...",
+    "link": "https://finance.yahoo.com/markets/stocks/articles/us-149-vistra-corp-nyse-140016795.html",
+    "sentiment_polarity": 0.3,
+    "sentiment_subjectivity": 0.1
+  },
+  {
+    "title": "CEG Trades Below 50 and 200 Day SMA: Buy Opportunity or Wait for Now?",
+    "published": "2026-06-05T13:22:00Z",
+    "publisher": "Zacks",
+    "summary": "CEG dips below 50 and 200-day SMAs amid project delays, but nuclear strength, Calpine deal and buybacks keep the bull case alive.",
+    "link": "https://finance.yahoo.com/markets/stocks/articles/ceg-trades-below-50-200-132200511.html",
+    "sentiment_polarity": 0.1,
+    "sentiment_subjectivity": 0.4
+  },
+  {
+    "title": "Is Sempra Stock Underperforming the Nasdaq?",
+    "published": "2026-06-05T12:38:09Z",
+    "publisher": "Barchart",
+    "summary": "Though Sempra has lagged behind the broader Nasdaq Composite over the past year, Wall Street analysts remain moderately optimistic about the stock’s prospects.",
+    "link": "https://www.barchart.com/story/news/2324276/is-sempra-stock-underperforming-the-nasdaq",
+    "sentiment_polarity": -0.217,
+    "sentiment_subjectivity": 0.55
+  },
+  {
+    "title": "Vistra vs. Constellation: Which AI Power Stock Is the Better Buy Right Now?",
+    "published": "2026-06-05T11:30:04Z",
+    "publisher": "24/7 Wall St.",
+    "summary": "For retirement-focused investors weighing the two dominant independent power producers cashing in on the AI data center buildout, the question is direct: Vistra (NYSE:VST) or Constellation Energy (NASDAQ:CEG) — which one belongs in the portfolio right now? Both have ridden the same nuclear-and-gas thesis. Both have signed long-term hyperscaler contracts. But the answer for someone whose ... Vistra vs. Constellation: Which AI Power Stock Is the Better Buy Right Now?",
+    "link": "https://247wallst.com/investing/2026/06/05/vistra-vs-constellation-which-ai-power-stock-is-the-better-buy-right-now/",
+    "sentiment_polarity": 0.206,
+    "sentiment_subjectivity": 0.373
+  },
+  {
+    "title": "Vistra Reshapes Growth With Cogentrix Deal And AI Data Center Power",
+    "published": "2026-06-04T21:19:30Z",
+    "publisher": "Simply Wall St.",
+    "summary": "Vistra (NYSE:VST) has completed its acquisition of Cogentrix natural gas assets, expanding its power generation footprint. The company is growing long-term nuclear power agreements, including a new arrangement to supply Meta's data center needs. Vistra is working to restart the Perry nuclear plant, adding more baseload capacity for AI driven electricity demand. Vistra enters this phase of expansion with its stock at $153.7 and a very large 5 year return, reflecting a major change in the...",
+    "link": "https://finance.yahoo.com/sectors/energy/articles/vistra-reshapes-growth-cogentrix-deal-211930921.html",
+    "sentiment_polarity": 0.125,
+    "sentiment_subjectivity": 0.373
+  },
+  {
+    "title": "Top Analyst Reports for Berkshire Hathaway, Eli Lilly & Walmart",
+    "published": "2026-06-04T20:21:00Z",
+    "publisher": "Zacks",
+    "summary": "Berkshire Hathaway, Eli Lilly and Walmart headline new analyst reports, highlighting growth drivers, opportunities and key risks shaping their outlooks.",
+    "link": "https://finance.yahoo.com/markets/stocks/articles/top-analyst-reports-berkshire-hathaway-202100807.html",
+    "sentiment_polarity": 0.212,
+    "sentiment_subjectivity": 0.652
+  },
+  {
+    "title": "AI Power Boom Revives Natural Gas as Infrastructure Bet",
+    "published": "2026-06-04T19:08:19Z",
+    "publisher": "Bloomberg",
+    "summary": "(Bloomberg) -- A surge in electricity demand from artificial intelligence and data centers is reshaping North America’s power markets, creating a “renaissance” for natural gas after decades of limited new development, according to KKR & Co. partner Brandon Freiman.Most Read from BloombergGlazer Family Members Study Manchester United Stake SaleRepublican-Led House Votes to Stop Iran War, Rebuking TrumpDow Average Hits Peak as Old-School Stocks Beat AI: Markets WrapTrump Begins Rebuilding His Tari",
+    "link": "https://finance.yahoo.com/sectors/energy/articles/ai-power-boom-revives-natural-190819348.html",
+    "sentiment_polarity": -0.081,
+    "sentiment_subjectivity": 0.466
+  },
+  {
+    "title": "Texas Instruments Is a Major Winner of the AI Power Bottleneck, Investors Just Aren’t Seeing It Yet",
+    "published": "2026-06-03T14:15:02Z",
+    "publisher": "Barchart",
+    "summary": "The company solves the power bottleneck from the inside rather than from the outside, a fact many seem to be ignoring.",
+    "link": "https://www.barchart.com/story/news/2283609/texas-instruments-is-a-major-winner-of-the-ai-power-bottleneck-investors-just-arent-seeing-it-yet",
+    "sentiment_polarity": 0.188,
+    "sentiment_subjectivity": 0.35
+  },
+  {
+    "title": "Can GE Vernova Benefit From the Global Gas Turbine Supply Crunch?",
+    "published": "2026-06-03T12:08:00Z",
+    "publisher": "Zacks",
+    "summary": "GEV is riding a surge in gas turbine demand as utilities reserve capacity years in advance, driving backlog growth and strong Power orders.",
+    "link": "https://finance.yahoo.com/sectors/energy/articles/ge-vernova-benefit-global-gas-120800782.html",
+    "sentiment_polarity": 0.217,
+    "sentiment_subjectivity": 0.367
+  },
+  {
+    "title": "Vistra (VST) Valuation Check After Recent Share Price Pullback",
+    "published": "2026-06-02T11:14:21Z",
+    "publisher": "Simply Wall St.",
+    "summary": "Vistra (VST) has drawn fresh attention after recent share price moves, with the stock down 3.4% over the past day and 0.3% over the past month. This has prompted closer scrutiny from investors. See our latest analysis for Vistra. Looking beyond the latest move, Vistra's share price has eased over the past quarter and year to date, while the very large 3 year and 5 year total shareholder returns point to a stock that has already rewarded patient investors. If you are assessing how this recent...",
+    "link": "https://finance.yahoo.com/markets/stocks/articles/vistra-vst-valuation-check-recent-111421732.html",
+    "sentiment_polarity": 0.056,
+    "sentiment_subjectivity": 0.45
+  },
+  {
+    "title": "Vistra vs. Constellation Energy: The Big Revenue Face-Off",
+    "published": "2026-06-01T21:36:49Z",
+    "publisher": "Motley Fool",
+    "summary": "One company posted a dramatic revenue surge while the other faced sharp swings, as recent filings reveal. But there's more to this story.",
+    "link": "https://www.fool.com/coverage/charts/2026/06/01/vistra-vs-constellation-energy-the-big-revenue-face-off/",
+    "sentiment_polarity": -0.031,
+    "sentiment_subjectivity": 0.429
+  },
+  {
+    "title": "From Bond Proxy to Battleground: Why Utilities Are the Worst Hiding Spot in 2026",
+    "published": "2026-06-01T14:05:42Z",
+    "publisher": "24/7 Wall St.",
+    "summary": "The defensive utility trade is breaking. With the 10-year Treasury yield at 4.45% and near the 91.1 percentile of its trailing 12-month range, the “bond proxy” argument that long anchored retirement portfolios in regulated power names has lost its math. Risk-free yield now competes directly with utility dividends, capital programs have ballooned to fund AI-driven ... From Bond Proxy to Battleground: Why Utilities Are the Worst Hiding Spot in 2026",
+    "link": "https://247wallst.com/investing/2026/06/01/from-bond-proxy-to-battleground-why-utilities-are-the-worst-hiding-spot-in-2026/",
+    "sentiment_polarity": -0.242,
+    "sentiment_subjectivity": 0.633
+  },
+  {
+    "title": "Analyst Raises Vistra (VST) Price Target by $4",
+    "published": "2026-05-31T00:51:00Z",
+    "publisher": "Insider Monkey",
+    "summary": "Vistra Corp. (NYSE:VST) is included among the 15 Best Nuclear Power Stocks to Buy According to Wall Street Analysts. Vistra Corp. (NYSE:VST) is one of the largest competitive power generators in the United States. The company operates a power generation fleet of natural gas, nuclear, coal, solar, and battery energy storage facilities in the country. […]",
+    "link": "https://finance.yahoo.com/sectors/energy/articles/analyst-raises-vistra-vst-price-005100355.html",
+    "sentiment_polarity": 0.55,
+    "sentiment_subjectivity": 0.35
+  },
+  {
+    "title": "XLU Investors: Watch PJM’s March 2027 Data Center Framework Decision",
+    "published": "2026-05-30T23:18:28Z",
+    "publisher": "24/7 Wall St.",
+    "summary": "The Utilities Select Sector SPDR Fund (NYSEARCA:XLU) has quietly become one of the more interesting trades in the market because it sits at the intersection of two crosscurrents. Hyperscaler power demand has turned a defensive sector into a growth story, but at the same time the 10-year Treasury yield sits in the 98th percentile of ... XLU Investors: Watch PJM’s March 2027 Data Center Framework Decision",
+    "link": "https://247wallst.com/investing/2026/05/30/xlu-investors-watch-pjms-march-2027-data-center-framework-decision/",
+    "sentiment_polarity": 0.133,
+    "sentiment_subjectivity": 0.276
+  },
+  {
+    "title": "XPLR Infrastructure Is Up 42%. Here's Why One Investor Added $4.5 Million More",
+    "published": "2026-05-30T17:05:43Z",
+    "publisher": "Motley Fool",
+    "summary": "XPLR Infrastructure delivers stable revenue through contracted clean energy and natural gas assets across North America.",
+    "link": "https://www.fool.com/coverage/filings/2026/05/30/xplr-infrastructure-is-up-42-here-s-why-one-investor-added-usd4-5-million-more/",
+    "sentiment_polarity": 0.322,
+    "sentiment_subjectivity": 0.533
+  },
+  {
+    "title": "NextDecade Stock Has Lagged the Market, so Why Did One Investor Buy Up More?",
+    "published": "2026-05-30T16:58:08Z",
+    "publisher": "Motley Fool",
+    "summary": "NextDecade develops LNG export terminals and carbon capture projects, with its flagship facility on the U.S. Gulf Coast.",
+    "link": "https://www.fool.com/coverage/filings/2026/05/30/nextdecade-stock-has-lagged-the-market-so-why-did-one-investor-buy-up-more/",
+    "sentiment_polarity": 0.5,
+    "sentiment_subjectivity": 0.5
+  },
+  {
+    "title": "Is Vistra (VST) The Best AI Energy Stock to Buy Now?",
+    "published": "2026-05-30T13:04:52Z",
+    "publisher": "Insider Monkey",
+    "summary": "We just covered the Claude Stock Portfolio: Top 10 Stocks to Buy According to AI Chatbot. Vistra Corp (NYSE:VST) ranks #4 (see Claude Stock Portfolio: Top 5 Stocks to Buy According to AI Chatbot). Number of Hedge Funds: 102 Vistra Corp (NYSE:VST) is among the biggest holdings in Claude’s May 2026 portfolio. Its thesis is […]",
+    "link": "https://finance.yahoo.com/sectors/energy/articles/vistra-vst-best-ai-energy-130452362.html",
+    "sentiment_polarity": 0.667,
+    "sentiment_subjectivity": 0.433
+  },
+  {
+    "title": "Vistra vs. Talen: Which Stock Is Better Positioned for the AI Boom?",
+    "published": "2026-05-29T15:31:00Z",
+    "publisher": "Zacks",
+    "summary": "VST and TLN's clean-power fleets are vying to serve AI data centers' 24/7 load and expanding their clean energy generation portfolio.",
+    "link": "https://finance.yahoo.com/markets/stocks/articles/vistra-vs-talen-stock-better-153100143.html",
+    "sentiment_polarity": 0.433,
+    "sentiment_subjectivity": 0.6
+  },
+  {
+    "title": "Possible Bearish Signals With Vistra Insiders Disposing Stock",
+    "published": "2026-05-28T14:00:07Z",
+    "publisher": "Simply Wall St.",
+    "summary": "Over the past year, many Vistra Corp. ( NYSE:VST ) insiders sold a significant stake in the company which may have...",
+    "link": "https://finance.yahoo.com/markets/stocks/articles/possible-bearish-signals-vistra-insiders-140007995.html",
+    "sentiment_polarity": 0.156,
+    "sentiment_subjectivity": 0.656
+  },
+  {
     "title": "Here is What to Know Beyond Why Vistra Corp. (VST) is a Trending Stock",
     "published": "2026-05-27T13:00:07Z",
     "publisher": "Zacks",
@@ -61,273 +448,5 @@
     "link": "https://finance.yahoo.com/sectors/energy/articles/vistra-taps-ai-data-center-231205029.html",
     "sentiment_polarity": 0.023,
     "sentiment_subjectivity": 0.361
-  },
-  {
-    "title": "CEG Stock Underperforms Industry in Past 3 Months: How to Play?",
-    "published": "2026-05-22T17:12:00Z",
-    "publisher": "Zacks",
-    "summary": "Constellation Energy's shares slip on delay in power plant restart and no new data-center deals, even as the Calpine acquisition adds capacity.",
-    "link": "https://finance.yahoo.com/markets/stocks/articles/ceg-stock-underperforms-industry-past-171200688.html",
-    "sentiment_polarity": -0.159,
-    "sentiment_subjectivity": 0.352
-  },
-  {
-    "title": "The AI Data Center Buildout Is Accelerating, and Nuclear Could Be the Most Underowned Piece of the Puzzle",
-    "published": "2026-05-22T16:01:15Z",
-    "publisher": "24/7 Wall St.",
-    "summary": "The data center buildout doesn’t seem like it’s about to slow down. As more firms look to step up and supply AI compute, some of which (unlike the cash-rich hyperscalers) are risking their shirts by going into debt, it feels like timing the peak in the AI boom or the beginning of an AI bubble ... The AI Data Center Buildout Is Accelerating, and Nuclear Could Be the Most Underowned Piece of the Puzzle",
-    "link": "https://247wallst.com/investing/2026/05/22/the-ai-data-center-buildout-is-accelerating-and-nuclear-could-be-the-most-underowned-piece-of-the-puzzle/",
-    "sentiment_polarity": 0.093,
-    "sentiment_subjectivity": 0.311
-  },
-  {
-    "title": "Analysts See Vistra (VST) Among AI Stocks That Are About to Explode",
-    "published": "2026-05-21T21:09:02Z",
-    "publisher": "Insider Monkey",
-    "summary": "Vistra Corp. (NYSE:VST) is one of the 10 AI Stocks That Are About to Explode. Vistra Corp. (NYSE:VST) ranks among AI stocks that are about to explode. Carillon Tower Advisers, an investment management company, stated the following regarding Vistra Corp. (NYSE:VST) in its fourth quarter 2025 investor letter for the Carillon Eagle Mid Cap Growth […]",
-    "link": "https://finance.yahoo.com/markets/stocks/articles/analysts-see-vistra-vst-among-210902189.html",
-    "sentiment_polarity": 0.0,
-    "sentiment_subjectivity": 0.033
-  },
-  {
-    "title": "Donald Trump and Nancy Pelosi Both Recently Bought the Same Underfollowed Stock. It Could Be a Massive AI Winner.",
-    "published": "2026-05-21T13:32:11Z",
-    "publisher": "24/7 Wall St.",
-    "summary": "Two of the most-watched political traders in America, on opposite ends of the spectrum, just bought the same stock. Nancy Pelosi disclosed a Vistra (NYSE:VST) stock purchase tied to a January 16 options exercise executed by her husband, Paul Pelosi. Furthermore, recently released financial disclosures indicate that President Donald Trump bought Vistra shares on February ... Donald Trump and Nancy Pelosi Both Recently Bought the Same Underfollowed Stock. It Could Be a Massive AI Winner.",
-    "link": "https://247wallst.com/investing/2026/05/21/donald-trump-and-nancy-pelosi-both-recently-bought-the-same-underfollowed-stock-it-could-be-a-massive-ai-winner/",
-    "sentiment_polarity": 0.0,
-    "sentiment_subjectivity": 0.293
-  },
-  {
-    "title": "Did Vistra’s (VST) Q1 Profit Surge and Completed Buyback Just Recast Its Capital Story?",
-    "published": "2026-05-21T02:08:10Z",
-    "publisher": "Simply Wall St.",
-    "summary": "In the first quarter of 2026, Vistra Corp. reported sales of US$5,640 million and net income of US$1,029 million, and by March 31 it had repurchased 2,373,546 shares, completing a total buyback of 168,279,522 shares for US$6.13 billion under its October 12, 2021 program. Together with fresh compensation-related stock grants to multiple directors, these results highlight Vistra’s focus on aligning leadership incentives with shareholder interests while reshaping its capital structure. We’ll...",
-    "link": "https://finance.yahoo.com/markets/stocks/articles/did-vistra-vst-q1-profit-020810647.html",
-    "sentiment_polarity": 0.11,
-    "sentiment_subjectivity": 0.317
-  },
-  {
-    "title": "Talen Energy Appoints New General Counsel Amid Leadership Transition (TLN)",
-    "published": "2026-05-20T15:10:38Z",
-    "publisher": "InvestorsHub",
-    "summary": "The leadership change places former Vistra executive Daniel Kelly in charge of Talen’s legal and regulatory functions as the company continues positioning itself around power infrastructure and AI-driven energy demand growth. Key Investor TakeawaysTalen Energy (NASDAQ:TLN) appointed Daniel Kelly as General Counsel and Corporate Secretary following the retirement of longtime legal executive John Wander.",
-    "link": "https://investorshub.advfn.com/market-news/article/28781/talen-energy-appoints-new-general-counsel-amid-leadership-transition-tln",
-    "sentiment_polarity": 0.071,
-    "sentiment_subjectivity": 0.328
-  },
-  {
-    "title": "Forget Vistra. One Quarter of Orders at GE Vernova Exceeded All of Last Year. That Is the AI Power Trade Worth Owning",
-    "published": "2026-05-19T17:05:24Z",
-    "publisher": "24/7 Wall St.",
-    "summary": "Everyone’s talking about Vistra (NYSE:VST) right now because retail investors have decided the merchant power producer is the cleanest way to bet on AI data center electricity demand. But here’s what you should actually be watching. Vistra is a single-commodity bet. Its earnings power tracks wholesale power prices, and the bull case leans heavily on ... Forget Vistra. One Quarter of Orders at GE Vernova Exceeded All of Last Year. That Is the AI Power Trade Worth Owning",
-    "link": "https://247wallst.com/investing/2026/05/19/forget-vistra-one-quarter-of-orders-at-ge-vernova-exceeded-all-of-last-year-that-is-the-ai-power-trade-worth-owning/",
-    "sentiment_polarity": 0.073,
-    "sentiment_subjectivity": 0.196
-  },
-  {
-    "title": "Forest Avenue Capital Adds to Par Pacific Stake, According to Recent SEC Filing",
-    "published": "2026-05-19T01:22:31Z",
-    "publisher": "Motley Fool",
-    "summary": "Par Pacific’s regional refining model gives investors a more nuanced question after its big run: whether Hawaii-led strength deserves confidence beyond the current margin cycle.",
-    "link": "https://www.fool.com/coverage/filings/2026/05/18/forest-avenue-capital-adds-to-par-pacific-stake-according-to-recent-sec-filing/",
-    "sentiment_polarity": 0.08,
-    "sentiment_subjectivity": 0.37
-  },
-  {
-    "title": "NextEra, Dominion Merger Reinforces Power Infrastructure Supercycle Thesis, Wedbush Says",
-    "published": "2026-05-18T14:59:52Z",
-    "publisher": "MT Newswires",
-    "summary": "NextEra Energy (NEE) and Dominion Energy's (D) merger shows that the \"AI-driven power demand supercy",
-    "link": "https://finance.yahoo.com/sectors/energy/articles/nextera-dominion-merger-reinforces-power-145952615.html",
-    "sentiment_polarity": 0.0,
-    "sentiment_subjectivity": 0.0
-  },
-  {
-    "title": "Industry Analysts Just Upgraded Their Vistra Corp. (NYSE:VST) Revenue Forecasts By 24%",
-    "published": "2026-05-17T12:39:44Z",
-    "publisher": "Simply Wall St.",
-    "summary": "Shareholders in Vistra Corp. ( NYSE:VST ) may be thrilled to learn that the analysts have just delivered a major...",
-    "link": "https://finance.yahoo.com/markets/stocks/articles/industry-analysts-just-upgraded-vistra-123944325.html",
-    "sentiment_polarity": 0.331,
-    "sentiment_subjectivity": 0.6
-  },
-  {
-    "title": "Why the Long-Term Case for Vistra Corp. (VST) Remains Strong",
-    "published": "2026-05-16T15:26:32Z",
-    "publisher": "Insider Monkey",
-    "summary": "Vistra Corp. (NYSE:VST) is among the stocks with the best earnings growth for the next 10 years. On May 11, Raymond James trimmed the price target on Vistra Corp. (NYSE:VST) to $202 from $208. According to the firm, the company has a notable retail business and manages a large thermal fleet, while accelerating its nuclear […]",
-    "link": "https://finance.yahoo.com/markets/stocks/articles/why-long-term-case-vistra-152632921.html",
-    "sentiment_polarity": 0.325,
-    "sentiment_subjectivity": 0.394
-  },
-  {
-    "title": "JPMorgan Raises its Price Target on Vistra (VST)",
-    "published": "2026-05-15T13:23:46Z",
-    "publisher": "Insider Monkey",
-    "summary": "Vistra Corp. (NYSE:VST) is one of the 10 Best Depressed Stocks to Buy in 2026. On May 12, 2026, JPMorgan raised the firm’s price target on Vistra Corp. (NYSE:VST) to $93 from $89 previously while maintaining an Overweight rating on the shares. On May 7, 2026, Vistra Corp. (NYSE:VST) reported Q1 revenue of $5.64B, versus […]",
-    "link": "https://finance.yahoo.com/markets/stocks/articles/jpmorgan-raises-price-target-vistra-132346672.html",
-    "sentiment_polarity": 0.211,
-    "sentiment_subjectivity": 0.289
-  },
-  {
-    "title": "Vistra (VST) Valuation Check After Strong Earnings And Expanding Data Center Power Agreements",
-    "published": "2026-05-15T13:15:02Z",
-    "publisher": "Simply Wall St.",
-    "summary": "Vistra (VST) has drawn investor attention after reporting first quarter 2026 earnings that moved from a loss to a US$1,029 million profit on US$5,640 million in sales, alongside record adjusted EBITDA and higher credit quality. See our latest analysis for Vistra. Despite the strong first quarter results, the stock has cooled recently, with the share price down about 13% over the past month and the 1-year total shareholder return slightly negative. Multi year total shareholder returns remain...",
-    "link": "https://finance.yahoo.com/markets/stocks/articles/vistra-vst-valuation-check-strong-131502935.html",
-    "sentiment_polarity": 0.101,
-    "sentiment_subjectivity": 0.486
-  },
-  {
-    "title": "Best AI Energy Stocks to Buy Now Down 30%: CEG, VST",
-    "published": "2026-05-15T12:00:00Z",
-    "publisher": "Zacks",
-    "summary": "Two great long-term AI energy stocks--Vistra and Constellation--to buy now in May, down 30% or more and hold forever.",
-    "link": "https://finance.yahoo.com/sectors/energy/articles/best-ai-energy-stocks-buy-120000669.html",
-    "sentiment_polarity": 0.398,
-    "sentiment_subjectivity": 0.426
-  },
-  {
-    "title": "Looking for Nuclear Stock Exposure? Use This Zacks Tool",
-    "published": "2026-05-14T22:55:00Z",
-    "publisher": "Zacks",
-    "summary": "Nuclear energy stands at the cusp of the global push for a low-carbon, greener, and more resilient energy future.",
-    "link": "https://finance.yahoo.com/sectors/energy/articles/looking-nuclear-stock-exposure-zacks-225500548.html",
-    "sentiment_polarity": 0.167,
-    "sentiment_subjectivity": 0.208
-  },
-  {
-    "title": "Vinson & Elkins: Accelerating AI Infrastructure & Power Constraints Reshape the Market",
-    "published": "2026-05-14T15:44:59Z",
-    "publisher": "Exec Edge",
-    "summary": "By Karen Roman The growing tension between AI-driven data center development and power availability constraints is reshaping the market, according to a survey published by Vinson & Elkins. The survey also found 96% of infrastructure developers preview power constraints to pivot data center development to new locations, while more than 80% are adopting hybrid and […]",
-    "link": "https://finance.yahoo.com/sectors/technology/articles/vinson-elkins-accelerating-ai-infrastructure-154459380.html",
-    "sentiment_polarity": 0.109,
-    "sentiment_subjectivity": 0.289
-  },
-  {
-    "title": "Vistra (VST) Advances 4.5 GW Capacity Growth Amid Projected Multi-Year Load Increase",
-    "published": "2026-05-14T11:32:17Z",
-    "publisher": "Insider Monkey",
-    "summary": "Vistra Corp. (NYSE:VST) is one of the best NYSE stocks to buy according to Wall Street analysts. On May 11, Vistra recently completed or initiated 4.5 GW of capacity additions, encompassing nuclear uprates, coal-to-gas conversions, and new renewable projects. CEO Jim Burke projects annual load growth of 5% to 6% in ERCOT and 2% to […]",
-    "link": "https://finance.yahoo.com/sectors/energy/articles/vistra-vst-advances-4-5-113217950.html",
-    "sentiment_polarity": 0.379,
-    "sentiment_subjectivity": 0.335
-  },
-  {
-    "title": "Is Vistra (VST) Still a Good AI Stock to Buy? Grok Says Yes",
-    "published": "2026-05-13T20:16:59Z",
-    "publisher": "Insider Monkey",
-    "summary": "We just covered Grok’s Latest Stock Portfolio in 2026: Elon Musk’s AI Chatbot’s Top 10 Stock Picks. Vistra Corp (NYSE:VST) ranks #3 (see Grok’s Latest Stock Portfolio in 2026: AI Assistant’s Top 5 Stock Picks). Number of Hedge Funds: 102 Surging electricity demand amid the AI data center boom drives the bull case for Vistra […]",
-    "link": "https://finance.yahoo.com/news/vistra-vst-still-good-ai-201659744.html",
-    "sentiment_polarity": 0.433,
-    "sentiment_subjectivity": 0.583
-  },
-  {
-    "title": "Is Trending Stock Vistra Corp. (VST) a Buy Now?",
-    "published": "2026-05-13T13:00:06Z",
-    "publisher": "Zacks",
-    "summary": "Vistra (VST) has received quite a bit of attention from Zacks.com users lately. Therefore, it is wise to be aware of the facts that can impact the stock's prospects.",
-    "link": "https://finance.yahoo.com/news/trending-stock-vistra-corp-vst-130006746.html",
-    "sentiment_polarity": 0.217,
-    "sentiment_subjectivity": 0.583
-  },
-  {
-    "title": "Vistra Expands Gas Capacity And Data Center Ties With AI Power Deals",
-    "published": "2026-05-12T14:13:13Z",
-    "publisher": "Simply Wall St.",
-    "summary": "Vistra (NYSE:VST) is pursuing the acquisition of Cogentrix Energy's 5.5 GW natural gas portfolio, adding a large set of gas fired generation assets to its platform. The company has also entered new long term power agreements with hyperscale data center partners to supply electricity to major technology customers. Together, these moves link Vistra more closely to the growing power needs of AI infrastructure and large scale data centers. For you as an investor, this combination of a large gas...",
-    "link": "https://finance.yahoo.com/sectors/energy/articles/vistra-expands-gas-capacity-data-141313862.html",
-    "sentiment_polarity": 0.119,
-    "sentiment_subjectivity": 0.374
-  },
-  {
-    "title": "Vistra Corp. (VST) – Among the 10 Best Robinhood Stocks to Buy According to Billionaires",
-    "published": "2026-05-12T06:44:50Z",
-    "publisher": "Insider Monkey",
-    "summary": "Vistra Corp. (NYSE:VST) is included among the 10 Best Robinhood Stocks to Buy According to Billionaires. On May 7, Reuters reported that Vistra Corp. (NYSE:VST) swung to a quarterly profit as rising power demand and higher electricity prices lifted results. The company’s shares climbed 4.2% in premarket trading following the report. Power companies across the […]",
-    "link": "https://finance.yahoo.com/markets/stocks/articles/vistra-corp-vst-among-10-064450663.html",
-    "sentiment_polarity": 0.562,
-    "sentiment_subjectivity": 0.3
-  },
-  {
-    "title": "Nuclear Reactor Leader Constellation Backs Three Mile Island Goal",
-    "published": "2026-05-11T20:12:45Z",
-    "publisher": "Investor's Business Daily",
-    "summary": "Constellation Energy earnings surged 28% and revenue sharply accelerated. But the nuclear stock undercut key level.",
-    "link": "https://www.investors.com/news/nuclear-stock-constellation-energy-affirms-goal-guidance-earnings-beat/?src=A00220&yptr=yahoo",
-    "sentiment_polarity": -0.062,
-    "sentiment_subjectivity": 0.875
-  },
-  {
-    "title": "Vistra Q1 Earnings Beat Estimates as Hedging Fortifies Visibility",
-    "published": "2026-05-11T16:03:00Z",
-    "publisher": "Zacks",
-    "summary": "VST beats Q1 EPS and revenue estimates as capacity prices jump; hedging nearly all 2026 volumes lifts visibility.",
-    "link": "https://finance.yahoo.com/markets/stocks/articles/vistra-q1-earnings-beat-estimates-160300968.html",
-    "sentiment_polarity": 0.1,
-    "sentiment_subjectivity": 0.4
-  },
-  {
-    "title": "Vistra adds 4.5 GW of capacity in line with ‘reasonable’ forecasts for PJM, ERCOT",
-    "published": "2026-05-11T10:35:44Z",
-    "publisher": "Utility Dive",
-    "summary": "“While these views remain below many third-party forecasts and ISO projections, they reflect what we believe to be the pace of physical development,” Vistra CEO Jim Burke said of the company’s load growth projections.",
-    "link": "https://www.utilitydive.com/news/vistra-adds-45-gw-of-capacity-in-line-with-reasonable-forecasts-for-pjm/819845/",
-    "sentiment_polarity": 0.233,
-    "sentiment_subjectivity": 0.414
-  },
-  {
-    "title": "Is Vistra (VST) One of the Best Electric Utility Stocks to Buy for the Data Center Surge?",
-    "published": "2026-05-11T02:55:41Z",
-    "publisher": "Insider Monkey",
-    "summary": "Vistra Corp. (NYSE:VST) is included among the 12 Best Electric Utility Stocks to Buy for the Data Center Surge. Vistra Corp. (NYSE:VST) is one of the largest competitive power generators in the United States. The company operates a power generation fleet of natural gas, nuclear, coal, solar, and battery energy storage facilities in the country. […]",
-    "link": "https://finance.yahoo.com/markets/stocks/articles/vistra-vst-one-best-electric-025541921.html",
-    "sentiment_polarity": 0.38,
-    "sentiment_subjectivity": 0.24
-  },
-  {
-    "title": "Is Vistra (VST) the Best Utility Stock that Beat Earnings Estimates?",
-    "published": "2026-05-10T02:48:06Z",
-    "publisher": "Insider Monkey",
-    "summary": "Vistra Corp. (NYSE:VST) is one of the 10 Best Utility Stocks that Beat Earnings Estimates. On May 7, 2026, Vistra Corp. (NYSE:VST) reported Q1 revenue of $5.64B, ahead of the $5.24B consensus estimate, while ongoing operations adjusted EBITDA totaled $1.49B. President and CEO Jim Burke said the company entered 2026 with momentum driven by its […]",
-    "link": "https://finance.yahoo.com/markets/stocks/articles/vistra-vst-best-utility-stock-024806002.html",
-    "sentiment_polarity": 1.0,
-    "sentiment_subjectivity": 0.3
-  },
-  {
-    "title": "Jim Cramer Suggests “Might Want to Get Some GE Vernova”",
-    "published": "2026-05-09T18:36:22Z",
-    "publisher": "Insider Monkey",
-    "summary": "GE Vernova Inc. (NYSE:GEV) was one of the stocks featured in Jim Cramer’s Mad Money recap, as he discussed how the AI build-out could power the economy. Cramer mentioned the stock during the episode and said: Take a look at these. These companies are hiring like mad because they know the demand for electricity is […]",
-    "link": "https://finance.yahoo.com/markets/stocks/articles/jim-cramer-suggests-might-want-183622001.html",
-    "sentiment_polarity": -0.625,
-    "sentiment_subjectivity": 1.0
-  },
-  {
-    "title": "Vistra (VST): The Best Power Generation Stock To Buy For Data Center Demand",
-    "published": "2026-05-09T05:27:51Z",
-    "publisher": "Insider Monkey",
-    "summary": "Vistra Corp. (NYSE:VST) is one of the 15 Best Power Generation Stocks To Buy For Data Center Demand. On May 4, 2026, TD Cowen analyst Shelby Tucker lowered the firm’s price target on Vistra Corp. (NYSE:VST) to $230 from $253 previously and maintained a Buy rating on the shares. The firm expects Vistra to report […]",
-    "link": "https://finance.yahoo.com/markets/stocks/articles/vistra-vst-best-power-generation-052751738.html",
-    "sentiment_polarity": 0.176,
-    "sentiment_subjectivity": 0.252
-  },
-  {
-    "title": "Vistra (VST) Q1 Earnings: How Key Metrics Compare to Wall Street Estimates",
-    "published": "2026-05-08T23:30:02Z",
-    "publisher": "Zacks",
-    "summary": "The headline numbers for Vistra (VST) give insight into how the company performed in the quarter ended March 2026, but it may be worthwhile to compare some of its key metrics to Wall Street estimates and the year-ago actuals.",
-    "link": "https://finance.yahoo.com/markets/stocks/articles/vistra-vst-q1-earnings-key-233002113.html",
-    "sentiment_polarity": 0.167,
-    "sentiment_subjectivity": 0.833
-  },
-  {
-    "title": "Vistra Corp. (VST) Q1 Earnings and Revenues Top Estimates",
-    "published": "2026-05-08T11:55:01Z",
-    "publisher": "Zacks",
-    "summary": "Vistra (VST) delivered earnings and revenue surprises of +29.63% and +3.54%, respectively, for the quarter ended March 2026. Do the numbers hold clues to what lies ahead for the stock?",
-    "link": "https://finance.yahoo.com/markets/stocks/articles/vistra-corp-vst-q1-earnings-115501428.html"
   }
 ]

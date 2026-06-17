@@ -69,8 +69,9 @@ def extract_tickers(rules_path: Path) -> Set[str]:
     watchlist_path = BASE_DIR / "data" / "watchlist.csv"
     if force_watchlist:
         if watchlist_path.is_file():
-            line = watchlist_path.read_text(encoding="utf-8").strip()
-            csv_tickers = [t.strip().upper() for t in line.split(",") if t.strip()]
+            text = watchlist_path.read_text(encoding="utf-8").strip()
+            text = text.replace("\r\n", ",").replace("\n", ",").replace("\r", ",")
+            csv_tickers = [t.strip().upper() for t in text.split(",") if t.strip()]
             tickers.update(csv_tickers)
         return tickers
 
@@ -92,8 +93,9 @@ def extract_tickers(rules_path: Path) -> Set[str]:
 
     # 3) 最终回退到 watchlist.csv（保证 watchlist 中的 ticker 一定被包含）
     if watchlist_path.is_file():
-        line = watchlist_path.read_text(encoding="utf-8").strip()
-        csv_tickers = [t.strip().upper() for t in line.split(",") if t.strip()]
+        text = watchlist_path.read_text(encoding="utf-8").strip()
+        text = text.replace("\r\n", ",").replace("\n", ",").replace("\r", ",")
+        csv_tickers = [t.strip().upper() for t in text.split(",") if t.strip()]
         tickers.update(csv_tickers)
 
     return tickers

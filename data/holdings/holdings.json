@@ -1,13 +1,63 @@
 {
   "meta": {
-    "generated_at": "2026-05-19T07:23:18.215747Z",
+    "generated_at": "2026-06-17T00:47:34.403491Z",
     "source": "tws"
   },
   "holdings": {
+    "AMZN": {
+      "position": 10.0,
+      "averageCost": 240.1,
+      "marketPrice": 245.7400055
+    },
+    "AXP": {
+      "position": 12.0,
+      "averageCost": 310.75,
+      "marketPrice": 341.05529785
+    },
+    "CEG": {
+      "position": 15.0,
+      "averageCost": 249.08666665,
+      "marketPrice": 268.7999878
+    },
+    "GOOG": {
+      "position": 10.0,
+      "averageCost": 356.1,
+      "marketPrice": 369.5
+    },
+    "IAU": {
+      "position": 100.0,
+      "averageCost": 81.610003,
+      "marketPrice": 81.502182
+    },
     "IBKR": {
       "position": 6.144,
       "averageCost": 65.10416665,
-      "marketPrice": 86.16999815
+      "marketPrice": 93.12000275
+    },
+    "LMT": {
+      "position": 5.0,
+      "averageCost": 520.2,
+      "marketPrice": 536.6500244
+    },
+    "SPCX": {
+      "position": 20.0,
+      "averageCost": 158.773335,
+      "marketPrice": 205.94999695
+    },
+    "VST": {
+      "position": 20.0,
+      "averageCost": 154.550005,
+      "marketPrice": 158.9700012
+    },
+    "VTIP": {
+      "position": 500.0,
+      "averageCost": 50.355003,
+      "marketPrice": 50.32993315
+    },
+    "WMT": {
+      "position": 20.0,
+      "averageCost": 118.450005,
+      "marketPrice": 121.0
     }
   }
 }

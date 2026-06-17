@@ -1,452 +1,452 @@
 [
   {
-    "title": "$5.7 Trillion and Counting. How Much Further Can the Chip Rally Run?",
-    "published": "2026-05-28T00:00:00Z",
-    "publisher": "The Wall Street Journal",
-    "summary": "The frenzied rally in chip stocks passed a new milestone on Wednesday, with the PHLX Semiconductor Index posting its best start to a year on record.  Samsung  Micron  and  SK Hynix  have all climbed into the ranks of $1 trillion companies.  Investors’ enthusiasm for the building-blocks of artificial intelligence helped pull the stock market out of its Iran-war slump, while raising worries that a surge this dramatic must end sometime.",
-    "link": "https://www.wsj.com/finance/stocks/5-7-trillion-and-counting-how-much-further-can-the-chip-rally-run-56daea5e?siteid=yhoof2&yptr=yahoo",
-    "sentiment_polarity": 0.021,
-    "sentiment_subjectivity": 0.571
+    "title": "Qualcomm Stock's Next Chapter Might Be Written In The Cloud",
+    "published": "2026-06-17T00:42:48Z",
+    "publisher": "Trefis",
+    "summary": "The company famous for putting chips in your phone is quietly building a new business with the world's biggest data centers.",
+    "link": "https://www.trefis.com/articles/603100/qualcomm-stocks-next-chapter-might-be-written-in-the-cloud/2026-06-16",
+    "sentiment_polarity": 0.159,
+    "sentiment_subjectivity": 0.447
   },
   {
-    "title": "Cathie Wood sells $16M of surging semiconductor stock",
-    "published": "2026-05-27T22:17:00Z",
+    "title": "AMD (AMD) Signs Rackspace Deal To Build 30 MW Enterprise AI Cloud",
+    "published": "2026-06-17T00:18:45Z",
+    "publisher": "Simply Wall St.",
+    "summary": "AMD (NasdaqGS:AMD) and Rackspace signed a multi year agreement to build dedicated AMD powered Enterprise AI Cloud infrastructure. The partnership focuses on governed and accountable AI compute for regulated sectors, including healthcare. The deal targets a phased rollout of 30 MW of AMD based data center capacity for AI workloads. AMD becomes the silicon partner for Rackspace's global governed AI infrastructure offering. For investors watching AMD, this agreement relates to the company’s...",
+    "link": "https://finance.yahoo.com/technology/ai/articles/amd-amd-signs-rackspace-deal-001845177.html",
+    "sentiment_polarity": -0.05,
+    "sentiment_subjectivity": 0.05
+  },
+  {
+    "title": "AMD deal sparks Rackspace stock surge as company cuts jobs",
+    "published": "2026-06-16T23:07:00Z",
     "publisher": "TheStreet",
-    "summary": "When one of Wall Street's most closely watched fund managers starts trimming a stock that's on a tear, investors take notice. Cathie Wood has been quietly but consistently reducing her firm's position in Advanced Micro Devices throughout May. That alone raises a question worth asking: What does she ...",
-    "link": "https://www.thestreet.com/investing/stocks/cathie-wood-sells-16m-of-surging-semiconductor-stock-amd",
-    "sentiment_polarity": 0.208,
-    "sentiment_subjectivity": 0.364
+    "summary": "Rackspace Technology (RXT) runs the infrastructure that many enterprises rely on when they want managed cloud services without building everything in-house. The San Antonio-based company operates across public and private cloud segments, handling the compute, storage, and security layers that sit ...",
+    "link": "https://www.thestreet.com/investing/stocks/rtx-rackspace-bets-on-amd-ai-compute-cuts-15-of-workforce",
+    "sentiment_polarity": 0.167,
+    "sentiment_subjectivity": 0.314
   },
   {
-    "title": "The ‘Insatiable’ Logic Behind Micron’s ‘Extreme’ Gains",
-    "published": "2026-05-27T21:09:00Z",
-    "publisher": "Barrons.com",
-    "summary": "Memory chips are the hottest play on artificial-intelligence hardware, and  Micron Technology  has been among the hottest stocks in the space.  It has company in SK Hynix, the South Korean memory-chip maker, whose shares have also surged.  Micron stock had an incredible day on Tuesday, when it surged 19% after UBS raised its price target on the stock to $1,625 from $535, arguing long-term supply agreements justified a higher price-to-earnings ratio for the company.",
-    "link": "https://www.barrons.com/articles/micron-stock-price-memory-chip-sk-hynix-049d3a30?siteid=yhoof2&yptr=yahoo",
-    "sentiment_polarity": 0.205,
-    "sentiment_subjectivity": 0.8
-  },
-  {
-    "title": "Open Sesame — Heard on the Street Recap",
-    "published": "2026-05-27T20:51:08Z",
-    "publisher": "The Wall Street Journal",
-    "summary": "Oil prices fell on a new report of progress in negotiations.  Iran’s state broadcaster reported that a draft framework being negotiated with the U.S. includes restoring commercial shipping to prewar levels within a month.  President Trump, speaking at a cabinet meeting, signaled that he was prepared to keep negotiating but didn’t exclude further military action.",
-    "link": "https://www.wsj.com/livecoverage/stock-market-today-dow-sp-500-nasdaq-05-27-2026/card/open-sesame-heard-on-the-street-recap-VVEgNy9dnyxfYNDlQuyA?siteid=yhoof2&yptr=yahoo",
-    "sentiment_polarity": 0.023,
-    "sentiment_subjectivity": 0.276
-  },
-  {
-    "title": "SK Hynix and Micron lead AI boom, join trillion-dollar club",
-    "published": "2026-05-27T20:34:20Z",
-    "publisher": "Yahoo Finance Video",
-    "summary": "Yahoo Finance Tech Editor Dan Howley joins Host Josh Lipton on Market Domination to break down the day’s leading tech stories, including SK Hynix (000660.KS) joining the Trillion-dollar club and Micron Technology (MU) impressive growth in 2026.",
-    "link": "https://finance.yahoo.com/video/sk-hynix-and-micron-lead-ai-boom-join-trillion-dollar-club-203420020.html",
-    "sentiment_polarity": 0.422,
-    "sentiment_subjectivity": 0.644
-  },
-  {
-    "title": "Zuckerberg Just Gave Away Why You Should Buy Micron, Not Meta",
-    "published": "2026-05-27T19:00:09Z",
-    "publisher": "24/7 Wall St.",
-    "summary": "During Meta’s (NASDAQ:META) Q1 2026 earnings call, Zuckerberg said something that most other hyperscalers skimmed over. He said that while Meta Platforms was expanding its data center capacity and increasing its spending, he said, “…we are increasing our infrastructure capex forecast for this year. Most of that is due to higher component costs, particularly memory ... Zuckerberg Just Gave Away Why You Should Buy Micron, Not Meta",
-    "link": "https://247wallst.com/investing/2026/05/27/zuckerberg-just-gave-away-why-you-should-buy-micron-not-meta/",
-    "sentiment_polarity": 0.152,
-    "sentiment_subjectivity": 0.383
-  },
-  {
-    "title": "This AI Stock Hits $1T, Soars 200% & Crushes NVIDIA - Buy Now?",
-    "published": "2026-05-27T19:00:00Z",
+    "title": "Advanced Micro Devices (AMD) Dips More Than Broader Market: What You Should Know",
+    "published": "2026-06-16T21:45:03Z",
     "publisher": "Zacks",
-    "summary": "MU surged past a $1T valuation as AI-driven memory shortages boosted pricing power and HBM demand, with growth momentum still building.",
-    "link": "https://finance.yahoo.com/markets/stocks/articles/ai-stock-hits-1t-soars-190000467.html",
-    "sentiment_polarity": -0.25,
+    "summary": "In the closing of the recent trading day, Advanced Micro Devices (AMD) stood at $507.29, denoting a -7.3% move from the preceding trading day.",
+    "link": "https://finance.yahoo.com/markets/stocks/articles/advanced-micro-devices-amd-dips-214503811.html",
+    "sentiment_polarity": 0.325,
+    "sentiment_subjectivity": 0.488
+  },
+  {
+    "title": "Stock Market Today, June 16: Nvidia, Broadcom, and Micron Technology Lead Drop in Nasdaq",
+    "published": "2026-06-16T21:44:34Z",
+    "publisher": "Motley Fool",
+    "summary": "Retail investors reassess growth favorites as Robinhood’s job cuts ripple through a market tilting toward industrial and financial stocks, today, June 16, 2026.",
+    "link": "https://www.fool.com/coverage/stock-market-today/2026/06/16/stock-market-today-june-16-nvidia-broadcom-and-micron-technology-lead-drop-in-nasdaq/",
+    "sentiment_polarity": 0.0,
+    "sentiment_subjectivity": 0.0
+  },
+  {
+    "title": "Stocks to Watch: Snap, JPMorgan, AMD, SpaceX",
+    "published": "2026-06-16T21:29:11Z",
+    "publisher": "The Wall Street Journal",
+    "summary": "↗️ SpaceX (SPCX): Shares of Elon Musk’s rocket company wrapped up another day of gains, following a two-day rally that put the stock about 43% above its IPO price. Shares rose 4.8% Tuesday, pushing SpaceX's market cap above Amazon's.",
+    "link": "https://www.wsj.com/livecoverage/stock-market-today-dow-sp-500-nasdaq-06-16-2026/card/stocks-to-watch-spacex-qualcomm-dave-buster-s-6q5CjGNVDDA4CigySAs4?siteid=yhoof2&yptr=yahoo",
+    "sentiment_polarity": 0.15,
+    "sentiment_subjectivity": 0.312
+  },
+  {
+    "title": "Why Rackspace Rallied Today",
+    "published": "2026-06-16T20:34:39Z",
+    "publisher": "Motley Fool",
+    "summary": "Rackspace inked a data center deal with Advanced Micro Devices.",
+    "link": "https://www.fool.com/investing/2026/06/16/why-rackspace-rallied-today/",
+    "sentiment_polarity": 0.15,
+    "sentiment_subjectivity": 0.35
+  },
+  {
+    "title": "Micron Stock Falls From Record High. Where It Goes Next.",
+    "published": "2026-06-16T20:33:00Z",
+    "publisher": "Barrons.com",
+    "summary": "Micron stock has had 34 record closes so far in 2026 and Wall Street is racing to raise price targets for the memory-chip maker.",
+    "link": "https://www.barrons.com/articles/micron-stock-price-new-high-analyst-fc450072?siteid=yhoof2&yptr=yahoo",
+    "sentiment_polarity": 0.087,
+    "sentiment_subjectivity": 0.513
+  },
+  {
+    "title": "Trending: Robinhood cuts 10% of workforce, Yum Brands sells Pizza Hut, Qualcomm's AI deal",
+    "published": "2026-06-16T14:57:24Z",
+    "publisher": "Yahoo Finance Video",
+    "summary": "Yahoo Finance's Julie Hyman takes a closer look at some of Tuesday's trending tickers and stories, including Yum Brands' (YUM) sale of Pizza Hut, Qualcomm's (QCOM) reported interest in acquiring an AI chip company, Robinhood (HOOD) cutting 10% of its workforce, and Rackspace's (RXT) job cuts.",
+    "link": "https://finance.yahoo.com/video/trending-robinhood-cuts-10-of-workforce-yum-brands-sells-pizza-hut-qualcomms-ai-deal-145724697.html",
+    "sentiment_polarity": -0.6,
+    "sentiment_subjectivity": 0.9
+  },
+  {
+    "title": "Western Digital stock jumps as AI trade reignites",
+    "published": "2026-06-16T13:21:54Z",
+    "publisher": "Yahoo Finance",
+    "summary": "Western Digital stock jumped again on Tuesday as the AI memory and storage trade reignited.",
+    "link": "https://finance.yahoo.com/markets/article/western-digital-stock-jumps-as-ai-trade-reignites-132154187.html",
+    "sentiment_polarity": 0.0,
+    "sentiment_subjectivity": 0.0
+  },
+  {
+    "title": "Why Intel, AMD, Arm, and Other Artificial Intelligence (AI) Stocks Popped Today",
+    "published": "2026-06-13T01:09:33Z",
+    "publisher": "Motley Fool",
+    "summary": "Agentic AI will be a powerful growth driver.",
+    "link": "https://www.fool.com/investing/2026/06/12/why-intel-amd-arm-ai-stocks-up-today/",
+    "sentiment_polarity": -0.142,
+    "sentiment_subjectivity": 0.792
+  },
+  {
+    "title": "Why Qualcomm (QCOM) Stock Is Trading Up Today",
+    "published": "2026-06-12T22:05:20Z",
+    "publisher": "StockStory",
+    "summary": "Shares of wireless chipmaker Qualcomm (NASDAQ:QCOM) jumped 4.8% in the afternoon session after macro rate relief from the Iran peace deal, a Wells Fargo price target increase, and positive positioning ahead of a June 24 Investor Day drove renewed market interest.",
+    "link": "https://finance.yahoo.com/markets/stocks/articles/why-qualcomm-qcom-stock-trading-220520438.html",
+    "sentiment_polarity": 0.227,
+    "sentiment_subjectivity": 0.545
+  },
+  {
+    "title": "Why AMD (AMD) Stock Is Up Today",
+    "published": "2026-06-12T21:57:20Z",
+    "publisher": "StockStory",
+    "summary": "Shares of computer processor maker AMD (NASDAQ:AMD) jumped 4.6% in the afternoon session after Citi analyst Atif Malik upgraded the stock to Buy from Neutral and raised his price target to $575 from $460, making the case that \"the market has yet to fully recognize AMD as a legit second source in the GPU market.\"",
+    "link": "https://finance.yahoo.com/markets/stocks/articles/why-amd-amd-stock-today-215720676.html",
+    "sentiment_polarity": 0.0,
+    "sentiment_subjectivity": 0.0
+  },
+  {
+    "title": "Stocks Rally on Hopes for a Near-term US-Iran Interim Peace Agreement",
+    "published": "2026-06-12T20:39:53Z",
+    "publisher": "Barchart",
+    "summary": "The S&P 500 Index ($SPX ) (SPY ) on Friday rose +0.50%, the Dow Jones Industrial Average ($DOWI ) (DIA ) rose +0.70%, and the Nasdaq 100 Index ($IUXX ) (QQQ ) rose +0.64%. June E-mini S&P futures (ESM26 ) rose +0.65%, and June E-mini Nasdaq futures (NQM26 ) rose...",
+    "link": "https://www.barchart.com/story/news/2447851/stocks-rally-on-hopes-for-a-near-term-us-iran-interim-peace-agreement",
+    "sentiment_polarity": 0.475,
+    "sentiment_subjectivity": 0.858
+  },
+  {
+    "title": "AMD Stock Ended Friday’s Session Nearly 5% Higher — What Triggered The Rally?",
+    "published": "2026-06-12T20:37:22Z",
+    "publisher": "Stocktwits",
+    "summary": "Citi upgraded AMD to ‘Buy’ and lifted its price target, stating that investors should also be looking at the company’s graphics processing unit’s potential.",
+    "link": "https://stocktwits.com/news-articles/markets/equity/amd-stock-ended-fridays-session-nearly-5-percent-higher-what-triggered-the-rally/cZKdJXoR75W",
+    "sentiment_polarity": 0.125,
+    "sentiment_subjectivity": 0.75
+  },
+  {
+    "title": "AMD Stock Upgraded To Buy On GPU Upside",
+    "published": "2026-06-12T20:20:35Z",
+    "publisher": "Investor's Business Daily",
+    "summary": "A Wall Street analyst on Friday upgraded AMD stock to buy from neutral, saying its GPU business is undervalued.",
+    "link": "https://www.investors.com/news/technology/amd-stock-upgraded-to-buy-on-gpu-upside/?src=A00220&yptr=yahoo",
+    "sentiment_polarity": 0.0,
+    "sentiment_subjectivity": 0.0
+  },
+  {
+    "title": "Citi Just Upgraded AMD Stock. Here’s Why.",
+    "published": "2026-06-12T20:05:28Z",
+    "publisher": "Barchart",
+    "summary": "AMD shares rally as Citi issues a largely bullish note on the chipmaker. Here’s why analyst Atif Malik believes AMD stock will rip higher from here.",
+    "link": "https://www.barchart.com/story/news/2447161/citi-just-upgraded-amd-stock-heres-why",
+    "sentiment_polarity": 0.232,
+    "sentiment_subjectivity": 0.464
+  },
+  {
+    "title": "Sector Update: Tech Stocks Rise Late Afternoon",
+    "published": "2026-06-12T19:37:19Z",
+    "publisher": "MT Newswires",
+    "summary": "Tech stocks were higher late Friday afternoon, with the State Street Technology Select Sector SPDR E",
+    "link": "https://finance.yahoo.com/markets/stocks/articles/sector-tech-stocks-rise-afternoon-193719338.html",
+    "sentiment_polarity": -0.117,
+    "sentiment_subjectivity": 0.567
+  },
+  {
+    "title": "AMD Rises as Citi Sees Bigger GPU Opportunity",
+    "published": "2026-06-12T18:20:26Z",
+    "publisher": "GuruFocus.com",
+    "summary": "The upgrade points to growing confidence in AMD's role in AI and data center chips.",
+    "link": "https://finance.yahoo.com/markets/stocks/articles/amd-rises-citi-sees-bigger-182026144.html",
+    "sentiment_polarity": -0.05,
+    "sentiment_subjectivity": 0.3
+  },
+  {
+    "title": "AMD Stock Pops After Buy Upgrade. It’s More Than a CPU Play.",
+    "published": "2026-06-12T18:07:00Z",
+    "publisher": "Barrons.com",
+    "summary": "Advanced Micro Devices stock has roared higher on enthusiasm for its central-processing units but Citi analyst Atif Malik sees another catalyst.",
+    "link": "https://www.barrons.com/articles/amd-stock-buy-upgrade-cpu-bf9cabdc?siteid=yhoof2&yptr=yahoo",
+    "sentiment_polarity": 0.383,
+    "sentiment_subjectivity": 0.533
+  },
+  {
+    "title": "AMD and Qualcomm Shares Are Soaring, What You Need To Know",
+    "published": "2026-06-12T00:01:37Z",
+    "publisher": "StockStory",
+    "summary": "A number of stocks jumped in the afternoon session after the Nasdaq rebounded, up 1.8%, as Trump's Iran peace deal announcement released the rate pressure that weighed on the sector all week.",
+    "link": "https://finance.yahoo.com/markets/stocks/articles/amd-qualcomm-shares-soaring-know-000137960.html",
+    "sentiment_polarity": 0.0,
+    "sentiment_subjectivity": 0.0
+  },
+  {
+    "title": "Why AMD Stock Crushed it on Thursday",
+    "published": "2026-06-11T23:34:18Z",
+    "publisher": "Motley Fool",
+    "summary": "An analyst lifted his estimate for a crucial segment of the chip market.",
+    "link": "https://www.fool.com/investing/2026/06/11/why-amd-stock-crushed-it-on-thursday/",
+    "sentiment_polarity": -0.05,
+    "sentiment_subjectivity": 0.55
+  },
+  {
+    "title": "S&P Global Ratings upgrades Nvidia to AA on explosive AI demand",
+    "published": "2026-06-11T21:14:17Z",
+    "publisher": "Investing.com",
+    "summary": "Investing.com -- S&P Global Ratings raised its long-term issuer credit rating on NVIDIA Corporation (NASDAQ:NVDA) to \"AA\" from \"AA-,\" citing insatiable market demand for artificial intelligence systems. The upgrade reflects the chipmaker’s sustainable competitive advantage and massive cash flow generation within the rapidly expanding data center ecosystem. The ratings agency now forecasts Nvidia’s revenue to surge 82% in fiscal 2027 to $394 billion, followed by a 38% increase to $544 billion the",
+    "link": "https://finance.yahoo.com/markets/stocks/articles/p-global-ratings-upgrades-nvidia-211417548.html",
+    "sentiment_polarity": -0.14,
+    "sentiment_subjectivity": 0.42
+  },
+  {
+    "title": "Stocks to Watch Recap: Hugo Boss, Broadcom, Super Micro",
+    "published": "2026-06-11T20:43:31Z",
+    "publisher": "The Wall Street Journal",
+    "summary": "↘️ Oracle (ORCL): Shares slid 8.5% after the software and cloud-computing company reported larger-than-forecast spending related to its data-center buildout. ↗️ Super Micro Computer (SMCI): Shares bounced up 9%, following a 28% drop Wednesday.",
+    "link": "https://www.wsj.com/livecoverage/stock-market-today-dow-sp-500-nasdaq-06-11-2026/card/stocks-to-watch-broadcom-super-micro-hugo-boss-8dipg4qmCqjcatSb8m0a?siteid=yhoof2&yptr=yahoo",
+    "sentiment_polarity": 0.167,
+    "sentiment_subjectivity": 0.458
+  },
+  {
+    "title": "Stocks making big moves yesterday: Bark, Robinhood, United Natural Foods, Lazard, and AMD",
+    "published": "2026-06-11T20:25:37Z",
+    "publisher": "StockStory",
+    "summary": "Check out the companies making headlines yesterday:",
+    "link": "https://finance.yahoo.com/markets/stocks/articles/stocks-making-big-moves-yesterday-202537639.html",
+    "sentiment_polarity": 0.05,
     "sentiment_subjectivity": 0.25
   },
   {
-    "title": "Why Is the US Stock Market Down Today?",
-    "published": "2026-05-27T18:06:50Z",
-    "publisher": "BeInCrypto",
-    "summary": "The US stock market fell as AI chip leaders saw profit-taking and oil crashed 6% on a US-Iran Strait of Hormuz framework deal.",
-    "link": "https://beincrypto.com/why-is-the-us-stock-market-down-today/",
+    "title": "AMD CEO makes bold move to boost AI in key market",
+    "published": "2026-06-11T19:47:00Z",
+    "publisher": "TheStreet",
+    "summary": "Advanced Micro Devices (AMD) investors have had little to celebrate this month. The chipmaker’s shares fell 4.86% on June 10 to close at $452.40, stretching the loss over the past five trading days to 12.15%. The selling was not an AMD problem, as a wave of profit-taking and Middle East tensions ...",
+    "link": "https://www.thestreet.com/investing/stocks/amd-ceo-ai-investment-uk",
+    "sentiment_polarity": 0.049,
+    "sentiment_subjectivity": 0.503
+  },
+  {
+    "title": "Is Photronics, Inc. (PLAB) A Good Stock To Buy Now?",
+    "published": "2026-06-11T18:21:04Z",
+    "publisher": "Insider Monkey",
+    "summary": "Is PLAB a good stock to buy? We came across a bullish thesis on Photronics, Inc. on r/ValueInvesting by blee1236. In this article, we will summarize the bulls’ thesis on PLAB. Photronics, Inc.’s share was trading at $29.56 as of June 9th. PLAB’s trailing P/E was 10.76 according to Yahoo Finance. Photronics, Inc., together with its subsidiaries, […]",
+    "link": "https://finance.yahoo.com/markets/stocks/articles/photronics-inc-plab-good-stock-182104678.html",
+    "sentiment_polarity": 0.7,
+    "sentiment_subjectivity": 0.6
+  },
+  {
+    "title": "CPU market to grow 5x by 2030, BofA says",
+    "published": "2026-06-11T18:04:54Z",
+    "publisher": "Yahoo Finance",
+    "summary": "The CPU market is expected to grow 5x through 2030.",
+    "link": "https://finance.yahoo.com/sectors/technology/article/cpu-market-to-grow-5x-by-2030-bofa-says-180454617.html",
+    "sentiment_polarity": -0.1,
+    "sentiment_subjectivity": 0.4
+  },
+  {
+    "title": "Up 129% Year-to-Date: 1 Flashing Red Light That Makes AMD Stock a Dangerous Buy Above $475",
+    "published": "2026-06-11T17:56:04Z",
+    "publisher": "24/7 Wall St.",
+    "summary": "At $475.51, Advanced Micro Devices (NASDAQ:AMD) is a Hold. The stock has roughly doubled in five months on accelerating AI demand, and the gap between the operating story and the multiple has rarely been wider. AMD designs the CPUs and GPUs powering hyperscale AI factories, with EPYC server chips and Instinct accelerators now the company’s ... Up 129% Year-to-Date: 1 Flashing Red Light That Makes AMD Stock a Dangerous Buy Above $475",
+    "link": "https://247wallst.com/investing/2026/06/11/up-129-year-to-date-1-flashing-red-light-that-makes-amd-stock-a-dangerous-buy-above-475/",
+    "sentiment_polarity": 0.017,
+    "sentiment_subjectivity": 0.442
+  },
+  {
+    "title": "Intel Stock And The Hyperscaler's Tell",
+    "published": "2026-06-11T17:32:49Z",
+    "publisher": "Trefis",
+    "summary": "Before Intel shares took flight, a critical vote of confidence from one of the world’s biggest chip buyers was hiding in the fine print of an earnings call.",
+    "link": "https://www.trefis.com/articles/602489/intel-stock-and-the-hyperscalers-tell/2026-06-11",
+    "sentiment_polarity": 0.208,
+    "sentiment_subjectivity": 0.65
+  },
+  {
+    "title": "The Software Engine The Broadcom Stock Bears Overlook",
+    "published": "2026-06-11T00:16:52Z",
+    "publisher": "Trefis",
+    "summary": "While Wall Street obsesses over AI chip sales, a different, high-margin business is providing the stability that could answer the biggest risk.",
+    "link": "https://www.trefis.com/articles/602304/the-software-engine-the-broadcom-stock-bears-overlook/2026-06-10",
+    "sentiment_polarity": 0.0,
+    "sentiment_subjectivity": 0.6
+  },
+  {
+    "title": "Why AMD (AMD) Shares Are Sliding Today",
+    "published": "2026-06-11T00:01:28Z",
+    "publisher": "StockStory",
+    "summary": "Shares of computer processor maker AMD (NASDAQ:AMD) fell 5% in the afternoon session after the CPI print of 4.2% annual inflation (the hottest since 2023) revived the rate hike narrative.",
+    "link": "https://finance.yahoo.com/markets/stocks/articles/why-amd-amd-shares-sliding-000128882.html",
+    "sentiment_polarity": 0.0,
+    "sentiment_subjectivity": 0.0
+  },
+  {
+    "title": "Why Jefferies Recommends Riot Platforms Inc (RIOT) Stock",
+    "published": "2026-06-10T23:33:10Z",
+    "publisher": "Insider Monkey",
+    "summary": "Riot Platforms Inc (NASDAQ:RIOT) is one of the best data center stocks to invest in according to billionaires. In the past month, Riot Platforms’ shares have gained more than 20%. That puts the stock’s year-to-date gains at around 77% and past-year gains at roughly 180%. On May 14, Jefferies initiated coverage of Riot Platforms Inc […]",
+    "link": "https://finance.yahoo.com/markets/stocks/articles/why-jefferies-recommends-riot-platforms-233310946.html",
+    "sentiment_polarity": 0.21,
+    "sentiment_subjectivity": 0.31
+  },
+  {
+    "title": "AMD Stock And The Five-Billion Dollar Whisper",
+    "published": "2026-06-10T22:06:08Z",
+    "publisher": "Trefis",
+    "summary": "Before the chipmaker’s triple-digit surge, the most telling signal wasn’t a secret; it was the company’s own rapidly escalating ambition.",
+    "link": "https://www.trefis.com/articles/602297/amd-stock-and-the-five-billion-dollar-whisper/2026-06-10",
+    "sentiment_polarity": 0.233,
+    "sentiment_subjectivity": 0.733
+  },
+  {
+    "title": "Here's Why Advanced Micro Devices (AMD) Fell More Than Broader Market",
+    "published": "2026-06-10T21:45:04Z",
+    "publisher": "Zacks",
+    "summary": "In the closing of the recent trading day, Advanced Micro Devices (AMD) stood at $452.21, denoting a -4.9% move from the preceding trading day.",
+    "link": "https://finance.yahoo.com/markets/stocks/articles/heres-why-advanced-micro-devices-214504006.html",
+    "sentiment_polarity": 0.325,
+    "sentiment_subjectivity": 0.488
+  },
+  {
+    "title": "The Spill: Is Broadcom (AVGO) the Other AI Trade?",
+    "published": "2026-06-10T21:41:17Z",
+    "publisher": "IPO-Edge.com",
+    "summary": "Is Broadcom (AVGO) the Other AI Trade? By IPO Edge Editorial Staff Broadcom’s (AVGO) AI business is growing faster than almost anyone expected. Last quarter, AI semiconductor revenue hit $10.8 billion, […]",
+    "link": "https://finance.yahoo.com/markets/stocks/articles/spill-broadcom-avgo-other-ai-214117164.html",
+    "sentiment_polarity": -0.087,
+    "sentiment_subjectivity": 0.304
+  },
+  {
+    "title": "AMD TensorWave Bet Ties AI Cloud Growth To Rich Valuation",
+    "published": "2026-06-10T21:19:53Z",
+    "publisher": "Simply Wall St.",
+    "summary": "AMD co-led a $350 million funding round in TensorWave, an AI cloud provider that uses only AMD hardware for its training clusters. The deal positions AMD more directly inside the AI cloud infrastructure stack, alongside traditional chip supply. TensorWave plans to build AI cloud platforms around AMD GPUs, offering an alternative to Nvidia focused setups. Advanced Micro Devices (NasdaqGS:AMD) is drawing attention with this new capital commitment at a time when its stock has had a very large...",
+    "link": "https://finance.yahoo.com/markets/stocks/articles/amd-tensorwave-bet-ties-ai-211953021.html",
+    "sentiment_polarity": 0.177,
+    "sentiment_subjectivity": 0.601
+  },
+  {
+    "title": "US Equity Indexes Slide as Semiconductors Lead Technology Lower, Trump Warns of Iran Attack",
+    "published": "2026-06-10T20:51:07Z",
+    "publisher": "MT Newswires",
+    "summary": "US equity indexes slumped following a sell-off in mega-cap semiconductor names, and as President Don",
+    "link": "https://finance.yahoo.com/markets/stocks/articles/us-equity-indexes-slide-semiconductors-205107081.html",
+    "sentiment_polarity": 0.0,
+    "sentiment_subjectivity": 0.1
+  },
+  {
+    "title": "Micron, Super Micro, Newmont, Robinhood, Casey’s, and More Stocks That Explain Today’s Market",
+    "published": "2026-06-10T20:29:00Z",
+    "publisher": "Barrons.com",
+    "summary": "Micron and Super Micro stocks sink as the selloff in AI and other momentum stocks accelerates. Casey’s General Stores leads the S&P 500.",
+    "link": "https://www.barrons.com/articles/stock-movers-4d7abe0b?siteid=yhoof2&yptr=yahoo",
+    "sentiment_polarity": 0.218,
+    "sentiment_subjectivity": 0.542
+  },
+  {
+    "title": "Slumping Semiconductors, Trump's Threat to Iran Push US Equity Indexes Lower",
+    "published": "2026-06-10T19:55:30Z",
+    "publisher": "MT Newswires",
+    "summary": "US equity indexes slumped amid a sell-off in high-growth, mega-cap semiconductor names and after Pre",
+    "link": "https://finance.yahoo.com/markets/stocks/articles/slumping-semiconductors-trump-apos-threat-195530424.html",
+    "sentiment_polarity": 0.0,
+    "sentiment_subjectivity": 0.0
+  },
+  {
+    "title": "Chip Stocks Tumble in Roller-Coaster Market",
+    "published": "2026-06-09T21:28:53Z",
+    "publisher": "The Wall Street Journal",
+    "summary": "Stocks took a wild ride on Tuesday. Shares rose at the open before a midday selloff, then made up some ground toward the end of the session. The Nasdaq composite fell about 1%, and the S&P 500 declined 0.",
+    "link": "https://www.wsj.com/livecoverage/stock-market-today-dow-sp-500-nasdaq-06-09-2026/card/chip-stocks-tumble-in-roller-coaster-market-Css8sUSiwG0Qe7bX4ynZ?siteid=yhoof2&yptr=yahoo",
+    "sentiment_polarity": 0.233,
+    "sentiment_subjectivity": 0.617
+  },
+  {
+    "title": "Penguin Solutions, AMD, and Impinj Stocks Trade Down, What You Need To Know",
+    "published": "2026-06-09T21:18:14Z",
+    "publisher": "StockStory",
+    "summary": "A number of stocks fell in the afternoon session after the midday Apache helicopter incident over the Strait of Hormuz removed the stable macro backdrop the semiconductor sector needed to extend its recovery.",
+    "link": "https://finance.yahoo.com/markets/stocks/articles/penguin-solutions-amd-impinj-stocks-211814542.html",
     "sentiment_polarity": -0.156,
     "sentiment_subjectivity": 0.289
   },
   {
-    "title": "AMD Is Up Nearly 300% Over the Past Year. Is It Still a Buy?",
-    "published": "2026-05-27T18:05:00Z",
+    "title": "What Could Go Wrong For Broadcom Stock?",
+    "published": "2026-06-09T21:15:55Z",
+    "publisher": "Trefis",
+    "summary": "The company's spectacular AI success is undeniable, but it also concentrates the two biggest risks investors now face.",
+    "link": "https://www.trefis.com/articles/602063/what-could-go-wrong-for-broadcom-stock/2026-06-09",
+    "sentiment_polarity": 0.133,
+    "sentiment_subjectivity": 0.6
+  },
+  {
+    "title": "Stock Market Today, June 9: Risk-Off Sentiment Pressures Nasdaq",
+    "published": "2026-06-09T21:15:54Z",
     "publisher": "Motley Fool",
-    "summary": "AMD's stock price is growing much faster than the company.",
-    "link": "https://www.fool.com/investing/2026/05/27/amd-is-up-nearly-300-over-the-past-year-is-it-stil/",
-    "sentiment_polarity": 0.017,
+    "summary": "Tech jitters and profit taking weighed on AI and chip stocks as markets whipsaw and yesterday's apparent rebound falters, today, June 9, 2026.",
+    "link": "https://www.fool.com/coverage/stock-market-today/2026/06/09/stock-market-today-june-9-risk-off-sentiment-pressures-nasdaq/",
+    "sentiment_polarity": 0.05,
+    "sentiment_subjectivity": 0.35
+  },
+  {
+    "title": "AI Stocks Lead Tech Sector Slide. 'Summer Swoon Has Arrived.'",
+    "published": "2026-06-09T20:38:59Z",
+    "publisher": "Investor's Business Daily",
+    "summary": "AI stocks and shares of major tech players stumbled Tuesday as an attempt to rebound from a sell-off last week fizzled.",
+    "link": "https://www.investors.com/news/technology/ai-stocks-lead-tech-sector-slide-summer-swoon-has-arrived/?src=A00220&yptr=yahoo",
+    "sentiment_polarity": 0.031,
     "sentiment_subjectivity": 0.283
   },
   {
-    "title": "AMD's Data Center Growth Rides on EPYC Demand: More Upside Ahead?",
-    "published": "2026-05-27T17:36:00Z",
-    "publisher": "Zacks",
-    "summary": "AMD's data center revenue surged 57% to $5.78B as EPYC and Instinct ramp; Helios/MI platforms fuel big AI ambitions amid fierce rivals.",
-    "link": "https://finance.yahoo.com/markets/stocks/articles/amds-data-center-growth-rides-173600399.html",
-    "sentiment_polarity": 0.075,
-    "sentiment_subjectivity": 0.2
+    "title": "Nvidia Finally Lands Apple as an AI Customer. Why the Stock Is Dropping.",
+    "published": "2026-06-09T20:20:00Z",
+    "publisher": "Barrons.com",
+    "summary": "Apple is accessing Nvidia’s hardware via the cloud-computing services of Google rather than buying the chips directly.",
+    "link": "https://www.barrons.com/articles/nvidia-stock-price-apple-ai-ea453f75?siteid=yhoof2&yptr=yahoo",
+    "sentiment_polarity": 0.05,
+    "sentiment_subjectivity": 0.7
   },
   {
-    "title": "Why Qualcomm (QCOM) Stock Is Up Today",
-    "published": "2026-05-26T22:07:28Z",
-    "publisher": "StockStory",
-    "summary": "Shares of wireless chipmaker Qualcomm (NASDAQ:QCOM) jumped 3.5% in the afternoon session after Micron's UBS-led surge ignited a semiconductor rally.",
-    "link": "https://finance.yahoo.com/markets/stocks/articles/why-qualcomm-qcom-stock-today-220728104.html",
-    "sentiment_polarity": 0.0,
-    "sentiment_subjectivity": 0.0
+    "title": "Broadcom Stock And The Ninety-Billion-Dollar Roadmap",
+    "published": "2026-06-09T20:15:48Z",
+    "publisher": "Trefis",
+    "summary": "Before the stock took off, the company was laying out an unusually specific, multi-year plan for its AI business that many investors seemed to overlook.",
+    "link": "https://www.trefis.com/articles/602078/broadcom-stock-and-the-ninety-billion-dollar-roadmap/2026-06-09",
+    "sentiment_polarity": 0.25,
+    "sentiment_subjectivity": 0.312
   },
   {
-    "title": "SOXL Lost 90 Percent in 2022 While Semiconductors Themselves Fell 35 Percent, And the Daily Reset Math Hasn’t Changed",
-    "published": "2026-05-26T22:00:16Z",
-    "publisher": "24/7 Wall St.",
-    "summary": "Semiconductors have been the trade of 2026, and the Direxion Daily Semiconductor Bull 3X Shares (NYSEARCA:SOXL) has been the vehicle retail traders keep reaching for. SOXL is up about 291% year to date and roughly 792% over the past year, and inflows have followed the chart. The same math that produced those gains produced a ... SOXL Lost 90 Percent in 2022 While Semiconductors Themselves Fell 35 Percent, And the Daily Reset Math Hasn’t Changed",
-    "link": "https://247wallst.com/investing/2026/05/26/soxl-lost-90-percent-in-2022-while-semiconductors-themselves-fell-35-percent-and-the-daily-reset-math-hasnt-changed/",
-    "sentiment_polarity": -0.058,
-    "sentiment_subjectivity": 0.129
-  },
-  {
-    "title": "Allegro MicroSystems and Penguin Solutions Stocks Trade Up, What You Need To Know",
-    "published": "2026-05-26T21:59:28Z",
-    "publisher": "StockStory",
-    "summary": "A number of stocks jumped in the afternoon session after Micron's UBS-led surge ignited a semiconductor rally.",
-    "link": "https://finance.yahoo.com/markets/stocks/articles/allegro-microsystems-penguin-solutions-stocks-215928481.html",
-    "sentiment_polarity": 0.0,
-    "sentiment_subjectivity": 0.0
-  },
-  {
-    "title": "Stock Market Today, May 26: Soaring Tech Stocks Push S&P 500 and Nasdaq to New Highs",
-    "published": "2026-05-26T21:36:51Z",
-    "publisher": "Motley Fool",
-    "summary": "On May 26, 2026, Micron’s surge helped propel the S&P 500 and Nasdaq to fresh records even as the Dow lagged.",
-    "link": "https://www.fool.com/coverage/stock-market-today/2026/05/26/stock-market-today-may-26-soaring-tech-stocks-push-s-and-p-500-and-nasdaq-to-new-highs/",
-    "sentiment_polarity": 0.218,
-    "sentiment_subjectivity": 0.477
-  },
-  {
-    "title": "OneQode Deal Highlights AMD AI Expansion Beyond Hyperscaler Data Centers",
-    "published": "2026-05-26T21:12:34Z",
+    "title": "AMD’s UK AI Supercomputers Put Sovereign And Research Role In Focus",
+    "published": "2026-06-09T20:12:28Z",
     "publisher": "Simply Wall St.",
-    "summary": "OneQode has partnered with Advanced Micro Devices (NasdaqGS:AMD) to deploy AMD Instinct GPUs and Helios rack-scale solutions. The rollout targets global AI infrastructure needs, with a focus on high-performance compute, low latency, and sovereignty-focused workloads. This agreement extends AMD's AI data center reach beyond traditional hyperscaler customers into new regions and use cases. For investors tracking NasdaqGS:AMD, this partnership comes at a time when the stock is trading at...",
-    "link": "https://finance.yahoo.com/markets/stocks/articles/oneqode-deal-highlights-amd-ai-211234929.html",
-    "sentiment_polarity": 0.073,
-    "sentiment_subjectivity": 0.367
-  },
-  {
-    "title": "Xerox and Super Micro Shares Are Soaring, What You Need To Know",
-    "published": "2026-05-26T20:31:28Z",
-    "publisher": "StockStory",
-    "summary": "A number of stocks jumped in the afternoon session after Micron Technology surged on a UBS price target hike that signaled AI hardware demand is structurally undersupplied.",
-    "link": "https://finance.yahoo.com/markets/stocks/articles/xerox-super-micro-shares-soaring-203128231.html",
-    "sentiment_polarity": 0.333,
-    "sentiment_subjectivity": 0.667
-  },
-  {
-    "title": "Dell and Diebold Nixdorf Stocks Trade Up, What You Need To Know",
-    "published": "2026-05-26T20:23:28Z",
-    "publisher": "StockStory",
-    "summary": "A number of stocks jumped in the afternoon session after Micron Technology surged on a UBS price target hike that signaled AI hardware demand is structurally undersupplied.",
-    "link": "https://finance.yahoo.com/markets/stocks/articles/dell-diebold-nixdorf-stocks-trade-202328400.html",
+    "summary": "AMD (NasdaqGS:AMD) has announced a multi billion pound investment in AI supercomputers and related infrastructure in the UK. The plan includes partnerships with Dell, the University of Cambridge, UK Atomic Energy Authority, Imperial College, and Oriole Networks. The projects aim to support sovereign AI capabilities, fusion research, and national computing capacity for science and industry. For investors tracking semiconductor and AI infrastructure companies, this move puts AMD's UK presence...",
+    "link": "https://finance.yahoo.com/sectors/technology/articles/amd-uk-ai-supercomputers-put-201228509.html",
     "sentiment_polarity": 0.0,
-    "sentiment_subjectivity": 0.0
+    "sentiment_subjectivity": 0.4
   },
   {
-    "title": "Tech-Stock Rally Pushes Micron to $1 Trillion Market Cap",
-    "published": "2026-05-26T19:40:40Z",
-    "publisher": "The Wall Street Journal",
-    "summary": "U.S. semiconductor and memory stocks rallied on Tuesday, led by Micron, which soared 19% and traded above a $1 trillion market capitalization for the first time.  After its biggest daily gain since 2011, the tech stock passed Walmart and Eli Lilly to become the 10th-largest U.S. company by market value.  Micron stock, which closed at $895.88, is up a staggering 830% from a year ago, when it closed at $96.38.",
-    "link": "https://www.wsj.com/livecoverage/stock-market-today-dow-sp-500-nasdaq-05-26-2026/card/chip-memory-stocks-are-rallying-again-Fifjd5M9JfKwlcQockqq?siteid=yhoof2&yptr=yahoo",
-    "sentiment_polarity": 0.01,
-    "sentiment_subjectivity": 0.127
-  },
-  {
-    "title": "Nvidia has a $200 Billion Warning for AMD and Intel Stock Investors",
-    "published": "2026-05-26T18:43:00Z",
-    "publisher": "Motley Fool",
-    "summary": "Nvidia is poised to make a big dent in a fast-growing market that's currently dominated by AMD and Intel.",
-    "link": "https://www.fool.com/investing/2026/05/26/nvidia-has-a-200-billion-warning-for-amd-and-intel/",
-    "sentiment_polarity": 0.0,
-    "sentiment_subjectivity": 0.25
-  },
-  {
-    "title": "AMD Stock Soars to Record High as Next-Gen AI Chip Enters Production",
-    "published": "2026-05-26T18:16:42Z",
+    "title": "China Weighs $295 Billion AI Data Center Buildout Over Five Years",
+    "published": "2026-06-09T19:57:27Z",
     "publisher": "GuruFocus.com",
-    "summary": "AMD Hits Fresh High After Lisa Su Signals New AI Growth Wave",
-    "link": "https://finance.yahoo.com/markets/stocks/articles/amd-stock-soars-record-high-181642205.html",
-    "sentiment_polarity": 0.189,
-    "sentiment_subjectivity": 0.509
+    "summary": "Beijing is drafting a nationwide computing network plan that could rely on domestic AI chip suppliers for 80% of core technology.",
+    "link": "https://finance.yahoo.com/sectors/technology/articles/china-weighs-295-billion-ai-195727474.html",
+    "sentiment_polarity": -0.05,
+    "sentiment_subjectivity": 0.1
   },
   {
-    "title": "Alphabet, AMD Removed From Value Stock Status as Russell Reconstitutes Indexes",
-    "published": "2026-05-23T00:47:00Z",
-    "publisher": "Barrons.com",
-    "summary": "FTSE Russell announced a preliminary list of changes to its indexes on Friday after the market closed—and some Big Tech names are being reclassified.  Google parent  Alphabet  and  Advanced Micro Devices  were among the largest stocks that will be removed from the  That means those stocks will move to pure growth status by FTSE Russell’s standard.  Apple  and  Microsoft  on the other hand, will join the value index—and move from pure growth classification to a blend of growth and value.",
-    "link": "https://www.barrons.com/articles/alphabet-amd-apple-microsoft-amazon-russell-reconstitution-growth-value-529b91e5?siteid=yhoof2&yptr=yahoo",
-    "sentiment_polarity": 0.117,
-    "sentiment_subjectivity": 0.346
-  },
-  {
-    "title": "Meet the Biggest Threat to Intel's Stunning Stock Market Rally",
-    "published": "2026-05-22T22:43:00Z",
-    "publisher": "Motley Fool",
-    "summary": "AMD continues to chip away at Intel's server CPU market share.",
-    "link": "https://www.fool.com/investing/2026/05/22/meet-the-biggest-threat-to-intels-stunning-stock-m/",
-    "sentiment_polarity": 0.5,
-    "sentiment_subjectivity": 1.0
-  },
-  {
-    "title": "Stock Market Today: S&P 500, Nasdaq Score Weekly Wins As Dow Logs Record High",
-    "published": "2026-05-22T20:43:55Z",
-    "publisher": "Investor's Business Daily",
-    "summary": "Stock Market Today: The Dow Jones index rises Friday as yields slip. AMD stock rallies near record highs.",
-    "link": "https://www.investors.com/market-trend/stock-market-today/dow-jones-sp500-nasdaq-inflation-survey-amd-stock/?src=A00220&yptr=yahoo",
-    "sentiment_polarity": 0.187,
-    "sentiment_subjectivity": 0.38
-  },
-  {
-    "title": "Nvidia Stock Gets Even Cheaper With Each Earnings Beat",
-    "published": "2026-05-22T20:36:00Z",
-    "publisher": "Barrons.com",
-    "summary": "Nvidia stock has become even more inexpensive on a price-to-earnings basis and compared with Wall Street's targets.",
-    "link": "https://www.barrons.com/articles/nvidia-stock-price-earnings-valuation-cheap-b4d4cf2f?siteid=yhoof2&yptr=yahoo",
-    "sentiment_polarity": 0.5,
-    "sentiment_subjectivity": 0.5
-  },
-  {
-    "title": "Stocks to Watch Recap: Estee Lauder, IBM, GloubalFoundries",
-    "published": "2026-05-22T20:26:54Z",
-    "publisher": "The Wall Street Journal",
-    "summary": "🔎 Estee Lauder (EL): The U.S. cosmetics giant and Spanish beauty group Puig (ES:PUIG) said they have terminated discussions of a potential business combination, ending speculation that the two could create one of the world’s largest beauty companies.",
-    "link": "https://www.wsj.com/livecoverage/stock-market-today-dow-sp-500-nasdaq-05-22-2026/card/stocks-to-watch-estee-lauder-ibm-gloubalfoundries-6wJJwF8i7j1gvn6oMaZz?siteid=yhoof2&yptr=yahoo",
-    "sentiment_polarity": 0.0,
-    "sentiment_subjectivity": 0.667
-  },
-  {
-    "title": "Celestica Ties AI Data Center Growth To DS6000 And AMD Helios",
-    "published": "2026-05-22T20:17:21Z",
-    "publisher": "Simply Wall St.",
-    "summary": "Celestica (TSX:CLS) has commercially launched its DS6000 series 1.6TbE data center switches, which are now available for initial customer orders. The company is expanding its work with AMD on the Helios rack scale AI platform, aligning its hardware offerings with high speed AI data center requirements. For investors watching AI infrastructure, Celestica sits in a part of the market focused on hardware that underpins data centers, networking and compute. The DS6000 series targets high...",
-    "link": "https://finance.yahoo.com/markets/stocks/articles/celestica-ties-ai-data-center-201721080.html",
-    "sentiment_polarity": 0.053,
-    "sentiment_subjectivity": 0.223
-  },
-  {
-    "title": "AMD (AMD) Announces $10B Investment in Taiwan AI Infrastructure",
-    "published": "2026-05-22T20:10:26Z",
-    "publisher": "Insider Monkey",
-    "summary": "Advanced Micro Devices Inc. (NASDAQ:AMD) is one of the best multibagger stocks to buy in 2026. On May 21, Advanced Micro Devices announced a strategic investment of over $10 billion across the Taiwan ecosystem to scale advanced packaging manufacturing and expand partnerships for next-generation AI infrastructure. The initiative focuses on delivering high-performance, energy-efficient solutions to […]",
-    "link": "https://finance.yahoo.com/sectors/technology/articles/amd-amd-announces-10b-investment-201026402.html",
-    "sentiment_polarity": 0.55,
-    "sentiment_subjectivity": 0.525
-  },
-  {
-    "title": "Sector Update: Tech Stocks Higher Late Afternoon",
-    "published": "2026-05-22T19:38:20Z",
-    "publisher": "MT Newswires",
-    "summary": "Tech stocks were higher late Friday afternoon, with the State Street Technology Select Sector SPDR E",
-    "link": "https://finance.yahoo.com/markets/stocks/articles/sector-tech-stocks-higher-afternoon-193820310.html",
-    "sentiment_polarity": -0.025,
-    "sentiment_subjectivity": 0.55
-  },
-  {
-    "title": "Nvidia vs. AMD vs. Intel: Which is the best chip stock to own?",
-    "published": "2026-05-22T14:34:08Z",
+    "title": "Wall Street sees AI trade bearing fruit with MANGOS ahead of IPOs",
+    "published": "2026-06-09T14:04:55Z",
     "publisher": "Yahoo Finance Video",
-    "summary": "Between Nvidia (NVDA), Advanced Micro Devices (AMD), and Intel (INTC), which chip stock stands out among the rest? Yahoo Finance Executive Editor Brian Sozzi is joined by Markets and Data Editor Jared Blikre, Senior Business Reporter Ines Ferré, and Portfolio Wealth Advisors president and CIO Lee Munson to share their thoughts on these leaders within the AI chip space.",
-    "link": "https://finance.yahoo.com/video/nvidia-vs-amd-vs-intel-which-is-the-best-chip-stock-to-own-143408694.html",
-    "sentiment_polarity": 0.667,
-    "sentiment_subjectivity": 0.633
-  },
-  {
-    "title": "It might be time to start investing in housing-related stocks",
-    "published": "2026-05-22T13:59:10Z",
-    "publisher": "Yahoo Finance Video",
-    "summary": "Laffer Tengler Investments CEO and CIO Nancy Tengler joins Yahoo Finance to explain why she's bullish on DR Horton (DHI) and Home Depot. (HD)",
-    "link": "https://finance.yahoo.com/video/it-might-be-time-to-start-investing-in-housing-related-stocks-135910931.html",
-    "sentiment_polarity": 0.0,
-    "sentiment_subjectivity": 0.0
-  },
-  {
-    "title": "Stocks to Watch Recap: Nvidia, Spotify Stellantis, Intuit",
-    "published": "2026-05-21T20:30:51Z",
-    "publisher": "The Wall Street Journal",
-    "summary": "↘️ Nvidia (NVDA): The chip giant reported record sales and income that beat analyst expectations, driven by demand for data-center computing and the rise of AI agents. Shares flitted between small gains and losses and closed down 1.",
-    "link": "https://www.wsj.com/livecoverage/stock-market-today-dow-sp-500-nasdaq-05-21-2026/card/stocks-to-watch-nvidia-rocket-lab-intuit-walmart-FwgeCwzoPzRtAnJROATn?siteid=yhoof2&yptr=yahoo",
-    "sentiment_polarity": -0.126,
-    "sentiment_subjectivity": 0.447
-  },
-  {
-    "title": "Nvidia Tells Skeptical Investors AI Is Ready to Go Mainstream",
-    "published": "2026-05-21T20:10:16Z",
-    "publisher": "Bloomberg",
-    "summary": "(Bloomberg) -- Nvidia Corp., facing more investor skepticism, used its latest quarterly report to tout progress in diversifying the company, which aims to rely less on the giant data center operators that have fueled its runaway growth.Most Read from BloombergSpot the Difference: Putin Gets Trump Treatment From Xi in ChinaIran Says the US’s Latest Proposal Has ‘Narrowed the Gaps’Modi’s Toffee Gift to Meloni Ignites Rally in Wrong Indian StockIran in Talks With Oman Over Permanent Hormuz Toll Sys",
-    "link": "https://finance.yahoo.com/markets/stocks/articles/nvidia-gets-tepid-reaction-forecast-210054064.html",
-    "sentiment_polarity": 0.048,
-    "sentiment_subjectivity": 0.596
-  },
-  {
-    "title": "Amkor working with AMD on advanced packaging after acquiring more land in Arizona",
-    "published": "2026-05-21T19:07:18Z",
-    "publisher": "Reuters",
-    "summary": "Amkor Technology is working with Advanced Micro Devices on packaging AMD's chips, ‌Amkor said on Thursday.  Earlier this week, Amkor said it ‌had secured 67 additional acres of land in Arizona next to a 104-acre ​parcel where it is developing a new campus where it plans to start production in 2028.  Modern data center chips such as those from AMD and Nvidia consist of multiple chips packaged together, and ‌those packaging steps have ⁠become a key bottleneck in chip production.",
-    "link": "https://finance.yahoo.com/sectors/technology/articles/amkor-working-amd-advanced-packaging-190718157.html",
-    "sentiment_polarity": 0.14,
-    "sentiment_subjectivity": 0.414
-  },
-  {
-    "title": "AMD makes a major $10 billion push in crucial tech hub",
-    "published": "2026-05-21T18:47:12Z",
-    "publisher": "TheStreet",
-    "summary": "Advanced Micro Devices (AMD) stock closed the May 20 trading session 8.1% up at $447.58, according to Yahoo Finance. ARM closed 15.05% higher at $256.73.Intel closed 7.36% higher at $118.96.Marvell closed 5.97% higher at $186.80.Micron closed 4.76% higher at $731.99.Broadcom closed 1.63% higher at ...",
-    "link": "https://www.thestreet.com/investing/stocks/amd-makes-a-major-10-billion-push-in-crucial-tech-hub",
-    "sentiment_polarity": 0.079,
-    "sentiment_subjectivity": 0.371
-  },
-  {
-    "title": "Intel Has Doubled AMD’s 2026 Gains. Is It Time to Rebalance Your Chip Stocks?",
-    "published": "2026-05-21T18:36:46Z",
-    "publisher": "24/7 Wall St.",
-    "summary": "Shares of Intel (NASDAQ:INTC) are trading near $119 in Thursday afternoon action, essentially flat on the session, while Advanced Micro Devices (NASDAQ:AMD) stock hovers near $446, down only slightly. The headline today isn’t the tape; it’s the scoreboard year-to-date. Intel stock has returned 222% in 2026 so far, roughly twice AMD stock’s 108% gain. That’s ... Intel Has Doubled AMD’s 2026 Gains. Is It Time to Rebalance Your Chip Stocks?",
-    "link": "https://247wallst.com/investing/2026/05/21/intel-has-doubled-amds-2026-gains-is-it-time-to-rebalance-your-chip-stocks/",
-    "sentiment_polarity": 0.035,
-    "sentiment_subjectivity": 0.448
-  },
-  {
-    "title": "AMD's $10 Billion Taiwan Push Puts AI Chip Race In Focus",
-    "published": "2026-05-21T17:35:40Z",
-    "publisher": "GuruFocus.com",
-    "summary": "AMD is expanding Taiwan partnerships and packaging capacity as AI infrastructure demand rises.",
-    "link": "https://finance.yahoo.com/sectors/technology/articles/amds-10-billion-taiwan-push-173540821.html",
-    "sentiment_polarity": 0.0,
-    "sentiment_subjectivity": 0.0
-  },
-  {
-    "title": "Quantum Computing and Robotics Are Arriving Faster Than Most Investors Realize and After Years of Covering This Space These 3 ETFs Stand Out",
-    "published": "2026-05-21T17:11:44Z",
-    "publisher": "24/7 Wall St.",
-    "summary": "Intuitive Surgical’s da Vinci 5 surgical platform, which began shipping in earnest on April 1, 2026, runs on 10,000 times the computing power of the da Vinci Xi and was co-engineered with NVIDIA’s Isaac platform. That is a working hospital robot, on the floor, today, that needed an AI compute stack nobody had five years ... Quantum Computing and Robotics Are Arriving Faster Than Most Investors Realize and After Years of Covering This Space These 3 ETFs Stand Out",
-    "link": "https://247wallst.com/investing/2026/05/21/quantum-computing-and-robotics-are-arriving-faster-than-most-investors-realize-and-after-years-of-covering-this-space-these-3-etfs-stand-out/",
-    "sentiment_polarity": 0.5,
-    "sentiment_subjectivity": 0.5
-  },
-  {
-    "title": "ASML (ASML): AI Stock With The Widest Moat?",
-    "published": "2026-05-21T16:16:33Z",
-    "publisher": "Insider Monkey",
-    "summary": "We just covered the 10 Best Pick and Shovel AI Stocks to Buy for the Long Term. ASML Holding (NASDAQ:ASML) ranks #1 (see 5 Best Pick and Shovel AI Stocks to Buy for the Long Term). Short interest: 0.2% Think of ASML Holding (NASDAQ:ASML) as the company selling the only ultra-advanced mining machines in the […]",
-    "link": "https://finance.yahoo.com/markets/stocks/articles/asml-asml-ai-stock-widest-161633693.html",
-    "sentiment_polarity": 0.317,
-    "sentiment_subjectivity": 0.45
-  },
-  {
-    "title": "Will AMD Stock Reach $600 This Year? The Answer May Not Surprise You",
-    "published": "2026-05-21T15:48:44Z",
-    "publisher": "24/7 Wall St.",
-    "summary": "AMD (NASDAQ: AMD) has a 24/7 Wall St. price target of $600 over the next 12 months, with the stock currently trading at $447.58. That implies roughly roughly 34% upside, and we are rating the shares buy with high confidence. AMD now combines a hyperscaler-anchored AI roadmap, an inflecting CPU franchise, and guidance that just ... Will AMD Stock Reach $600 This Year? The Answer May Not Surprise You",
-    "link": "https://247wallst.com/investing/2026/05/21/will-amd-stock-reach-600-this-year-the-answer-may-not-surprise-you/",
-    "sentiment_polarity": 0.015,
-    "sentiment_subjectivity": 0.335
-  },
-  {
-    "title": "2028 will be a more important earnings year for Nvidia: Analyst",
-    "published": "2026-05-21T14:53:37Z",
-    "publisher": "Yahoo Finance Video",
-    "summary": "Nvidia (NVDA) beat first quarter estimates on Wednesday after reporting earnings of $1.87 per share and record quarterly revenue of $81.62 billion. While also topping second quarter guidance forecasts and announcing an $80 billion share buyback program, the AI chip stock continues to dip in Thursday's session. New Street Research technology infrastructure analyst Antoine Chkaiban — alongside Switchyard Partners founder Joe Kaiser — explains how decisive 2028 could be for Nvidia while reacting to CFO Colette Kress's comments on CPU sales forecasts.",
-    "link": "https://finance.yahoo.com/video/2028-will-be-a-more-important-earnings-year-for-nvidia-analyst-145337681.html",
-    "sentiment_polarity": 0.257,
-    "sentiment_subjectivity": 0.458
-  },
-  {
-    "title": "Dow Jones Futures Fall After Strong Nvidia Earnings; SpaceX Files For Huge IPO",
-    "published": "2026-05-21T01:05:14Z",
-    "publisher": "Investor's Business Daily",
-    "summary": "Nvidia stock fell late despite strong earnings. Elon Musk's SpaceX released its filing for a mammoth IP. Stocks rallied Wednesday as oil prices dived on Iran hopes.",
-    "link": "https://www.investors.com/market-trend/stock-market-today/dow-jones-futures-nvidia-earnings-stocks-rally-oil-prices-iran-deal-hopes/?src=A00220&yptr=yahoo",
-    "sentiment_polarity": 0.242,
-    "sentiment_subjectivity": 0.742
-  },
-  {
-    "title": "Riot Platforms Links Bitcoin Mining With AI Data Center Growth",
-    "published": "2026-05-21T00:28:46Z",
-    "publisher": "Simply Wall St.",
-    "summary": "Riot Platforms (NasdaqCM:RIOT) is expanding its role in the AI value chain as AMD confirms a major 10 year AI infrastructure expansion at data centers operated by Riot. AMD plans to double its capacity at Riot facilities, signaling concrete AI related demand beyond Riot's core bitcoin mining business. Bernstein analysts have recently assigned outperform ratings, pointing to Riot's access to power rich data center hubs as a key advantage for AI workloads. For investors tracking...",
-    "link": "https://finance.yahoo.com/markets/stocks/articles/riot-platforms-links-bitcoin-mining-002846062.html",
-    "sentiment_polarity": 0.043,
-    "sentiment_subjectivity": 0.378
-  },
-  {
-    "title": "Nvidia Tells Skeptical Investors AI Is Ready to Go Mainstream",
-    "published": "2026-05-21T00:16:10Z",
-    "publisher": "Bloomberg",
-    "summary": "(Bloomberg) -- Nvidia Corp., facing more investor skepticism, used its latest quarterly report to tout progress in diversifying the company, which aims to rely less on the giant data center operators that have fueled its runaway growth.Most Read from BloombergSpot the Difference: Putin Gets Trump Treatment From Xi in ChinaIran Threatens to Retaliate Beyond Middle East If US AttacksSpaceX Filing Reveals $4.28 Billion Loss, Musk’s Tight GripHasbro Cancels Dungeons & Dragons Game From ‘Star Wars’ V",
-    "link": "https://finance.yahoo.com/markets/stocks/articles/nvidia-gets-tepid-reaction-forecast-210054064.html",
-    "sentiment_polarity": -0.015,
-    "sentiment_subjectivity": 0.425
-  },
-  {
-    "title": "Nvidia Tells Skeptical Investors That AI Is Ready to Go Mainstream",
-    "published": "2026-05-21T00:16:10Z",
-    "publisher": "Bloomberg",
-    "summary": "(Bloomberg) -- Nvidia Corp., facing more investor skepticism, used its latest quarterly report to tout progress in diversifying the company, which aims to rely less on the giant data center operators that have fueled its runaway growth.Most Read from BloombergSpot the Difference: Putin Gets Trump Treatment From Xi in ChinaIran Threatens to Retaliate Beyond Middle East If US AttacksSpaceX Filing Reveals $4.28 Billion Loss, Musk’s Tight GripHasbro Cancels Dungeons & Dragons Game From ‘Star Wars’ V",
-    "link": "https://finance.yahoo.com/markets/stocks/articles/nvidia-gets-tepid-reaction-forecast-210054064.html",
-    "sentiment_polarity": -0.015,
-    "sentiment_subjectivity": 0.425
-  },
-  {
-    "title": "Why Advanced Micro Devices Stock Was a big Winner on Wednesday",
-    "published": "2026-05-20T22:55:11Z",
-    "publisher": "Motley Fool",
-    "summary": "It was generally a good day for tech hardware companies.",
-    "link": "https://www.fool.com/investing/2026/05/20/why-advanced-micro-devices-stock-was-a-big-winner/",
-    "sentiment_polarity": 0.367,
-    "sentiment_subjectivity": 0.433
-  },
-  {
-    "title": "Stock Market Today, May 20: Nasdaq Gains 1.5% as Risk Appetite Returns",
-    "published": "2026-05-20T21:32:09Z",
-    "publisher": "Motley Fool",
-    "summary": "Today, May 20, 2026, falling oil prices boosted stocks as traders braced for Nvidia’s post-close report.",
-    "link": "https://www.fool.com/coverage/stock-market-today/2026/05/20/stock-market-today-may-20-nasdaq-gains-1-5-as-risk-appetite-returns/",
-    "sentiment_polarity": 0.0,
-    "sentiment_subjectivity": 0.0
-  },
-  {
-    "title": "The Furious Chip Rally Was Petering Out. Now Wall Street Turns to Nvidia.",
-    "published": "2026-05-20T21:31:00Z",
-    "publisher": "The Wall Street Journal",
-    "summary": "The massive gains in chip manufacturers from South Korea to Silicon Valley have hit a volatile stretch.  Chip makers, including Intel, Micron and AMD, closed Monday on their worst two-session skid since March, an abrupt halt to a torrid weekslong rally.  Investors’ enthusiasm for the makers of the tiny devices powering AI has helped pull the stock market out of its Iran war malaise, carrying indexes in South Korea and Taiwan past their Western peers and fueling the blockbuster public offering of chip startup  Cerebras  After the bell, investors said  Nvidia’s  record sales and profits set up an upbeat ending to a robust earnings season.",
-    "link": "https://www.wsj.com/finance/stocks/the-furious-chip-rally-was-petering-out-here-come-nvidias-results-e2c3d916?siteid=yhoof2&yptr=yahoo",
-    "sentiment_polarity": -0.184,
-    "sentiment_subjectivity": 0.49
-  },
-  {
-    "title": "Chip Stocks Are on a Tear. Money Pros Weigh In on Whether the Rally Can Last.",
-    "published": "2026-05-20T20:59:00Z",
-    "publisher": "Barrons.com",
-    "summary": "Semiconductor-chip stocks have surged over the past month and a half. We queried investment pros on whether the group has gotten over its proverbial skis.",
-    "link": "https://www.barrons.com/advisor/articles/chip-stocks-nvidia-micron-investings-56080d17?siteid=yhoof2&yptr=yahoo",
-    "sentiment_polarity": -0.139,
-    "sentiment_subjectivity": 0.161
-  },
-  {
-    "title": "Nvidia Stock Is Down Ahead of Conference Call. So Are These Chip Stocks.",
-    "published": "2026-05-20T20:58:01Z",
-    "publisher": "Barrons.com",
-    "summary": "Nvidia reported an earnings and revenue beat on Wednesday, but the stock was still in negative territory heading into the company's conference call with investors, which is scheduled to start at 5 p.m.",
-    "link": "https://www.barrons.com/livecoverage/nvidia-earnings-stock-price-ai-chips-jensen-huang/card/nvidia-stock-is-down-ahead-of-conference-call-so-are-these-chip-stocks--OkMqDE246MFzvHERnaDa?siteid=yhoof2&yptr=yahoo",
-    "sentiment_polarity": -0.228,
-    "sentiment_subjectivity": 0.344
-  },
-  {
-    "title": "Intel Stock Surges as the Chips Rally Reignites",
-    "published": "2026-05-20T20:41:00Z",
-    "publisher": "Barrons.com",
-    "summary": "Intel is putting its five-day losing streak in the rear window as it looks to lock in a second straight day of gains Wednesday.",
-    "link": "https://www.barrons.com/articles/intel-stock-price-chips-rally-f189bfd8?siteid=yhoof2&yptr=yahoo",
-    "sentiment_polarity": 0.1,
-    "sentiment_subjectivity": 0.2
+    "summary": "MANGOS — no, not the tropical stone fruit — is the latest Big Tech acronym to be at the top of investors' minds ahead of 2026's biggest IPOs. MANGOS consists of Meta Platforms (META), Anthropic (ANTH.PVT), Nvidia (NVDA), Alphabet (GOOG, GOOGL), OpenAI (OPAI.PVT), and SpaceX (SPCX, SPAX.PVT). Yahoo Finance Senior Business Reporter Ines Ferré explains the latest AI tech groupings being coined by Wall Street analysts.",
+    "link": "https://finance.yahoo.com/video/wall-street-sees-ai-trade-bearing-fruit-with-mangos-ahead-of-ipos-140455578.html",
+    "sentiment_polarity": 0.375,
+    "sentiment_subjectivity": 0.6
   }
 ]
